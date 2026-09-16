@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3rd Party Integrations — Lamat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #000000;
+        color: #a0a0a0;
+        font-family: "Inter", "SF Pro", "Roboto", sans-serif;
+        line-height: 1.7;
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(76, 42, 133, 0.03) 2px,
+          rgba(76, 42, 133, 0.03) 4px
+        );
+        pointer-events: none;
+        z-index: 9999;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 48px 120px;
+      }
+      .main-header {
+        text-align: center;
+        margin-bottom: 64px;
+      }
+      .main-header h1 {
+        font-size: 48px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        background: linear-gradient(135deg, #a855f7, #6366f1, #22d3ee);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .main-header p {
+        color: #6b7280;
+        font-size: 18px;
+        margin-top: 12px;
+      }
+      .main-header .subtitle {
+        color: #4b5563;
+        font-size: 14px;
+        margin-top: 4px;
+      }
+      .plugin-row {
+        display: flex;
+        gap: 32px;
+        margin-bottom: 48px;
+        padding: 32px;
+        border: 1px solid rgba(168, 85, 247, 0.1);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.02);
+        position: relative;
+        overflow: hidden;
+      }
+      .plugin-row::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #a855f7, transparent);
+      }
+      .plugin-meta {
+        min-width: 220px;
+      }
+      .plugin-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: #e5e7eb;
+      }
+      .plugin-package {
+        font-size: 13px;
+        color: #6b7280;
+        margin-top: 4px;
+        font-family: monospace;
+      }
+      .plugin-status {
+        display: inline-block;
+        margin-top: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 2px 10px;
+        border-radius: 999px;
+      }
+      .status-configured {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22d94e;
+      }
+      .status-api {
+        background: rgba(234, 179, 8, 0.15);
+        color: #eab308;
+      }
+      .plugin-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .plugin-desc {
+        color: #9ca3af;
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+      .fields-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+      }
+      .get-links {
+        margin-bottom: 12px;
+      }
+      .get-links a {
+        color: #22d3ee;
+        font-size: 13px;
+        font-family: monospace;
+        text-decoration: none;
+        display: block;
+      }
+      .get-links a:hover {
+        text-decoration: underline;
+      }
+      .field-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      .field-table th {
+        text-align: left;
+        padding: 6px 12px;
+        color: #6b7280;
+        font-weight: 500;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .field-table td {
+        padding: 6px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        font-family: monospace;
+        color: #d1d5db;
+      }
+      .field-table td.desc {
+        font-family: inherit;
+        color: #9ca3af;
+      }
+      .field-table tr:hover td {
+        background: rgba(168, 85, 247, 0.03);
+      }
+      .config-key {
+        color: #22d3ee;
+      }
+      .badge {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 1px 8px;
+        border-radius: 999px;
+        margin-left: 6px;
+      }
+      .badge-key {
+        background: rgba(99, 102, 241, 0.15);
+        color: #818cf8;
+      }
+      .badge-pkg {
+        background: rgba(34, 211, 238, 0.15);
+        color: #22d3ee;
+      }
+      .badge-req {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+      }
+      .badge-opt {
+        background: rgba(234, 179, 8, 0.15);
+        color: #eab308;
+      }
+      @media (max-width: 768px) {
+        .plugin-row {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="main-header">
+        <h1>3rd Party Integrations</h1>
+        <p>
+          Every external service Lamat connects to, what it needs, and where
+          it's configured.
+        </p>
+        <div class="subtitle">
+          Sources: pubspec.yaml &bull; lib/models/config_model.dart
+        </div>
+      </div>
+
+      <!-- ─── Firebase ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Firebase</div>
+          <div class="plugin-package">
+            firebase_core, firebase_messaging, firebase_phone_auth_handler,
+            firebase_ai
+          </div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Core Firebase services including Cloud Messaging (FCM push), phone
+            authentication, and AI services.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a href="https://console.firebase.google.com" target="_blank"
+              >&#8594; https://console.firebase.google.com</a
+            >
+          </div>
+          <div class="fields-title">Files Needed</div>
+          <table class="field-table">
+            <tr>
+              <th>File</th>
+              <th>Platform</th>
+              <th class="desc">Notes</th>
+            </tr>
+            <tr>
+              <td>google-services.json</td>
+              <td>Android</td>
+              <td class="desc">
+                From Firebase Console → Project settings → General
+              </td>
+            </tr>
+            <tr>
+              <td>GoogleService-Info.plist</td>
+              <td>iOS</td>
+              <td class="desc">
+                From Firebase Console → Project settings → General
+              </td>
+            </tr>
+            <tr>
+              <td>firebase_options.dart</td>
+              <td>All</td>
+              <td class="desc">
+                Generated via <code>flutterfire configure</code>
+              </td>
+            </tr>
+          </table>
+          <div class="fields-title" style="margin-top: 12px">
+            FCM Config (Backend)
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Config Key</th>
+            </tr>
+            <tr>
+              <td>Server Key</td>
+              <td class="config-key">onesignal → fcm_server_key</td>
+            </tr>
+            <tr>
+              <td>Project ID</td>
+              <td class="config-key">onesignal → fcm_project_id</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── RevenueCat ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">RevenueCat</div>
+          <div class="plugin-package">purchases_flutter</div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            In-app purchases and subscription management across iOS and Android.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a href="https://app.revenuecat.com" target="_blank"
+              >&#8594; https://app.revenuecat.com</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields
+            <span class="badge badge-key">plugins.revenue_cart</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Apple API Key</td>
+              <td class="config-key">apple_api_key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Google API Key</td>
+              <td class="config-key">google_api_key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Entitlement ID</td>
+              <td class="config-key">entitlement_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>App ID</td>
+              <td class="config-key">app_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── OneSignal ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">OneSignal</div>
+          <div class="plugin-package">onesignal_flutter</div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Push notification service for promotional campaigns and targeted
+            notifications.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a href="https://app.onesignal.com" target="_blank"
+              >&#8594; https://app.onesignal.com</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.onesignal</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>App ID</td>
+              <td class="config-key">app_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+          <div class="fields-title" style="margin-top: 12px">
+            Also Needs (Backend)
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Config Key</th>
+            </tr>
+            <tr>
+              <td>FCM Server Key</td>
+              <td class="config-key">onesignal → fcm_server_key</td>
+            </tr>
+            <tr>
+              <td>FCM Project ID</td>
+              <td class="config-key">onesignal → fcm_project_id</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Pusher ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Pusher</div>
+          <div class="plugin-package">pusher_client</div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Real-time WebSocket events (diamond earnings, live interactions,
+            etc.).
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a href="https://dashboard.pusher.com" target="_blank"
+              >&#8594; https://dashboard.pusher.com</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.pusher</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>App Key</td>
+              <td class="config-key">app_key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Cluster</td>
+              <td class="config-key">cluster</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Encrypted</td>
+              <td class="config-key">encrypted</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+            <tr>
+              <td>Auth Endpoint</td>
+              <td class="config-key">auth_endpoint</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Google Sign-In ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Google Sign-In</div>
+          <div class="plugin-package">google_sign_in</div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">OAuth social login via Google accounts.</div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a
+              href="https://console.cloud.google.com/apis/credentials"
+              target="_blank"
+              >&#8594; https://console.cloud.google.com/apis/credentials</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.google</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Key (Client ID)</td>
+              <td class="config-key">key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Secret</td>
+              <td class="config-key">secret</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Facebook Sign-In ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Facebook Sign-In</div>
+          <div class="plugin-package">flutter_facebook_auth</div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            OAuth social login via Facebook accounts.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a href="https://developers.facebook.com/apps" target="_blank"
+              >&#8594; https://developers.facebook.com/apps</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.facebook</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>App ID</td>
+              <td class="config-key">id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Secret</td>
+              <td class="config-key">secret</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Apple Sign-In ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Apple Sign-In</div>
+          <div class="plugin-package">
+            sign_in_with_apple, the_apple_sign_in
+          </div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">Sign in with Apple for iOS users.</div>
+          <div class="fields-title">Setup</div>
+          <div class="get-links">
+            <a
+              href="https://developer.apple.com/account/resources/identifiers/list"
+              target="_blank"
+              >&#8594; Apple Developer Portal</a
+            >
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Step</th>
+              <th>Details</th>
+            </tr>
+            <tr>
+              <td>Xcode Capability</td>
+              <td class="desc">
+                Target → Signing &amp; Capabilities → "+" → "Sign in with Apple"
+              </td>
+            </tr>
+            <tr>
+              <td>Service ID</td>
+              <td class="desc">
+                Create in Apple Developer → Identifiers → Services IDs
+              </td>
+            </tr>
+            <tr>
+              <td>Domain/Return URL</td>
+              <td class="desc">
+                Configure in Apple Developer for the Service ID
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Sentry ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Sentry</div>
+          <div class="plugin-package">sentry_flutter</div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Error tracking and performance monitoring for Flutter and backend
+            PHP.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a href="https://sentry.io/settings/projects" target="_blank"
+              >&#8594; https://sentry.io/settings/projects</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.sentry</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>DSN</td>
+              <td class="config-key">dsn</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── AdMob ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Google AdMob</div>
+          <div class="plugin-package">google_mobile_ads</div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Monetization via banner, interstitial, rewarded, and native ads.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a href="https://apps.admob.com" target="_blank"
+              >&#8594; https://apps.admob.com</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.admob</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Android App ID</td>
+              <td class="config-key">android_app_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Android Banner ID</td>
+              <td class="config-key">android_banner_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Android Interstitial ID</td>
+              <td class="config-key">android_interstitial_id</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+            <tr>
+              <td>Android Rewarded ID</td>
+              <td class="config-key">android_rewarded_id</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+            <tr>
+              <td>Android Native ID</td>
+              <td class="config-key">android_native_id</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+            <tr>
+              <td>iOS App ID</td>
+              <td class="config-key">ios_app_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>iOS Banner ID</td>
+              <td class="config-key">ios_banner_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Zego UIKit ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Zego UIKit</div>
+          <div class="plugin-package">
+            zego_uikit, zego_uikit_prebuilt_call,
+            <br />zego_uikit_prebuilt_live_audio_room,
+            zego_uikit_prebuilt_live_streaming,
+            <br />zego_uikit_signaling_plugin
+          </div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Real-time audio/video calls, live streaming, live audio rooms.
+            Powers BlindDate, VoiceParty, LiveStream, LiveMingle.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a href="https://console.zegocloud.com" target="_blank"
+              >&#8594; https://console.zegocloud.com</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.live</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Pub Token</td>
+              <td class="config-key">pub_token</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Account ID</td>
+              <td class="config-key">account_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Google Maps ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Google Maps</div>
+          <div class="plugin-package">
+            google_maps_flutter, geolocator, geocode, location,
+            map_location_picker
+          </div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Location services, map display, geocoding, place picking.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a
+              href="https://console.cloud.google.com/google/maps-apis/credentials"
+              target="_blank"
+              >&#8594;
+              https://console.cloud.google.com/google/maps-apis/credentials</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.settings</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Geolocation API Key</td>
+              <td class="config-key">geolocation_api_key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+          <div class="fields-title" style="margin-top: 12px">Native Files</div>
+          <table class="field-table">
+            <tr>
+              <th>File</th>
+              <th>Platform</th>
+            </tr>
+            <tr>
+              <td>AndroidManifest.xml (meta-data)</td>
+              <td>Android</td>
+            </tr>
+            <tr>
+              <td>AppDelegate.swift (GMSServices)</td>
+              <td>iOS</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Giphy ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Giphy</div>
+          <div class="plugin-package">giphy_get</div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">GIF search and sharing in chat.</div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a href="https://developers.giphy.com/dashboard" target="_blank"
+              >&#8594; https://developers.giphy.com/dashboard</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.giphy</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>API Key</td>
+              <td class="config-key">apiKey</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Deep Links ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Deep Links</div>
+          <div class="plugin-package">app_links</div>
+          <div class="plugin-status status-configured">Configured</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Universal links (iOS) and app links (Android) for deep navigation.
+          </div>
+          <div class="fields-title">Setup</div>
+          <table class="field-table">
+            <tr>
+              <th>Platform</th>
+              <th>Requirement</th>
+            </tr>
+            <tr>
+              <td>Android</td>
+              <td>
+                assetlinks.json served at
+                <code>/.well-known/assetlinks.json</code>
+              </td>
+            </tr>
+            <tr>
+              <td>iOS</td>
+              <td>
+                apple-app-site-association served at
+                <code>/.well-known/apple-app-site-association</code>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Instagram ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Instagram</div>
+          <div class="plugin-package">—</div>
+          <div class="plugin-status status-api">API Key Needed</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Instagram Basic Display API for social login / content sharing.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a
+              href="https://developers.facebook.com/docs/instagram-basic-display-api"
+              target="_blank"
+              >&#8594; https://developers.facebook.com</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.instagram</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Key</td>
+              <td class="config-key">key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Secret</td>
+              <td class="config-key">secret</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Twitter ─── -->
+      <div class="plugin-row">
+        <div class="plugin-meta">
+          <div class="plugin-name">Twitter</div>
+          <div class="plugin-package">—</div>
+          <div class="plugin-status status-api">API Key Needed</div>
+        </div>
+        <div class="plugin-content">
+          <div class="plugin-desc">
+            Twitter API v2 for OAuth 2.0 login / content sharing.
+          </div>
+          <div class="fields-title">Get Keys</div>
+          <div class="get-links">
+            <a
+              href="https://developer.twitter.com/en/portal/dashboard"
+              target="_blank"
+              >&#8594; https://developer.twitter.com</a
+            >
+          </div>
+          <div class="fields-title">
+            Config Fields <span class="badge badge-key">plugins.twitter</span>
+          </div>
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Key</td>
+              <td class="config-key">key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Secret</td>
+              <td class="config-key">secret</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

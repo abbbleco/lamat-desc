@@ -1,0 +1,4258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Changelog — Lamat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #000000;
+        color: #a0a0a0;
+        font-family: "Inter", "SF Pro", "Roboto", sans-serif;
+        line-height: 1.7;
+        min-height: 100vh;
+      }
+
+      /* ── Scanline overlay ── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(76, 42, 133, 0.03) 2px,
+          rgba(76, 42, 133, 0.03) 4px
+        );
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 48px 120px;
+      }
+
+      /* ── Main Header ── */
+      .main-header {
+        margin-bottom: 80px;
+        position: relative;
+      }
+
+      .main-header h1 {
+        font-size: 72px;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: -2px;
+        line-height: 1;
+      }
+
+      .main-header h1 span {
+        background: linear-gradient(135deg, #7c3aed, #4c2a85);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .main-header::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #7c3aed, transparent);
+        margin-top: 24px;
+        border-radius: 2px;
+      }
+
+      .header-sub {
+        color: #666;
+        font-size: 16px;
+        margin-top: 12px;
+        font-weight: 400;
+        letter-spacing: 0.3px;
+      }
+
+      /* ── Timeline ── */
+      .timeline {
+        position: relative;
+      }
+
+      /* Vertical neon line */
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 25%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          180deg,
+          rgba(124, 58, 237, 0.6),
+          rgba(124, 58, 237, 0.2) 40%,
+          rgba(124, 58, 237, 0.05) 70%,
+          transparent
+        );
+        transform: translateX(-50%);
+      }
+
+      /* Glow dots on the line */
+      .timeline::after {
+        content: "";
+        position: absolute;
+        left: 25%;
+        top: 0;
+        width: 9px;
+        height: 9px;
+        background: #7c3aed;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        box-shadow:
+          0 0 12px #7c3aed,
+          0 0 30px rgba(124, 58, 237, 0.3);
+        animation: pulse-dot 3s ease-in-out infinite;
+      }
+
+      @keyframes pulse-dot {
+        0%,
+        100% {
+          box-shadow:
+            0 0 12px #7c3aed,
+            0 0 30px rgba(124, 58, 237, 0.3);
+        }
+        50% {
+          box-shadow:
+            0 0 20px #7c3aed,
+            0 0 50px rgba(124, 58, 237, 0.5);
+        }
+      }
+
+      /* ── Timeline Row ── */
+      .timeline-row {
+        display: flex;
+        gap: 48px;
+        margin-bottom: 72px;
+        position: relative;
+      }
+
+      .timeline-row:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ── Left Column (Metadata) ── */
+      .version-meta {
+        flex: 0 0 25%;
+        padding-right: 48px;
+        text-align: right;
+        position: relative;
+      }
+
+      .version-meta .version-badge {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #7c3aed;
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid rgba(124, 58, 237, 0.25);
+        padding: 4px 14px;
+        border-radius: 20px;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+      }
+
+      .version-meta .version-number {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.2;
+        display: block;
+      }
+
+      .version-meta .version-date {
+        font-size: 14px;
+        color: #666;
+        margin-top: 4px;
+        display: block;
+      }
+
+      /* Glow dot per row (overlaid) */
+      .version-meta::after {
+        content: "";
+        position: absolute;
+        right: -56px;
+        top: 8px;
+        width: 9px;
+        height: 9px;
+        background: #4c2a85;
+        border: 2px solid #7c3aed;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
+      }
+
+      /* ── Right Column (Content) ── */
+      .version-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      /* ── Entry Cards ── */
+      .entry-card {
+        background: linear-gradient(
+          145deg,
+          rgba(76, 42, 133, 0.12),
+          rgba(30, 11, 54, 0.08)
+        );
+        border: 1px solid rgba(124, 58, 237, 0.1);
+        border-radius: 16px;
+        padding: 28px 32px;
+        margin-bottom: 16px;
+        backdrop-filter: blur(8px);
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .entry-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(124, 58, 237, 0.5),
+          transparent
+        );
+      }
+
+      .entry-card:hover {
+        border-color: rgba(124, 58, 237, 0.3);
+        box-shadow:
+          0 0 30px rgba(124, 58, 237, 0.05),
+          inset 0 0 30px rgba(124, 58, 237, 0.02);
+      }
+
+      .entry-card .entry-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .entry-card .entry-title .tag {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        padding: 2px 10px;
+        border-radius: 12px;
+        background: rgba(124, 58, 237, 0.15);
+        color: #a78bfa;
+      }
+
+      .entry-card .entry-title .tag.fix {
+        background: rgba(34, 197, 94, 0.12);
+        color: #4ade80;
+      }
+
+      .entry-card .entry-title .tag.feature {
+        background: rgba(124, 58, 237, 0.15);
+        color: #a78bfa;
+      }
+
+      .entry-card .entry-title .tag.refactor {
+        background: rgba(250, 204, 21, 0.12);
+        color: #facc15;
+      }
+
+      .entry-card p {
+        font-size: 15px;
+        color: #a0a0a0;
+        line-height: 1.7;
+      }
+
+      .entry-card .detail-list {
+        margin-top: 10px;
+        padding-left: 20px;
+        list-style: none;
+      }
+
+      .entry-card .detail-list li {
+        font-size: 14px;
+        color: #888;
+        line-height: 1.6;
+        position: relative;
+        padding-left: 16px;
+        margin-bottom: 4px;
+      }
+
+      .entry-card .detail-list li::before {
+        content: "\2022";
+        position: absolute;
+        left: 0;
+        color: #7c3aed;
+        font-weight: bold;
+      }
+
+      .entry-card .detail-list li strong {
+        color: #bbb;
+        font-weight: 500;
+      }
+
+      /* ── Sub-group card ── */
+      .sub-card {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(124, 58, 237, 0.06);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin: 8px 0 4px 0;
+      }
+
+      .sub-card .sub-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #ccc;
+        margin-bottom: 8px;
+      }
+
+      /* ── SVG decorative grid ── */
+      .entry-card .grid-bg {
+        position: absolute;
+        inset: 0;
+        opacity: 0.03;
+        background-image:
+          linear-gradient(rgba(124, 58, 237, 0.3) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(124, 58, 237, 0.3) 1px, transparent 1px);
+        background-size: 24px 24px;
+        pointer-events: none;
+      }
+
+      /* ── Neon glow accent ── */
+      .glow-accent {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        filter: blur(80px);
+        pointer-events: none;
+        opacity: 0.15;
+      }
+
+      .glow-accent.g1 {
+        background: #7c3aed;
+        top: -80px;
+        right: -60px;
+      }
+
+      .glow-accent.g2 {
+        background: #4c2a85;
+        bottom: -60px;
+        left: -40px;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 900px) {
+        .container {
+          padding: 48px 24px 80px;
+        }
+
+        .timeline-row {
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .timeline::before,
+        .timeline::after,
+        .version-meta::after {
+          display: none;
+        }
+
+        .version-meta {
+          flex: none;
+          text-align: left;
+          padding-right: 0;
+        }
+
+        .main-header h1 {
+          font-size: 48px;
+        }
+        .version-meta .version-number {
+          font-size: 24px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 32px 16px 60px;
+        }
+        .main-header h1 {
+          font-size: 36px;
+        }
+        .entry-card {
+          padding: 20px;
+        }
+      }
+
+      /* ── Scrollbar ── */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #4c2a85;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #7c3aed;
+      }
+
+      /* ── Pagination ── */
+      .older-entries {
+        display: none;
+      }
+      .older-entries.visible {
+        display: block;
+      }
+      .load-more-btn {
+        display: block;
+        margin: 48px auto 0;
+        padding: 14px 40px;
+        background: linear-gradient(135deg, #7c3aed, #4c2a85);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 40px;
+        color: #fff;
+        font-family: "Inter", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        letter-spacing: 0.3px;
+      }
+      .load-more-btn:hover {
+        background: linear-gradient(135deg, #8b5cf6, #5b21b6);
+        border-color: rgba(124, 58, 237, 0.6);
+        box-shadow: 0 0 30px rgba(124, 58, 237, 0.2);
+        transform: translateY(-1px);
+      }
+      .load-more-btn:active {
+        transform: translateY(0);
+      }
+      .load-more-btn.hidden {
+        display: none;
+      }
+
+      .hidden-entry {
+        display: none;
+      }
+      .version-more-btn {
+        margin-top: 32px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="main-header">
+        <h1>Change<span>log</span></h1>
+        <p class="header-sub">
+          Track every release, fix, and improvement in Lamat
+        </p>
+      </header>
+
+      <div class="timeline">
+        <!-- ============================================================ -->
+        <!-- 2026-08-13 — App Store privacy fix                            -->
+        <!-- ============================================================ -->
+        <!-- ============================================================ -->
+        <!-- 2026-09-10 — Echoes Play Store compliance fix              -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-badge">Latest</span>
+            <span class="version-number">v5.6.1</span>
+            <span class="version-date">Sep 10, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Echoes now works only while you use the app
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more background location checks.</strong>
+                  Echoes used to look for nearby people even when the app
+                  was closed, which app stores reject. Now it only checks
+                  your location while the Echoes screen is open or when you
+                  tap refresh or check in yourself.
+                </li>
+                <li>
+                  <strong>A clear permission screen comes first.</strong>
+                  Before the phone asks for location, the app now explains
+                  in plain words what is used, when, and that nothing runs
+                  in the background — so there are no surprises.
+                </li>
+                <li>
+                  <strong>Turning Echoes off truly stops everything.</strong>
+                  Disabling the feature immediately stops all location use,
+                  and leftovers from older app versions are safely ignored.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Release build fixed after an update raised the requirements
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>The app would not package for release.</strong>
+                  The build stopped right away saying the project's build
+                  tool was too old for the current Flutter version.
+                </li>
+                <li>
+                  <strong>Updated the build tool behind the scenes.</strong>
+                  Nothing looks different in the app — this just lets the
+                  release version build and install normally again.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                New app shell prepared behind the scenes
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Nothing changes in the app you use.</strong>
+                  A fresh copy of the app's Android foundation was set up
+                  with the latest recommended tools, ready for the future.
+                </li>
+                <li>
+                  <strong>All store and login settings carried over.</strong>
+                  Things like notifications, maps, payments, and the app's
+                  store identity were carefully moved across so nothing is
+                  lost when the switch happens.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                iPhone setup kept on its proven path
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Nothing changes in the app you use.</strong>
+                  The new template wanted a different way of fetching
+                  iPhone building blocks, but the video-call pieces the app
+                  relies on don't support it yet — so the current proven
+                  method stays, with all its settings carried over.
+                </li>
+                <li>
+                  <strong>Same app identity on iPhone.</strong>
+                  The new shell now uses the same app ID as the live app,
+                  so updates keep working as usual.
+                </li>
+                <li>
+                  <strong>iPhone permissions and services moved over.</strong>
+                  Login with Facebook and Google, notifications, camera and
+                  location explanations, and advertising settings were all
+                  carried into the new shell, now showing the Lamat name.
+                </li>
+                <li>
+                  <strong>Web version look carried over.</strong>
+                  The browser version keeps its icon, loading screen,
+                  sharing preview, and login buttons exactly as before.
+                </li>
+                <li>
+                  <strong>Fixed a hiccup building the new shell.</strong>
+                  The first test build of the new foundation stopped on a
+                  technicality in its settings file — corrected, and the
+                  build is being retried.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-09-09 — Lamat Shop: recommendations, affiliates,        -->
+        <!-- seller center, returns & disputes, subscriptions             -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.6.0</span>
+            <span class="version-date">Sep 9, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Shop recommendations and smart discovery
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>A "For You" row now lives at the top of the Shop.</strong>
+                  It learns from what a buyer has already purchased and puts
+                  similar and featured products right at the front.
+                </li>
+                <li>
+                  <strong>Buyers without order history still get picks.</strong>
+                  New shoppers see the newest and featured items instead of an
+                  empty recommendation shelf.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Creator affiliate program for the Shop
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Creators can now earn from the Shop.</strong> A new
+                  Affiliates section lets creators browse commission plans,
+                  join them and request product samples from sellers.
+                </li>
+                <li>
+                  <strong>Personal referral links pay out automatically.</strong>
+                  Every order placed through a creator's link credits the
+                  creator's wallet the moment payment completes — whether the
+                  buyer pays with credits or a card.
+                </li>
+                <li>
+                  <strong>An earnings dashboard tracks it all.</strong>
+                  Creators see clicks, orders and commission earned at a
+                  glance, and can copy any of their links to share.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Seller Center for shop owners
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Sellers get their own control room.</strong> The new
+                  Seller Center shows revenue, paid orders and product count,
+                  plus direct access to seller order fulfilment.
+                </li>
+                <li>
+                  <strong>Storefronts can be personalised.</strong> Sellers set
+                  a store name and description, and verification status is
+                  clearly displayed.
+                </li>
+                <li>
+                  <strong>Admin gains seller oversight.</strong> A new Shop
+                  Sellers admin page lets staff verify or suspend sellers, and
+                  the dashboard now shows shop revenue, orders today, new
+                  sellers and low-stock products.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Buyer protection: returns and disputes
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Buyers can request a return.</strong> Delivered orders
+                  now offer a Request Return action with a reason.
+                </li>
+                <li>
+                  <strong>Sellers can refund directly.</strong> Approving and
+                  refunding a return reverses the credits back to the buyer's
+                  wallet automatically and updates the order timeline.
+                </li>
+                <li>
+                  <strong>Disputes have an escape hatch.</strong> Either party
+                  can open a dispute on an order and resolve it with a written
+                  outcome.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Subscribe &amp; Save for repeat purchases
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Products can be put on subscription.</strong> Sellers
+                  flag items as subscribable and buyers pick weekly, biweekly
+                  or monthly delivery.
+                </li>
+                <li>
+                  <strong>Renewals happen hands-free.</strong> A scheduled task
+                  charges the buyer's wallet and creates the renewal order
+                  automatically; if the balance is short it simply tries again
+                  next cycle.
+                </li>
+                <li>
+                  <strong>Easy management from My Orders.</strong> A new
+                  Subscriptions sheet lists active subscriptions and lets
+                  buyers cancel in one tap.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Lamat Plus, Gold and Platinum memberships
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Three premium tiers replace the old one-size-fits-all
+                  premium.</strong> Members now join Lamat Plus, Gold or
+                  Platinum, each unlocking a bigger set of perks, and the app
+                  shows a tier badge on member profiles.
+                </li>
+                <li>
+                  <strong>Plus removes the limits.</strong> Members swipe with
+                  unlimited likes and rewinds, can browse invisibly with
+                  Incognito mode, and change their location to match anywhere
+                  with Passport.
+                </li>
+                <li>
+                  <strong>Upgrading, downgrading or cancelling just works.</strong>
+                  The membership level updates instantly, and perks expire
+                  gracefully when a subscription ends.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                A cleaner, store-ready paywall
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>The subscription screen got a full makeover.</strong>
+                  The old custom paywall is replaced with a modern, native
+                  purchase experience that follows each store's guidelines.
+                </li>
+                <li>
+                  <strong>Plans refresh themselves.</strong> Pricing, plans and
+                  special offers come straight from the App Store and Play
+                  Store, so testers and users always see the live catalog.
+                </li>
+                <li>
+                  <strong>Desktop and web users are covered too.</strong> The
+                  familiar card-based plan sheet remains available where the
+                  new purchase experience isn't supported.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Gold: see who's interested in you
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Gold members see who likes them.</strong> A new grid
+                  reveals everyone who has already swiped right, so a like
+                  back is an instant match.
+                </li>
+                <li>
+                  <strong>Hand-picked Top Picks arrive daily.</strong> A
+                  curated batch of the most compatible profiles shows up
+                  every day.
+                </li>
+                <li>
+                  <strong>Weekly perks land automatically.</strong> Free Super
+                  Likes and a monthly Boost are granted on schedule — no need
+                  to claim anything.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Platinum: stand out first
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Platinum likes jump the queue.</strong> Likes from
+                  Platinum members are shown ahead of everyone else's.
+                </li>
+                <li>
+                  <strong>Say something before you match.</strong> Platinum
+                  members can attach a short note to a Super Like, so the
+                  other person reads it before deciding.
+                </li>
+                <li>
+                  <strong>More visibility everywhere.</strong> Platinum hosts
+                  appear first in Live Streams, get priority placement in
+                  the Shop with lower selling fees, and earn a bonus on
+                  affiliate commissions. A new Likes Sent history shows the
+                  profiles liked over the past week.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Platinum: a dedicated support inbox
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Platinum members get a direct line to us.</strong>
+                  A new Support area in the profile menu opens a real
+                  conversation — start a ticket, reply to it and follow the
+                  whole thread in one place.
+                </li>
+                <li>
+                  <strong>Every message is kept together.</strong> Past
+                  tickets stay in the inbox with their status, so nothing
+                  gets lost between replies.
+                </li>
+                <li>
+                  <strong>Our team answers from the admin panel.</strong>
+                  Support staff see new tickets as they arrive, reply
+                  directly and close a conversation once it is resolved.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Custom profile themes
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Platinum profiles can dress up.</strong> A new
+                  theme picker offers six animated gradients — Aurora,
+                  Sunset, Midnight, Royal, Rose and Neon — that become the
+                  backdrop of the profile header.
+                </li>
+                <li>
+                  <strong>Visitors see the theme too.</strong> The chosen
+                  gradient shows up when someone else opens the profile, so
+                  a first impression feels personal.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice rooms: bigger crowds and reserved seats
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Platinum hosts can welcome more people.</strong>
+                  Rooms hosted by a Platinum member hold twenty extra
+                  listeners before they are full.
+                </li>
+                <li>
+                  <strong>The front seats are kept for Platinum guests.</strong>
+                  Reserved seats are marked with a crown so everyone can see
+                  them, and members without Platinum are invited to upgrade
+                  instead.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                App health check: code warnings cleared
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>The app's automated health check is green again.</strong>
+                  Thirty-one code warnings across the discovery pages, voice
+                  rooms and profile screens were tidied up, so future updates
+                  build on a clean foundation.
+                </li>
+                <li>
+                  <strong>Nothing looks different — and that is the point.</strong>
+                  This was behind-the-scenes housekeeping: buttons, badges
+                  and layouts all behave exactly as before, just with the
+                  code now passing its quality checks.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-09-02 — Flutter web CanvasKit error fixed                -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.5.5</span>
+            <span class="version-date">Sep 2, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Flutter web CanvasKit error fixed
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Fixed CanvasKit PathBuilder error on web.</strong>
+                  The app was crashing with "PathBuilder is not a constructor"
+                  error because manual CanvasKit files were placed in the web
+                  folder instead of letting Flutter generate them automatically
+                  during builds.
+                </li>
+                <li>
+                  <strong>Removed manual CanvasKit files.</strong>
+                  The web/canvaskit/ directory with manually placed files was
+                  removed to allow Flutter to generate the correct CanvasKit
+                  assets during web builds.
+                </li>
+                <li>
+                  <strong>Updated web bootstrap script.</strong>
+                  Added async attribute to the flutter_bootstrap.js script tag
+                  in web/index.html to match current Flutter web best practices.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Service Worker package added for Flutter web
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Added sw package for optimized web performance.</strong
+                  >
+                  The sw (Service Worker) package v0.1.5 was added to
+                  dev_dependencies to provide an optimized Service Worker and
+                  Bootstrap pipeline for Flutter web builds.
+                </li>
+                <li>
+                  <strong>Global activation completed.</strong>
+                  The package was activated globally using dart pub global
+                  activate sw, enabling the generation of service worker files
+                  with resource manifest and caching logic.
+                </li>
+                <li>
+                  <strong>Build process enhanced.</strong>
+                  The new setup allows generating sw.js and bootstrap.js files
+                  during web builds, providing intelligent caching, CanvasKit
+                  CDN loading, and a professional loading experience.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-08-31 — Bug fixes and UI improvements                  -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.5.4</span>
+            <span class="version-date">Aug 31, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Bug fixes and UI improvements
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>General bug fixes and UI enhancements</strong> across
+                  the application to improve user experience and stability.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ============================================================ -->
+        <!-- 2026-08-14 — Gender filtering now uses the genders table     -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.5.3</span>
+            <span class="version-date">Aug 14, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Public Privacy &amp; Support pages — hosted on the backend
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Four public pages are now live on the backend:</strong
+                  >
+                  Privacy Policy (<code>/privacy</code>), Your Privacy Choices
+                  (<code>/privacy-choices</code>), Cookie Policy
+                  (<code>/cookies</code>) and Help &amp; Support with a FAQ
+                  section (<code>/support</code>). They are open to everyone —
+                  no login needed — and are styled to match the site branding.
+                </li>
+                <li>
+                  <strong
+                    >The app's old privacy links now land here too.</strong
+                  >
+                  The in-app browser links that used
+                  <code>?page=pp</code>, <code>?page=cookies</code> and
+                  <code>?page=faq</code> now redirect to the new public pages
+                  instead of opening the landing page.
+                </li>
+                <li>
+                  <strong>Content is editable from the admin panel.</strong>
+                  A new "Public Pages" section in the sidebar lets you pick any
+                  of the four pages and edit its title and body with the same
+                  editor used for blog posts, then save straight to the
+                  database. The changes appear on the public pages immediately.
+                </li>
+                <li>
+                  <strong>The pages live in their own database table.</strong>
+                  A new <code>public_pages</code> table stores each page's slug,
+                  title and HTML content, and comes pre-filled with sensible
+                  default Privacy, Privacy Choices, Cookies and Support text —
+                  ready to be customised.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Matching now respects who users want to see
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>The app and server finally agree on genders.</strong>
+                  Everyone's gender options come from one single list in the
+                  database (the genders table), and the "Show me" choice now
+                  stores the id from that same list (or "all"). Previously the
+                  server used its own old internal list while the app used the
+                  database list, and the matching screens looked for values that
+                  were never stored — so gender filtering in swipes, echoes,
+                  blind dates, hot takes and live mingle silently showed
+                  everyone to everyone. All five now resolve the choice through
+                  the same helper, so filtering works properly.
+                </li>
+                <li>
+                  <strong
+                    >The "Show me" settings screens were fixed too.</strong
+                  >
+                  The app previously read and saved the choice by list position,
+                  which misidentified straight people as "All" (e.g. picking
+                  "Straight Woman" was shown as "All"), and the settings dialog
+                  read the option with a broken accessor that could crash. Both
+                  the filter screen and account settings now match by the real
+                  gender id.
+                </li>
+                <li>
+                  <strong>Registration now separates the two questions.</strong>
+                  The sign-up flow now asks "Show me" (which gender you are
+                  interested in) and "I'm looking for" (your purpose — love,
+                  friendship, etc.) as two separate choices, and both are saved.
+                  The old flow mixed these two meanings into one mislabeled
+                  picker.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Your exact gender choice is saved — no more male/female fallback
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>What you pick is what gets stored.</strong> Every way
+                  a profile can set gender — sign-up, editing settings, and the
+                  server's generic update — now saves the exact gender id from
+                  the database list the user selected. Before, the database had
+                  a leftover "male" default, and accounts created through Apple,
+                  Google, Facebook or phone login silently got the word "male"
+                  stored instead of a real gender, so those users could be
+                  missed or mismatched by gender filters.
+                </li>
+                <li>
+                  <strong>Old accounts are repaired.</strong> A database update
+                  converts any existing "male"/"female" text values to the
+                  matching gender from the list, and the column's default is
+                  changed so no future account can fall back to "male" again.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                The whole gender &amp; dating-intent system was audited and
+                unified
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >"Here for" and "I'm looking for" are now one thing.</strong
+                  >
+                  They stored the same answer (make friends, find a date, etc.)
+                  in two separate places — one was written once at sign-up and
+                  never used again, the other is what you edit in settings. The
+                  duplicate is removed: sign-up now saves straight into the one
+                  real field, the profile no longer sends or reads the old one,
+                  and a database update merges any existing values before
+                  removing the extra column.
+                </li>
+                <li>
+                  <strong
+                    >Double dates were still using the old gender list.</strong
+                  >
+                  The double-date matcher checked hard-coded "men"/"women"
+                  values that are never stored anymore, so it silently ignored
+                  everyone's preference. It now uses the same gender-list helper
+                  as every other feature.
+                </li>
+                <li>
+                  <strong
+                    >All the leftover old-style code was cleaned up.</strong
+                  >
+                  The blocked-users screen shows the gender correctly instead of
+                  a 0, live mingle and hot takes store the choice in the same id
+                  format as everywhere else, a useless line was removed from
+                  swiping, and the admin panel (sign-up, user management,
+                  profile editing) now offers the same gender list from the
+                  database instead of a fixed Male/Female/Other dropdown.
+                </li>
+                <li>
+                  <strong
+                    >A settings bug in the app was fixed along the way.</strong
+                  >
+                  The advanced filter screen's dropdowns could overwrite several
+                  profile fields at once because the code didn't stop after the
+                  right one — each choice now updates only its own field.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Your profile now shows up right after you sign in
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >No more app restarts after logging in or
+                    registering.</strong
+                  >
+                  After signing in (with password, Apple, Google, Facebook or
+                  phone) or creating a new account, the main screen sometimes
+                  showed an empty profile until the app was restarted. The
+                  profile was saved on the server but the app's memory and what
+                  the home screen reads were out of sync. Signing in now updates
+                  both at once, and the main screen also re-reads the saved
+                  profile if it ever starts without it — so your name, photo and
+                  account details are there immediately.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Logging out no longer wipes your language, theme and favourites
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Only your session is cleared when you sign out or get
+                    logged out.</strong
+                  >
+                  Before, signing out (or the app automatically logging you out
+                  after an expired session) also erased preferences like your
+                  display language, dark mode choice, favourite music and the
+                  features you were introduced to. Now only your login details
+                  are removed — restarting the session no longer resets your
+                  personal setup.
+                </li>
+                <li>
+                  <strong>Session-expiry handling was hardened.</strong> The
+                  routine that detects an expired login and sends you back to
+                  the sign-in screen could get stuck after the first timeout and
+                  never react again; it now always resets itself. A small
+                  background location-ping task was also cleaned up so it always
+                  finishes properly.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Login tokens are no longer stored in the database in plain text
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Your access token used to be copied into the database in
+                    readable form.</strong
+                  >
+                  Every time you signed in or registered — including through
+                  Apple, Google and Facebook — the server wrote your session
+                  token in plain text next to your account. Tokens are already
+                  protected on the device and in the server's token table, so
+                  this duplicate copy was an unnecessary risk if the database
+                  ever leaked. New logins no longer write it, and a database
+                  update removes the leftover column.
+                </li>
+                <li>
+                  <strong>Web builds lock the token down too.</strong> The app's
+                  secure-storage switch on the web now explicitly uses strong
+                  encrypted storage instead of the fallback option, and a dead
+                  in-memory token variable was removed so no code can read a
+                  stale empty token.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.5.3</span>
+            <span class="version-date">Aug 13, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Location permission explanation added for the App Store
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Apple asked for a privacy explanation for using the
+                    device's location in the background, so a new build had to
+                    be prepared.</strong
+                  >
+                  The app already explained why it needs location while open and
+                  in general. Apple also wanted the wording that covers the
+                  "always" option, so this explanation was added to the iOS
+                  settings. The explanation text matches the existing ones —
+                  "This app needs access to location to save your default
+                  location." — and the updated build is ready to be uploaded to
+                  the App Store as version 5.5.3 (build 17).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-08-12 — Actions that change data now use POST           -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.5.3</span>
+            <span class="version-date">Aug 12, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Chat actions now use the safe request method
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Any action that changes a chat no longer travels as a plain
+                    GET request.</strong
+                  >
+                  Marking a message as read, reacting to, deleting, starring,
+                  pinning, editing or forwarding a message, and creating or
+                  restoring chat streaks now use the POST method, which is the
+                  proper way to change data on the server. Simply viewing chats,
+                  messages, streaks or call history still use GET, and nothing
+                  else about the requests was touched.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Profile actions now use the safe request method
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Updating your profile, photos, stories, credits or settings
+                    no longer happens over a GET request.</strong
+                  >
+                  Updating profile fields, settings and notifications, following
+                  or unfollowing, liking, adding or removing interests,
+                  boosting, visiting, purchasing or deleting stories, deleting
+                  conversations or photos, spending credits and saving favourite
+                  sounds now all use the POST method. Anything that only reads
+                  data — your profile, followers, rankings, matches, visitors or
+                  payout history — still uses GET.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                Apple Sign-In on iPhone is now instant
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >On iPhone, signing in with Apple no longer asks the server
+                    to re-check the Apple token.</strong
+                  >
+                  Apple's login screen already confirms who the user is on the
+                  device, so the app now simply tells the server which Apple
+                  identity signed in, and the server signs into that account.
+                  Fewer steps and no extra network checks, so Apple sign-in on
+                  iOS is faster and less likely to break. The Apple button only
+                  signs into an existing account — it never creates a new one
+                  automatically — and Android / web keep the full secure
+                  verification since those flows need it.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                The whole app now uses POST for actions that change data
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Every remaining action that changes data — in feeds, reels,
+                    voice chat rooms, stories, events, live streams, wallets,
+                    meetings, subscriptions, notifications, blocking, rankings
+                    and location updates — was moved from GET to the POST method
+                    in both the app and the server.</strong
+                  >
+                  Anything that only reads information (listing feeds, sounds,
+                  rooms, balances, transactions, matches or comments) stays as a
+                  quick GET request. The server routes were updated to accept
+                  the new method, so the app and backend always agree.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g4"></div>
+              <div class="entry-title">
+                Going live now uses the proper request method
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Starting or joining a live stream no longer travels as a
+                    plain GET request.</strong
+                  >
+                  Starting a stream and recording who joined it now use the POST
+                  method, and the server was updated to match. Loading the list
+                  of live streams still uses GET.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g5"></div>
+              <div class="entry-title">
+                Date-request photos are now sent with the request
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Photos chosen for a date request now travel with the
+                    request itself in one upload.</strong
+                  >
+                  Previously the app uploaded each photo separately and then a
+                  second request created the date. Now the photos are uploaded
+                  as part of the same single request when you send the date
+                  invite, and the server keeps them attached to the date — they
+                  appear in both users' "my meetings" screens as before.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g6"></div>
+              <div class="entry-title">
+                Posting a feed is now one upload instead of several
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Creating a feed post with multiple photos is now a single
+                    upload.</strong
+                  >
+                  The app used to create the post first, then send each photo
+                  one by one. Now the post details and all its photos are sent
+                  together at once, so posting is faster and the post never
+                  exists without its photos. The same tidy-up was applied to
+                  reels, and the old file-upload helper endpoints were retired.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-08-07 — Android release build fixed                     -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.5.2</span>
+            <span class="version-date">Aug 07, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Android release builds now complete successfully
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Release builds no longer stop at the Google Maps
+                    setup.</strong
+                  >
+                  The automated build for the Play Store was failing before
+                  compiling because the tool that reads the Maps API key was
+                  listed in the build settings without its version number. The
+                  version is now declared, so the build loads the tool correctly
+                  and can proceed all the way through.
+                </li>
+                <li>
+                  <strong>Removed duplicate, unused build files.</strong> The
+                  project carried two copies of its build settings, and only one
+                  set was actually used. The unused copies were removed so the
+                  release build always reads from a single, consistent set of
+                  settings.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                The app's coding tools are now up to date
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Release builds no longer crash inside the map
+                    plugin.</strong
+                  >
+                  After the first fix, the build got further but still stopped
+                  while compiling the Google Maps part of the app, because the
+                  version of the Kotlin coding tools the project was using was
+                  older than what the map plugin needs. The project now uses the
+                  same up-to-date tool versions that the current version of the
+                  app framework recommends, so the map code compiles cleanly.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                Companion build tools refreshed to match
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Crash reporting, Firebase setup and Play Store publishing
+                    tools were updated.</strong
+                  >
+                  These three helper tools were several years behind the current
+                  versions the build system recommends. Newer versions are
+                  officially designed for the build system now in use, fix known
+                  problems with newer Android builds, and everything the app
+                  needs was already in place, so the update is safe.
+                </li>
+                <li>
+                  <strong>Every other build setting was double-checked.</strong>
+                  The remaining build tools and libraries were reviewed one by
+                  one against the current build system and all of them are
+                  compatible, so no other changes were needed.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Crash reports updated to work with the new tools
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >The crash-reporting SDK was brought up to date.</strong
+                  >
+                  The version in use was from a couple of years ago and no
+                  longer compiled with the newer build tools, which stopped the
+                  Play Store build again. It has been updated to the current
+                  version, and the way the app uses it stays exactly the same,
+                  so crash reports keep working as before.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                All parts of the app now build with the same language level
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Fixed a mismatch that stopped the messaging library from
+                    building.</strong
+                  >
+                  One of the chat libraries was being compiled partly with an
+                  old version of Java's language settings and partly with a
+                  newer one, and the build tools refuse to mix them. The build
+                  now uses one consistent language level across every part of
+                  the app, which the stricter newer build tools require.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                The live chat connection library builds again
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Mended an old chat library that no longer worked with the
+                    current app framework.</strong
+                  >
+                  The library that keeps real-time chat and game features
+                  connected had been abandoned and referenced an old
+                  app-framework feature that no longer exists, which stopped the
+                  Play Store build once more. A fixed copy of the library is now
+                  kept inside the project with that outdated reference removed —
+                  the way the app talks to it is unchanged, so live chat behaves
+                  exactly as before.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-08-06 — Apple sign-in made more secure                  -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.5.1</span>
+            <span class="version-date">Aug 06, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                Logged-in sessions now last 90 days
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more silent sign-outs after a day.</strong> The
+                  login token that keeps users signed in used to expire after 24
+                  hours, which meant people who opened the app on a later day
+                  would suddenly find their feed failing even though they still
+                  looked logged in. Sessions are now valid for 90 days from
+                  login, so staying signed in just works.
+                </li>
+                <li>
+                  <strong>Fresh logins still work exactly as before.</strong>
+                  Every time someone signs in — password, phone, Google,
+                  Facebook or Apple — they receive a new 90-day session, so this
+                  change only makes things more convenient, never less secure.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Sign in with Apple is now protected against stolen logins
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Every Apple sign-in now gets a one-time secret
+                    code.</strong
+                  >
+                  When someone signs in with Apple, the app creates a unique
+                  code and asks Apple to stamp it onto the login receipt. Our
+                  server checks the stamp before letting anyone in, and refuses
+                  to accept a receipt that has been used before — so a stolen or
+                  copied login can't be reused to get into an account.
+                </li>
+                <li>
+                  <strong
+                    >Apple's session details are now kept safely on
+                    file.</strong
+                  >
+                  The server stores the Apple refresh token it receives at
+                  login, so the account stays linked to Apple even on Android
+                  and the web where Apple behaves differently.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Apple sign-in now behaves correctly on every device
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >iPhone, Android and web are each handled the way Apple
+                    expects.</strong
+                  >
+                  The login flow now speaks Apple's language per platform, which
+                  keeps sign-in working consistently and avoids the session
+                  being rejected on one device while working on another.
+                </li>
+                <li>
+                  <strong
+                    >Verified email addresses are now read accurately.</strong
+                  >
+                  Apple's "email verified" flag is interpreted exactly as Apple
+                  sends it, so unverified details are never mistaken for
+                  verified ones.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                Expired sessions now return you to login gracefully
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more frozen screens when a login runs out.</strong>
+                  If a session ever does end (for example a blocked account or
+                  an older login that ran past its date), the app now notices
+                  the rejection, clears the local session in the background and
+                  sends you back to the sign-in screen — instead of quietly
+                  showing error after error while the app appears broken.
+                </li>
+                <li>
+                  <strong>Everything is tidied up automatically.</strong> The
+                  stale login is removed from the device and all in-memory
+                  profile details are reset, so the next sign-in starts clean
+                  with no leftovers from the previous account.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-08-04 — LAMAT SHOP marketplace (TikTok-Shop style)      -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.5.0</span>
+            <span class="version-date">Aug 04, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                A new Shop tab inside Teels
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>A full marketplace now lives in the app.</strong>
+                  Teels has a new fourth tab (For You / Following / Trending /
+                  Shop). The Shop tab shows a browsable product grid with
+                  category filters and a search screen with sorting and endless
+                  scrolling, so users can discover goods without leaving the
+                  video feed.
+                </li>
+                <li>
+                  <strong>Products now have real catalog data.</strong> Sellers
+                  can list physical or digital items with stock, SKU, currency,
+                  shipping fee, media gallery, featured flag and SEO fields.
+                  Digital items are marked clearly and need no shipping.
+                </li>
+                <li>
+                  <strong
+                    >The Shop tab can be turned on from the admin panel.</strong
+                  >
+                  A new "LAMAT SHOP" plugin controls whether the tab is visible
+                  and lets the owner toggle wallet or gateway payment, set the
+                  default currency, shipping fee and free shipping threshold,
+                  and set the platform fee.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Product pages, cart and checkout
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Product page:</strong> swipeable image gallery, stock
+                  and quantity controls, seller info and an Add to Cart / Buy
+                  Now action that both drop the item straight into the cart.
+                </li>
+                <li>
+                  <strong>Cart:</strong> change quantities, remove items and see
+                  the running subtotal before checking out.
+                </li>
+                <li>
+                  <strong>Checkout:</strong> pick a saved shipping address (or
+                  add a new one), apply a coupon, and pay either with the in-app
+                  wallet balance or through the standard payment gateways in a
+                  secure in-app browser. Digital orders skip the address step
+                  entirely.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Orders, sellers and delivery tracking
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Orders behind the scenes:</strong> orders are created
+                  automatically grouped per seller, payment is confirmed through
+                  the wallet or the payment webhooks, and the seller is credited
+                  automatically minus the platform fee. Digital goods are
+                  delivered instantly after payment.
+                </li>
+                <li>
+                  <strong>My Orders / Seller Orders:</strong> buyers can cancel,
+                  track and confirm delivery; sellers can mark orders shipped
+                  (with a tracking number) or delivered. Every status change is
+                  kept in a history.
+                </li>
+                <li>
+                  <strong>Shipping addresses:</strong> save and manage multiple
+                  addresses, mark one as the default, and reuse them at
+                  checkout.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Order details now show where to ship
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  The order page now displays the saved shipping address for
+                  physical orders, pulled from the address book automatically.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                Shop payments and orders made more reliable
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Server maintenance is back.</strong> A setup issue on
+                  the server prevented administrative tasks from running, which
+                  also blocked database updates for the Shop. That is fixed, and
+                  all Shop database changes are now applied.
+                </li>
+                <li>
+                  <strong
+                    >Coupons are only used once an order is actually
+                    paid.</strong
+                  >
+                  Previously a coupon could be spent the moment an order was
+                  started, even if the buyer never paid. Now the coupon is
+                  redeemed only when payment goes through, whether by wallet or
+                  payment gateway.
+                </li>
+                <li>
+                  <strong
+                    >Wallet payments always charge the right amount.</strong
+                  >
+                  The wallet can only hold whole credit units, so orders are
+                  rounded up fairly so the seller is never paid less, and
+                  everything (balance, record, order status) is saved as one
+                  clean step.
+                </li>
+                <li>
+                  <strong>One order = one seller.</strong> Each order now only
+                  covers products from a single seller. If a cart mixes sellers,
+                  the app asks you to place a separate order, so every seller is
+                  paid correctly.
+                </li>
+                <li>
+                  <strong>Order steps are kept strict and clear.</strong>
+                  Sellers can only move an order forward in the right order
+                  (paid, fulfilled, shipped) and can no longer skip ahead;
+                  digital purchases are delivered instantly and can't be
+                  mistaken for physical shipments. Tracking details are stored
+                  when an order is shipped.
+                </li>
+                <li>
+                  <strong>Payments are private.</strong> Users can only check
+                  the status of their own payments, and a payment link can't be
+                  reused after an order is paid.
+                </li>
+                <li>
+                  <strong>Smaller fixes:</strong> cart quantities are kept
+                  between 1 and 99 with stock checked, price sorting in the shop
+                  is now accurate, gateway payments record the reference
+                  properly and are protected against being processed twice, and
+                  the order lists now show the product name and image for each
+                  order at a glance.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Shop management pages in the admin panel
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong
+                    >Manage everything about the Shop from the admin
+                    panel.</strong
+                  >
+                  Five new items appear in the sidebar under Pro Plans: Shop
+                  Orders, Shop Coupons, Shop Products, Shop Categories and Shop
+                  Reviews — all available to the admin without touching the
+                  database directly.
+                </li>
+                <li>
+                  <strong>Shop Orders:</strong> every order is listed with the
+                  buyer, seller, type, total and status, with filters and an
+                  easy dropdown to move an order forward or resolve it (paid,
+                  shipped, delivered, cancelled, refunded). Each admin change is
+                  recorded in the order history.
+                </li>
+                <li>
+                  <strong>Shop Coupons:</strong> create, edit, enable or delete
+                  discount codes with percent or fixed discounts, minimum
+                  spends, usage limits and validity dates. Live usage counts are
+                  shown next to each coupon.
+                </li>
+                <li>
+                  <strong>Shop Products:</strong> search and filter the product
+                  catalog, feature items, hide or re-list them, or remove them.
+                </li>
+                <li>
+                  <strong>Shop Categories:</strong> add, rename and reorder the
+                  shop categories, with icons and auto-generated slugs.
+                </li>
+                <li>
+                  <strong>Shop Reviews:</strong> browse all product reviews with
+                  star ratings, hide or show them, and remove any that are
+                  inappropriate.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Sign in with Apple now works on iPhone
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Apple sign-in on iOS is now truly enabled.</strong>
+                  The permission that lets the app talk to Apple's sign-in page
+                  was never actually attached to the app when it was built, so
+                  the login would not work on an iPhone. The permission file is
+                  now wired into the build correctly.
+                </li>
+                <li>
+                  <strong>The app's identity matches on the server.</strong> The
+                  server now knows the iPhone app's real bundle identifier, so
+                  when someone signs in with their Apple ID the app is accepted
+                  as the genuine Lamat app and the login goes through. This also
+                  keeps the iPhone's universal-link setup consistent.
+                </li>
+                <li>
+                  <strong>Getting Apple sign-in fully live</strong> still needs
+                  the "Sign in with Apple" capability turned on for the app in
+                  the Apple Developer portal and a matching provisioning
+                  profile.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-08-03 — Sign in with Apple on Android & Web             -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.4.1</span>
+            <span class="version-date">Aug 03, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                Sign in with Apple now works on Android and Web
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>New Apple callback page:</strong> the server now
+                  answers the "Return URL" (<code>/apple/callback</code>) that
+                  Apple redirects to after login. On Android it safely hands
+                  Apple's response back to the app so login completes
+                  automatically; everywhere else it sends users back to the web
+                  app.
+                </li>
+                <li>
+                  <strong>Code exchange:</strong> the login API now accepts
+                  either an Apple identity token (iPhone) or an authorization
+                  code (Android/Web) and verifies it with Apple before creating
+                  a session.
+                </li>
+                <li>
+                  <strong>App side:</strong> the login screen passes Apple the
+                  right identifiers for Android and Web, the Android app
+                  registers the Apple callback screen, and login no longer fails
+                  on repeat sign-ins.
+                </li>
+                <li>
+                  <strong>Setup still required:</strong> fill in the Apple Team
+                  ID, Service ID and Sign in with Apple key in the server
+                  settings, and register the return URLs (<code
+                    >https://lamatt.abbble.co.za/apple/callback</code
+                  >
+                  and <code>https://lamat.abbble.co.za/</code>) on the Service
+                  ID.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Security fix for Apple sign-in
+                <span class="tag security">security</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  The email used to link an Apple login to an account used to
+                  come from the app itself. Someone with any Apple account could
+                  have attached a victim's email to their own login and take
+                  over the victim's account. The email is now taken only from
+                  Apple's verified token.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Cleaner code on the login screen
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  The <strong>LoginButton</strong> and
+                  <strong>LangaugeSwitcher</strong> widgets were moved out of
+                  the login page into their own files under
+                  <code>lib/widgets</code> so they can be reused more easily.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Apple sign-in managed from the admin panel
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>New Apple plugin:</strong> a database migration adds
+                  the Apple plugin and its settings (enabled, Service ID, Key
+                  ID, Team ID, private key, Return URL) so everything can be
+                  configured from the admin panel instead of the server settings
+                  file.
+                </li>
+                <li>
+                  <strong>Config API:</strong> the app's configuration now
+                  includes the Apple login details. The private key is never
+                  sent to the app.
+                </li>
+                <li>
+                  <strong>App:</strong> the login screen reads these settings
+                  and only shows the Sign in with Apple button when the plugin
+                  is switched on and a Service ID is filled in.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-07-31 — FCM HTTP v1 push via kreait/laravel-firebase     -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.4.0</span>
+            <span class="version-date">Jul 31, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                FCM HTTP v1 push notifications
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>composer.json:</strong> added
+                  <code>kreait/laravel-firebase</code> ^7.2 (FCM HTTP v1 via
+                  service account); enabled <code>ext-sodium</code> in
+                  <code>C:\xampp\php\php.ini</code> (required by
+                  <code>lcobucci/jwt</code>).
+                </li>
+                <li>
+                  <strong>config/firebase.php:</strong> new — published package
+                  config; credentials resolved from
+                  <code>FIREBASE_CREDENTIALS</code> pointing at
+                  <code>storage/app/firebase/service-account.json</code>.
+                </li>
+                <li>
+                  <strong>FcmService.php:</strong>
+                  <code>send()</code> now prefers the FCM HTTP v1 API
+                  (<code>CloudMessage</code>) when a service account is present,
+                  and falls back to the legacy server-key API on failure or when
+                  no service account exists; added
+                  <code>hasServiceAccount()</code>; public method signatures
+                  unchanged.
+                </li>
+                <li>
+                  <strong>PushNotifications.php:</strong>
+                  <code>sendRealMessage()</code> no longer requires
+                  <code>fcm_server_key</code> when a Firebase service account is
+                  configured; updated error message.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Block direct web access to sensitive files
+                <span class="tag security">security</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>root .htaccess:</strong> requests that map to a real
+                  file/dir under <code>.env*</code>, <code>.git</code>,
+                  <code>storage/app/firebase</code>, <code>app/</code>,
+                  <code>config/</code>, <code>database/</code>,
+                  <code>vendor/</code>, <code>tests/</code>,
+                  <code>bootstrap/</code> now return 403 (docroot is the project
+                  root, so these were previously served raw — the Firebase
+                  service account and <code>.env</code> were publicly
+                  downloadable).
+                </li>
+                <li>
+                  <strong>storage/app/firebase/.htaccess:</strong> new —
+                  <code>Require all denied</code> scoped to the service account
+                  directory.
+                </li>
+                <li>
+                  <strong>FcmService.php:</strong> data values are cast to
+                  strings before sending (FCM payloads require strings —
+                  <code>CallController</code> passes ints, which previously
+                  forced a v1 TypeError and silent legacy fallback);
+                  <code>hasServiceAccount()</code> accepts absolute credential
+                  paths.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Fix storage block breaking admin panel images
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  The broad <code>storage/</code> deny was breaking uploaded
+                  images served through the <code>public/storage</code> junction
+                  to <code>storage/app/public</code>.
+                </li>
+                <li>
+                  <strong>root .htaccess:</strong> deny list narrowed to
+                  <code>storage/app/firebase</code> only (plus the original
+                  non-storage entries).
+                </li>
+                <li>
+                  <strong>storage/.htaccess:</strong> removed;
+                  <strong>storage/app/firebase/.htaccess:</strong> new with
+                  <code>Require all denied</code>.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Preinstall page shows real errors + JSON fix
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Error visibility:</strong> new red
+                  <code>#manual-error</code> alert — the actual server error
+                  message is now rendered (previously dropped), and the output
+                  log auto-reveals with a red border on failure.
+                </li>
+                <li>
+                  <strong>JSON fix:</strong> the
+                  <code>?action=check/install/status</code> handlers ran after
+                  the HTML was echoed, so responses started with
+                  <code>&lt;!DOCTYPE</code> and failed
+                  <code>r.json()</code> ("Unexpected token '<'"). All three
+                  handlers now run at the top of the script, before any output
+                  or the vendor-exists redirect.
+                </li>
+                <li>
+                  <strong>No env checks:</strong> <code>?action=check</code>
+                  removed — the flow starts directly at "Install dependencies"
+                  (2 steps: install → complete).
+                </li>
+                <li>
+                  <strong>Cross-OS hardening:</strong>
+                  <code>runCommand()</code> accepts unset by-ref args (fixed
+                  TypeError); Windows uses <code>cmd /s /c</code> for quote-safe
+                  launching with output captured; Linux/macOS uses
+                  <code>nohup</code> so composer survives request end; Windows
+                  status detects <code>php.exe</code> via tasklist;
+                  <code>--no-ansi</code> keeps logs clean everywhere.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-07-30 — Spotify Music Anthem                          -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.3.9</span>
+            <span class="version-date">Jul 30, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                Spotify Music Anthem
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>SpotifyService.php:</strong> new backend service for
+                  Spotify Web API — Client Credentials auth with cached token,
+                  <code>searchTracks()</code> and <code>getTrack()</code>.
+                </li>
+                <li>
+                  <strong>SpotifyController.php:</strong> new endpoints —
+                  <code>GET /spotify/search</code>,
+                  <code>POST /spotify/set-anthem</code>,
+                  <code>DELETE /spotify/remove-anthem</code>.
+                </li>
+                <li>
+                  <strong>Migration:</strong> added Spotify Anthem plugin with
+                  <code>spotify_client_id</code>,
+                  <code>spotify_client_secret</code>, and
+                  <code>spotify_enabled</code> settings.
+                </li>
+                <li>
+                  <strong>config_model.dart:</strong> added
+                  <code>SpotifyAnthemPlugin</code> model and registered in
+                  <code>Plugins</code> class.
+                </li>
+                <li>
+                  <strong>spotify_anthem_model.dart:</strong> new Flutter model
+                  for parsing anthem JSON (id, name, artist, imageUrl,
+                  previewUrl).
+                </li>
+                <li>
+                  <strong>spotify_anthem_widget.dart:</strong> reusable
+                  LiquidGlass card showing track art, name, and artist.
+                </li>
+                <li>
+                  <strong>spotify_search_page.dart:</strong> search page with
+                  LiquidGlass-styled search bar and track list; tap to select
+                  anthem.
+                </li>
+                <li>
+                  <strong>user_image_card.dart:</strong> anthem overlay on swipe
+                  cards when user has set a track.
+                </li>
+                <li>
+                  <strong
+                    >edit_profile_page.dart / account_settings.dart:</strong
+                  >
+                  anthem selector that opens the Spotify search page.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-07-29 — Fix 3 critical Ably real-time delivery bugs    -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.3.8</span>
+            <span class="version-date">Jul 29, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g3"></div>
+              <div class="entry-title">
+                Fix wrong MESSAGE protocol action code
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>ably_service.dart:</strong> changed MESSAGE action
+                  from 16 to 17 — action 16 is AUTH, not MESSAGE. All chat
+                  messages published via Ably REST arrived with action 17 and
+                  were silently dropped by the switch statement.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Fix WebSocket format param
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>ably_service.dart:</strong> added
+                  <code>format=json&amp;v=1.2</code> to WebSocket URL. Ably
+                  defaults to binary msgpack encoding — without this param, all
+                  frames arrived as binary and failed JSON parsing.
+                </li>
+                <li>
+                  <strong>ably_service.dart:</strong> added
+                  <code>clientId</code> field to CONNECT message for proper
+                  token authentication.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Fix token URL, reduce TTL, add throttle
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>AblyService.php:</strong> extracted
+                  <code>keyName</code> from full apiKey for token request URL
+                  (was using full key with secret in URL path, causing 404).
+                </li>
+                <li>
+                  <strong>AblyService.php:</strong> reduced token TTL from 24h
+                  to 1h.
+                </li>
+                <li>
+                  <strong>routes/api.php:</strong> added
+                  <code>throttle:10,1</code> to ably/token endpoint to prevent
+                  abuse.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Cache 1-on-1 messages in Hive
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>chat_provider.dart:</strong> conversation messages
+                  cached per user-pair in Hive under key
+                  <code>chat_msg_{userId}_{peerId}</code>.
+                </li>
+                <li>
+                  <strong>chat_provider.dart:</strong> cached messages shown
+                  instantly on page load; background refresh fetches only delta.
+                </li>
+                <li>
+                  <strong>constants.dart:</strong> added
+                  <code>cachedMessagesPrefix</code> to
+                  <code>HiveConstants</code>.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Incremental fetch via <code>since</code> param
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>ChatService.php:</strong> added
+                  <code>since</code> param — filters by
+                  <code>time &gt; since OR edited_at &gt; since</code>; includes
+                  recently deleted messages for client-side cache cleanup.
+                </li>
+                <li>
+                  <strong>ChatController.php:</strong> accepts
+                  <code>since</code> query param and passes to service.
+                </li>
+                <li>
+                  <strong>ChatController.php:</strong>
+                  <code>deleteForEveryone</code> now sets
+                  <code>edited_at = now()</code> so deletes are detected by
+                  incremental sync.
+                </li>
+                <li>
+                  <strong>chat_provider.dart:</strong> tracks latest message
+                  timestamp; subsequent polls/Ably events pass
+                  <code>since</code> to fetch only changes.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Respect AblyRealtime plugin enabled flag
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>chat_provider.dart:</strong> reads
+                  <code>AblyRealtime.enabled</code> from config model in
+                  <code>connectAbly()</code>; only connects when plugin is
+                  enabled.
+                </li>
+                <li>
+                  <strong>ably_service.dart:</strong> added
+                  <code>setEnabled()</code> setter — early return in
+                  <code>connect()</code> when disabled; no connection attempt.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-07-28 — Apple Sign-In: full_name, JWT signature fix    -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.3.7</span>
+            <span class="version-date">Jul 28, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Apple Sign-In improvements &amp; security fix
+                <span class="tag security">security</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>auth_providers.dart:</strong> send
+                  <code>full_name</code> (givenName + familyName) from Apple
+                  credential to the backend
+                </li>
+                <li>
+                  <strong>AppleConnectController.php:</strong> accept
+                  <code>full_name</code> param and use it for user creation
+                  instead of deriving from email prefix
+                </li>
+                <li>
+                  <strong>AppleConnectController.php:</strong>
+                  <span style="color: #ef4444">SECURITY</span> — JWT signature
+                  is now verified via <code>openssl_verify()</code> using
+                  Apple's JWK public keys (previously only base64-decoded the
+                  payload with no cryptographic verification)
+                </li>
+                <li>
+                  <strong>AppleConnectController.php:</strong> added claim
+                  validation: <code>exp</code> (not expired),
+                  <code>iss</code> (must be
+                  <code>https://appleid.apple.com</code>),
+                  <code>aud</code> (must match bundle ID)
+                </li>
+                <li>
+                  <strong>AppleConnectController.php:</strong> added
+                  <code>rsaJwkToPem</code>, <code>base64urlDecode</code>,
+                  <code>derLength</code> helpers for JWT verification
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Ably Realtime chat delivery
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>ably_service.dart:</strong> new — WebSocket-based Ably
+                  realtime client with auto-reconnect
+                </li>
+                <li>
+                  <strong>chat_provider.dart:</strong> poll reduced from 2s to
+                  30s; Ably events trigger instant refresh
+                </li>
+                <li>
+                  <strong>ChatController.php:</strong> publishes message to Ably
+                  after <code>sendMessage</code>
+                </li>
+                <li>
+                  <strong>AblyService.php:</strong> new — REST publish + token
+                  generation via Guzzle
+                </li>
+                <li>
+                  <strong>AblyAuthController.php:</strong> new — token &amp;
+                  status endpoints
+                </li>
+                <li>
+                  <strong>plugins:</strong> added "Ably Realtime" plugin +
+                  settings (<code>ably_api_key</code>,
+                  <code>ably_channel_prefix</code>, <code>ably_enabled</code>)
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-07-23 — iOS build configuration fixes                    -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.3.6</span>
+            <span class="version-date">Jul 23, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                iOS build configuration fixes
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Info.plist:</strong> merged orphaned
+                  fbapi/fb-messenger-share-api into LSApplicationQueriesSchemes
+                  array
+                </li>
+                <li>
+                  <strong>Info.plist:</strong> removed second CFBundleURLTypes
+                  dict with orphaned CFBundleTypeRole
+                </li>
+                <li>
+                  <strong>Info.plist:</strong> removed duplicate
+                  NSCameraUsageDescription and NSMicrophoneUsageDescription
+                  entries
+                </li>
+                <li>
+                  <strong>Info.plist:</strong> changed CFBundleName from "myapp"
+                  to "Lamat"
+                </li>
+                <li>
+                  <strong>Runner.entitlements:</strong> changed aps-environment
+                  from "development" to "production"
+                </li>
+                <li>
+                  <strong>project.pbxproj:</strong> set TARGETED_DEVICE_FAMILY =
+                  "1,2" in Release (iPad support)
+                </li>
+                <li>
+                  <strong>project.pbxproj:</strong> removed hardcoded
+                  MARKETING_VERSION = 1 (uses FLUTTER_BUILD_NAME)
+                </li>
+                <li>
+                  <strong>project.pbxproj:</strong> aligned
+                  IPHONEOS_DEPLOYMENT_TARGET to 13.0 at project level
+                </li>
+                <li>
+                  <strong>Podfile:</strong> uncommented platform :ios, '13.0'
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Updated FirebaseFirestore pod tag
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Podfile:</strong> updated
+                  invertase/firestore-ios-sdk-frameworks tag from
+                  <code>10.29.0</code> to <code>12.16.0</code> (matches Firebase
+                  iOS SDK v12.16.0)
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Added missing ProGuard rules
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>proguard-rules.pro:</strong> added keep rules for
+                  RevenueCat, OneSignal, Sentry, Facebook, Pusher, Google
+                  Billing, ML Kit, and Stripe to prevent release crashes
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Cleaned up build.gradle files
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>build.gradle:</strong> removed invalid classpath,
+                  deprecated dexOptions, old support multidex, redundant
+                  play-services deps, jcenter, and buildToolsVersion
+                </li>
+                <li>
+                  <strong>build.gradle:</strong> narrowed broad
+                  <code>pickFirst '**/*.so'</code> to specific libc++_shared.so
+                  per arch
+                </li>
+                <li><strong>build.gradle:</strong> bumped minSdk to 26</li>
+                <li>
+                  <strong>root build.gradle:</strong> removed jcenter() and
+                  buildToolsVersion
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Added splashBgDark field
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>config_model.dart:</strong> added
+                  <code>splashBgDark</code> field to AppImagesIcons
+                </li>
+                <li>
+                  <strong>constants.dart:</strong> added setter for
+                  <code>splashBgDark</code> in <code>initialize()</code>
+                </li>
+                <li>
+                  <strong>migration:</strong> added
+                  <code>splash_bg_dark</code> to plugins_settings for "App
+                  Images Icons"
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-07-21 — Voice party home screen: app bar tabs, interests, room card upgrade, broadcast card + Dynamic api data types refactor + web entry fix, Music fixes                 -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.3.5</span>
+            <span class="version-date">Jul 21, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Storage paths fixed to absolute URLs + add_interest validator
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>8 controllers:</strong>
+                  replaced all <code>'storage/' . $path</code> with
+                  <code>asset('storage/' . $path)</code> so photo URLs stored in
+                  DB are absolute URLs
+                </li>
+                <li>
+                  <strong>InterestController.php:</strong>
+                  removed <code>user_id</code> from
+                  <code>addInterest</code> validator (Flutter never sends it;
+                  endpoint already uses <code>auth()->id()</code>)
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Registration flow fixes
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>lib/providers/user_profile_provider.dart:</strong>
+                  Sanctum token now saved via
+                  <code>TokenService.saveToken()</code> after registration —
+                  <code>add_interest</code> and <code>getUser</code> calls were
+                  unauthenticated
+                </li>
+                <li>
+                  <strong>RegisterController.php:</strong>
+                  wrapped user creation + photo uploads in
+                  <code>DB::transaction()</code> for atomicity
+                </li>
+                <li>
+                  <strong>RegisterController.php:</strong>
+                  added mime-type + size validation on uploaded images
+                  (<code>jpeg,png,jpg,gif,webp</code>, max 10MB, max 8 images)
+                </li>
+                <li>
+                  <strong>RegisterController.php:</strong>
+                  validation errors now return HTTP 422; duplicate
+                  email/username return HTTP 409; server errors return HTTP 500
+                  (previously all returned HTTP 200)
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Dynamic api data types refactor
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  replaced all
+                  <code
+                    >.toSafeString()/.toSafeInt()/.toSafeDouble()/.toSafeBool()</code
+                  >
+                  extension calls on dynamic receivers with
+                  <code>safeStr()/safeInt()/safeDouble()/safeBool()</code>
+                  top-level helpers
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                NoSuchMethodError on dynamic receivers
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>lib/utils/num_parsing_extensions.dart</strong>: added
+                  <code>safeStr/safeInt/safeDouble/safeBool</code> top-level
+                  helpers that cast to <code>Object?</code> before calling
+                  extension methods (fixes NoSuchMethodError on dynamic
+                  receivers)
+                </li>
+                <li>
+                  <strong>lib/models/config_model.dart:</strong> fixed
+                  <code>boolFromJson(dynamic value)</code> to use
+                  <code>safeStr(value)</code> instead of
+                  <code>value.toSafeString()</code>; fixed
+                  <code>x.toSafeString()</code> in <code>.map()</code> callback
+                  to use <code>safeStr(x)</code>
+                </li>
+                <li>
+                  <strong>lib/main.dart:</strong> wrapped
+                  <code>SentryFlutter.init()</code> in
+                  <code>try-catch</code> with fallback
+                  <code>runApp(buildApp())</code> when Sentry fails; extracted
+                  <code>buildApp()</code> widget function
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Bundled Outfit fonts locally
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>pubspec.yaml:</strong> replaced commented SFDisplay
+                  font section with Outfit family (9 weights from
+                  <code>assets/fonts/</code>)
+                </li>
+                <li>
+                  <strong>lib/utils/native_theme.dart:</strong> changed both
+                  light/dark theme <code>fontFamily</code> from 'Lexend' to
+                  'Outfit' (bundled); removed unused
+                  <code>google_fonts</code> import
+                </li>
+                <li>
+                  <strong>web/canvaskit/:</strong> added pre-downloaded
+                  <code>canvaskit.js/wasm</code> for offline web rendering
+                </li>
+                <li>
+                  <strong>web/index.html:</strong> set flutter-renderer to
+                  canvaskit; added
+                  <code>window.flutterConfig.canvasKitBaseUrl</code> pointing to
+                  local <code>/canvaskit/</code>
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Web startup hangs
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>lib/utils/native_theme.dart:</strong> replaced
+                  <code>GoogleFonts.outfit().fontFamily</code> with 'Lexend' to
+                  eliminate CDN font fetch on dark theme; removed
+                  <code>google_fonts</code> import
+                </li>
+                <li>
+                  <strong>web/index.html:</strong> added
+                  <code
+                    >&lt;meta name="flutter-renderer" content="html"&gt;</code
+                  >
+                  to use HTML renderer (avoids canvaskit.js CDN download)
+                </li>
+                <li>
+                  <strong>.vscode/launch.json:</strong> added
+                  <code>--web-renderer=html</code> to all launch configs
+                </li>
+                <li>
+                  <strong>lib/routes.dart:</strong> changed
+                  <code>BottomNavBarRoute</code> path from <code>'/'</code> to
+                  <code>'/tabs'</code> to prevent URL collision with initial
+                  browser URL
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Music feature: fixed backend issues
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>SoundController.php:</strong> removed required
+                  <code>id</code> from <code>getFavSounds</code> validator (uses
+                  <code>auth()->id()</code>)
+                </li>
+                <li>
+                  <strong>SoundController.php:</strong> removed required
+                  <code>uid</code> from <code>addFavSound</code> validator (uses
+                  <code>auth()->id()</code>)
+                </li>
+                <li>
+                  <strong>FeedService.php:</strong> added
+                  <code>singer</code> and <code>song_title</code> to
+                  <code>getFeeds()</code> response (were selected but not
+                  returned)
+                </li>
+                <li>
+                  <strong>ReelService.php:</strong> now stores
+                  <code>audio_link</code> and <code>audio_cover</code> during
+                  <code>createReel()</code>
+                </li>
+                <li>
+                  <strong>Music.php (Livewire admin):</strong> sound files,
+                  covers, and category images now stored as absolute URLs via
+                  <code>url('storage/' . $path)</code>
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Registration flow tests + build runner fix
+                <span class="tag feature">test</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>test/registration_flow_test.dart:</strong>
+                  8 tests covering Registration API, checkUserNameEmail, and
+                  image assets — all pass with <code>flutter test</code>
+                </li>
+                <li>
+                  <strong>lib/providers/api_service.dart:</strong>
+                  added
+                  <code>@visibleForTesting static setDioForTesting(Dio)</code>
+                  setter for injectable mock Dio
+                </li>
+                <li>
+                  <strong>lib/providers/chat_provider.dart:</strong>
+                  hid <code>FormData</code> from
+                  <code>universal_html/html.dart</code> to fix import name
+                  conflict with dio <code>FormData</code>
+                </li>
+                <li>
+                  <strong>build_runner:</strong>
+                  <code>--force-jit</code> flag required on Dart 3.10.7; use
+                  <code>dart run build_runner build --force-jit</code>
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Web load time optimization
+                <span class="tag feature">perf</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>web/index.html:</strong>
+                  enabled preload hint for <code>main.dart.js</code>; added
+                  <code>preconnect</code> / <code>dns-prefetch</code>
+                  for Google Fonts, Google Maps, Apple CDN
+                </li>
+                <li>
+                  <strong>pubspec.yaml:</strong>
+                  removed 13 unused dependencies (cloud_firestore,
+                  flutterwave_standard, stacked, injectable, scoped_model,
+                  socket_io_client, sms_autofill, zego_plugin_adapter,
+                  flutter_background_service, flutter_cached_pdfview,
+                  flutter_glass_morphism, flutter_story_view,
+                  flutter_wall_layout)
+                </li>
+                <li>
+                  <strong>pubspec.yaml:</strong>
+                  removed unused Roboto font family (40+ variants, ~3-4MB) — app
+                  uses Outfit exclusively
+                </li>
+                <li>
+                  <strong>pubspec.yaml:</strong>
+                  moved <code>mockito</code> from dependencies to
+                  dev_dependencies (test-only)
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Password validation fix + registration flow fix
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>RegisterController.php:</strong>
+                  password regex now allows any non-whitespace special char (was
+                  restricted to <code>@$!%*?&</code> only)
+                </li>
+                <li>
+                  <strong>first_time_update_profile_page.dart:</strong>
+                  added regex validator matching backend; updated hint text with
+                  full requirements
+                </li>
+                <li>
+                  <strong>password_page.dart:</strong>
+                  added same regex validator
+                </li>
+                <li>
+                  <strong>UserProfileController.php:</strong>
+                  <code>show()</code> now uses <code>auth()->id()</code> instead
+                  of requiring <code>id</code> request param — fixes "Baking
+                  Your Profile" hang when <code>getUser()</code> omitted the id
+                  to hang indefinitely
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice chat room: gifting, avatar borders, status indicators,
+                chat overlay
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>bordered_avatar.dart:</strong>
+                  new widget — avatar with PpBorder frame, status badges, and
+                  speaking indicator
+                </li>
+                <li>
+                  <strong>gift_button.dart:</strong>
+                  new widget — floating gift button with diamond balance
+                  display, opens GiftSheet
+                </li>
+                <li>
+                  <strong>chat_overlay.dart:</strong>
+                  new widget — welcome message / chat overlay at bottom of room
+                </li>
+                <li>
+                  <strong>user_profile_image.dart:</strong>
+                  added optional <code>borderImageUrl</code> and
+                  <code>isSpeaking</code> params for border decoration
+                </li>
+                <li>
+                  <strong>room_page.dart:</strong>
+                  integrated avatar borders (from config
+                  <code>ppBorders</code>), host crown badge, floating gift
+                  diamond button, chat overlay, and "Send Gift" option in member
+                  list context menu; changed from
+                  <code>pushReplacement</code> to direct
+                  <code>Stack</code> overlay for custom UI on top of Zego
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice party home screen: app bar tabs, interests section, room
+                card upgrade, broadcast card
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>home_screen.dart:</strong>
+                  integrated tabs (Related/HOT/Explore) with active underline
+                  styling, trophy icon + clock in app bar
+                </li>
+                <li>
+                  <strong>home_screen.dart:</strong>
+                  ported <code>_InterestsSection</code> with gradient-ring
+                  avatars, tag labels, and mini avatars
+                </li>
+                <li>
+                  <strong>room_card.dart:</strong>
+                  upgraded to 3 card types (Featured 20+ users / Gold 10+ users
+                  / Simple &lt;10 users) with gradient container, framed
+                  avatars, tag pills, signal bars, mini avatars, rocket icon
+                </li>
+                <li>
+                  <strong>room_card.dart:</strong>
+                  added <code>_SpaceshipRocket</code>,
+                  <code>_RocketPainter</code>,
+                  <code>_FeaturedFramePainter</code>, <code>_TagPill</code>,
+                  <code>_SignalBars</code>, <code>_MiniAvatars</code> shared
+                  widgets
+                </li>
+                <li>
+                  <strong>room_card.dart:</strong>
+                  added <code>BroadcastRoomCard</code> widget
+                </li>
+                <li>
+                  <strong>list_live_stream.dart:</strong>
+                  inserted <code>BroadcastRoomCard</code> at index 3 in
+                  <code>ListLiveStreamSearch</code> list view
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                PK battle: gifting overlay, grid layouts, sound level wave
+                widget
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>pk/config.dart:</strong>
+                  PK foregroundBuilder now shows per-host gift icon
+                  (bottom-left), user info name/level/avatar (bottom-right), and
+                  sound wave (top-right) driven by
+                  <code>host.soundLevel</code> stream
+                </li>
+                <li>
+                  <strong>pk/config.dart:</strong>
+                  foreground handles all grid layouts — 1×2 (2 users), 2×2 (4
+                  users), 3×3 (9 users)
+                </li>
+                <li>
+                  <strong>pk/config.dart:</strong>
+                  added <code>_showGiftSheet</code> gifting integration +
+                  <code>_SoundWaveWidget</code> real-time audio visualization
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Dynamic default home page (admin-configurable)
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Migration:</strong>
+                  added <code>default_home_page</code> to
+                  <code>plugins_settings</code> (General Settings) — value can
+                  be <code>swipecards</code>, <code>livestreams</code>,
+                  <code>livemingle</code>, <code>voiceparty</code>,
+                  <code>popballoon</code>, <code>hottakes</code>,
+                  <code>blinddate</code>, or <code>reels</code>
+                </li>
+                <li>
+                  <strong>lib/models/config_model.dart:</strong>
+                  added <code>defaultHomePage</code> field to
+                  <code>Settings</code> class with fromJson/toJson
+                </li>
+                <li>
+                  <strong>lib/views/tabs/bottom_nav_bar_page.dart:</strong>
+                  first <code>_BottomNavBarItem</code> now reads
+                  <code>configs.plugins?.settings?.defaultHomePage</code>
+                  and renders the matching page widget dynamically
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                plugins_settings: order column + block grouping
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Migration:</strong>
+                  added <code>order</code> column (int, default 0) to
+                  <code>plugins_settings</code>
+                </li>
+                <li>
+                  <strong>Database:</strong>
+                  all 59 General Settings ordered by importance with proper
+                  <code>block</code> group names (brand, currency, appearance,
+                  registration, urls, profile, location, datetime, messages,
+                  notifications, live, misc)
+                </li>
+                <li>
+                  <strong>PluginSettings.php:</strong>
+                  <code>loadSettings()</code> now orders by
+                  <code>order</code> column instead of <code>id</code>
+                </li>
+                <li>
+                  <strong>plugin-settings.blade.php:</strong>
+                  block names displayed in uppercase
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Safe type conversions across 20+ files
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  Replaced all <code>as String</code> /
+                  <code>as String?</code> → <code>safeStr()</code>
+                  (~65 replacements across auth_user, match_model, streak_model,
+                  question_model, user_photo, auth_providers, product_provider,
+                  contests_provider, blind_date_provider, notification_service,
+                  session_manager, live_mingle_search_screen, item_coin_plan,
+                  user_profile_provider, voicechat_rooms_provider,
+                  ranking_provider, boost_screen, live_stream_model,
+                  other_profile_page, subscriptions)
+                </li>
+                <li>
+                  Replaced all <code>.toInt()</code> → <code>safeInt()</code>
+                  (8 replacements across bank_card_model, stream_goal_model,
+                  user_account_settings_model, top_search_model,
+                  live_card_model, list_live_card_model)
+                </li>
+                <li>
+                  Replaced all <code>int.parse()</code> on map values →
+                  <code>safeInt()</code>
+                  (116 replacements across profile_controller,
+                  user_profile_provider, other_users_provider,
+                  voicechat_rooms_provider, teels_provider, ranking_provider)
+                </li>
+                <li>
+                  Replaced all <code>double.parse()</code> on map values →
+                  <code>safeDouble()</code>
+                  (19 replacements across profile_controller,
+                  user_profile_provider, other_users_provider, coin_plans)
+                </li>
+                <li>
+                  <strong>~208 total replacements</strong> — no more unsafe
+                  casts from map/dynamic values
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                ImageEditor + MapLocationPicker auto_route wrappers
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>lib/widgets/ImageEditor/:</strong>
+                  <code>@RoutePage()</code> wrapper around
+                  <code>image_editor_plus</code>
+                </li>
+                <li>
+                  <strong>lib/widgets/MapLocationPicker/:</strong>
+                  <code>@RoutePage()</code> wrapper around
+                  <code>map_location_picker</code>
+                </li>
+                <li>
+                  <strong>lib/routes.dart:</strong>
+                  added routes at <code>/image/editor</code> and
+                  <code>/location-picker</code>
+                </li>
+                <li>
+                  <strong
+                    >media_picker_helper.dart, bottom_nav_bar_page.dart,
+                    filter_options_screen.dart, account_settings.dart:</strong
+                  >
+                  replaced <code>Navigator.push</code> +
+                  <code>MaterialPageRoute</code> with auto_route push;
+                  backButton <code>Navigator.pop()</code> changed to
+                  <code>context.router.maybePop()</code>
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                DiamondEventOverlay removed, Pusher logic moved to myapp.dart
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>lib/widgets/diamond_event_overlay.dart</strong> —
+                  deleted file (no longer needed)
+                </li>
+                <li>
+                  <strong>lib/myapp.dart</strong> — added
+                  <code>_listenToDiamondEvents()</code> that subscribes to
+                  <code>pusherServiceProvider.onDiamondEarned</code> and calls
+                  <code>DiamondAnimation.show()</code> directly
+                </li>
+                <li>
+                  <strong>lib/myapp.dart</strong> — proper disposal of
+                  <code>StreamSubscription</code> in <code>dispose()</code>
+                </li>
+                <li>
+                  <strong>lib/myapp.dart</strong> — removed
+                  <code>DiamondEventOverlay</code> wrapper from Stack in build
+                  method
+                </li>
+                <li>
+                  <strong>lib/myapp.dart</strong> — removed unused
+                  <code>diamond_event_provider</code> import
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.3.3</span>
+            <span class="version-date">Jul 14, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Sentry full implementation fixes
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>echo_ping_task.dart</strong> — replaced
+                  <code>Sentry.setUser()</code> (undefined static method) with
+                  <code>Sentry.configureScope → scope.setUser()</code>
+                </li>
+                <li>
+                  <strong>main.dart</strong> — fixed
+                  <code>BeforeSendCallback</code> signature; changed named param
+                  <code>{hint}</code> to positional <code>hint</code> (sentry
+                  8.14.2 API)
+                </li>
+                <li>
+                  <strong>myapp.dart</strong> — removed outer
+                  <code>SentryNavigatorObserver</code> wrapper (<code
+                    >NavigatorObserver ≠ Widget</code
+                  >); observer already used in navigatorObservers list
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-07-03 — RevenueCat Service + Webhook                     -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.3.2</span>
+            <span class="version-date">Jul 3, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g2"></div>
+              <div class="entry-title">
+                Extracted RevenueCatService
+                <span class="tag refactor">refactor</span>
+              </div>
+              <p>
+                All RevenueCat business logic extracted from Job into a testable
+                service class. JSON error responses with UUID correlation IDs
+                added for traceable debugging.
+              </p>
+              <ul class="detail-list">
+                <li>
+                  Created <strong>ProPlan</strong> &amp;
+                  <strong>UserSubscription</strong> Eloquent models; updated
+                  webhook Job to use them (replaces raw <code>DB::table</code>)
+                </li>
+                <li>
+                  Dispatch <code>HandleRevenueCatWebhook</code> to
+                  <code>webhooks</code> queue via
+                  <code>-&gt;onQueue('webhooks')</code>
+                </li>
+                <li>
+                  RevenueCatWebhookRequest FormRequest — replaces ad-hoc payload
+                  validation with typed rules
+                </li>
+                <li>
+                  TransactionsLogger trait — shared between
+                  PaymentWebhookController and HandleRevenueCatWebhook Job (DRY)
+                </li>
+                <li>
+                  Health endpoint (<code>GET /webhook/health</code>) + try/catch
+                  error tracking
+                </li>
+                <li>
+                  Input sanitization for <code>origTransId</code>,
+                  <code>productId</code>, <code>transactionId</code> (trim +
+                  truncate to column limits)
+                </li>
+                <li>
+                  Handled <code>PRODUCT_CHANGE</code>, <code>TRANSFER</code>,
+                  <code>SUBSCRIPTION_EXTENDED</code> event types
+                </li>
+                <li>
+                  Async queue for RevenueCat webhook — new Job dispatched from
+                  controller (returns 202)
+                </li>
+                <li>
+                  Default match arm logs warning for unhandled event types
+                </li>
+                <li>
+                  Renamed <code>$expirationMs</code> →
+                  <code>$expirationAtMs</code> (matches RC field name)
+                </li>
+                <li>
+                  Renamed <code>ConfigService::getRevenueCart</code> →
+                  <code>getRevenueCat</code> (typo)
+                </li>
+                <li>
+                  Null-safety guard in
+                  <code>initPlatformStateForPurchases</code> (removed
+                  <code>userID!</code> crash risk)
+                </li>
+                <li>
+                  Removed client-side <code>boost_balance</code> sync from
+                  <code>subscription_builder.dart</code>; webhook is sole grants
+                  source
+                </li>
+                <li>
+                  DB transactions in
+                  <code>activateRevenueCatSubscription</code> &amp;
+                  <code>renewRevenueCatSubscription</code>
+                </li>
+                <li>
+                  V2 webhook signature replay protection (5-minute timestamp
+                  window)
+                </li>
+                <li>
+                  <code>isPremiumUserProvider</code> uses
+                  <code>ref.watch</code> (reactive) instead of
+                  <code>ref.read</code> (snapshot)
+                </li>
+                <li>
+                  User existence check in
+                  <code>handleRevenueCat</code> (prevents orphan records)
+                </li>
+                <li>
+                  Activation idempotency guard (duplicate webhook detection)
+                </li>
+                <li>
+                  Fixed <code>premium_expiry_date</code> type bug (<code
+                    >int</code
+                  >
+                  → MySQL datetime string)
+                </li>
+              </ul>
+            </div>
+
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                RevenueCat webhook endpoint (backend)
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>routes/web.php</strong> — Added
+                  <code>POST /webhook/revenuecat</code> route
+                </li>
+                <li>
+                  <strong>PaymentWebhookController</strong> — Added
+                  <code>handleRevenueCat()</code> with HMAC-SHA256 signature
+                  verification (V1/V2); resolves pro_plans by product_id;
+                  handles
+                  INITIAL_PURCHASE/RENEWAL/CANCELLATION/UNCANCELLATION/EXPIRATION
+                  events; inserts/updates users_subscriptions + users tables
+                </li>
+              </ul>
+            </div>
+
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="entry-title">
+                Subscription system improvements
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>is_subscribed_provider.dart</strong> — Derived
+                  <code>isPremiumUserProvider</code> from
+                  <code>premiumCustomerInfoProvider</code> to eliminate
+                  duplicate <code>Purchases.getCustomerInfo()</code> calls;
+                  added web guard
+                </li>
+                <li>
+                  <strong>init_purchase_conf.dart</strong> — Typed ref as
+                  <code>WidgetRef</code>; added try-catch around RevenueCat
+                  init; listener now syncs both activation AND deactivation with
+                  early return when state matches
+                </li>
+                <li>
+                  <strong>offerings_provider.dart</strong> — Added
+                  <code>kIsWeb</code> guard to return empty list without calling
+                  <code>Purchases.getOfferings()</code>
+                </li>
+                <li>
+                  <strong>subscription_builder.dart</strong> — Changed from
+                  <code>ref.read</code> → <code>ref.watch</code> for reactive
+                  rebuilds; replaced FutureBuilder with try/await; removed app
+                  restart and splash navigation after purchase
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">
+          Load More
+        </button>
+
+        <div id="older-entries" class="older-entries">
+          <!-- ============================================================ -->
+          <!-- 2026-07-02 — Wallet & Earnings System                          -->
+          <!-- ============================================================ -->
+          <div class="timeline-row">
+            <div class="version-meta">
+              <span class="version-number">v5.3.1</span>
+              <span class="version-date">Jul 2, 2026</span>
+            </div>
+            <div class="version-content">
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="glow-accent g1"></div>
+                <div class="entry-title">
+                  Wallet system update
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Created tables: <strong>users_wallets</strong>,
+                    <strong>users_earnings</strong>
+                  </li>
+                  <li>
+                    Added API routes: <code>GET wallets/</code>,
+                    <code>GET wallets/{type}</code>, <code>GET earnings</code>
+                  </li>
+                  <li>
+                    Added <strong>WalletController</strong>:
+                    <code>index()</code>, <code>show()</code>,
+                    <code>getEarnings()</code>
+                  </li>
+                  <li>
+                    Added Flutter providers: <code>walletsProvider</code>,
+                    <code>walletByTypeProvider</code>
+                  </li>
+                  <li>
+                    Updated WalletModel with WalletType/WalletStatus enums (17
+                    fields)
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Earnings system: pagination + service + UI
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    <strong>WalletController.getEarnings</strong> — now accepts
+                    page/limit, returns pagination block
+                  </li>
+                  <li>
+                    <strong>WalletService.getEarnings</strong> — refactored with
+                    page/offset + count query
+                  </li>
+                  <li>
+                    Created <strong>EarningModel</strong>,
+                    <strong>EarningTotals</strong>,
+                    <strong>PeriodEarningTotals</strong>,
+                    <strong>EarningsResponse</strong>
+                  </li>
+                  <li>
+                    Created <strong>EarningListNotifier</strong> (paginated
+                    StateNotifier) + <code>earningListProvider</code>
+                  </li>
+                  <li>
+                    Created <strong>earnings_page.dart</strong> with LiquidGlass
+                    cards, period/totals summary, type filter, infinite scroll
+                  </li>
+                  <li>
+                    Registered EarningsRoute in routes.dart + regenerated
+                    routes.gr.dart
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Wallet totals now computed from real source tables
+                  <span class="tag fix">fix</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Added <code>computeWalletComputedTotals()</code>: aggregates
+                    balance, points, earnings, withdrawals, rewards, gifts,
+                    deposits, transactions count from 6 real tables
+                  </li>
+                  <li>
+                    <code>formatWallet</code> now accepts computed array param,
+                    overrides all stored totals
+                  </li>
+                  <li>
+                    <code>getAllWallets</code> /
+                    <code>getWalletByType</code> pre-compute totals once before
+                    formatting
+                  </li>
+                  <li>
+                    Flutter <strong>EarningTotals</strong>: added gifts,
+                    deposits, withdrawals fields
+                  </li>
+                  <li>
+                    Flutter <strong>PeriodEarningTotals</strong>: added bonus,
+                    gifts fields
+                  </li>
+                  <li>
+                    <strong>earnings_page</strong>: added Gifts / Deposits /
+                    Withdrawals chips
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Paginated withdrawals system (backend + Flutter)
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    <strong>WalletService.getWithdrawals</strong>: paginated
+                    query on users_withdrawals, optional status filter,
+                    aggregate totals by status
+                  </li>
+                  <li>
+                    <strong>WalletController.getWithdrawals</strong>: delegates
+                    to service with page/limit/status
+                  </li>
+                  <li>Route <code>GET withdrawals/</code> added to api.php</li>
+                  <li>
+                    Created <strong>WithdrawalModel</strong>,
+                    <strong>WithdrawalTotals</strong>,
+                    <strong>WithdrawalResponse</strong> (Dart)
+                  </li>
+                  <li>
+                    Added <strong>WithdrawalListNotifier</strong> +
+                    <code>withdrawalListProvider</code>
+                  </li>
+                  <li>
+                    Created <strong>withdrawals_page.dart</strong> with
+                    LiquidGlass cards, status filter chips, aggregate summary,
+                    infinite scroll
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Created migration files for users_wallets + users_earnings
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    <code
+                      >2026_07_02_000001_create_users_wallets_table.php</code
+                    >
+                  </li>
+                  <li>
+                    <code
+                      >2026_07_02_000002_create_users_earnings_table.php</code
+                    >
+                  </li>
+                  <li>
+                    Both registered in migrations table (batch 9) to prevent
+                    re-run
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============================================================ -->
+          <!-- 2026-07-01 — Navigation Refactors & Blind Date Fixes           -->
+          <!-- ============================================================ -->
+          <div class="timeline-row">
+            <div class="version-meta">
+              <span class="version-number">v5.3.0</span>
+              <span class="version-date">Jul 1, 2026</span>
+            </div>
+            <div class="version-content">
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="glow-accent g2"></div>
+                <div class="entry-title">
+                  Massive Navigator.push → auto_route refactoring
+                  <span class="tag refactor">refactor</span>
+                </div>
+                <p>
+                  Completed project-wide migration from raw
+                  <code>Navigator.push</code> +
+                  <code>MaterialPageRoute</code> to auto_route across 40+ files.
+                  Added 7 missing route classes. Only third-party
+                  <code>MapLocationPicker</code> remains unconverted.
+                </p>
+                <ul class="detail-list">
+                  <li>
+                    Refactored <strong>4 message-related files</strong> (chats,
+                    chat_page, conversation_tile, media_message) — 9
+                    replacements
+                  </li>
+                  <li>
+                    Refactored <strong>feeds_home_page.dart</strong> — 14
+                    replacements (CameraScreenTeels, LiveStreamScreen,
+                    TextStatus, FeedPostPage, ProfileNested, etc.)
+                  </li>
+                  <li>
+                    Refactored
+                    <strong>6 more files</strong> (bottom_nav_bar_page,
+                    for_u_screen, pickup_screen, live_mingle_search_screen,
+                    live_providers, call_utilities)
+                  </li>
+                  <li>
+                    Refactored <strong>wallet (5 files)</strong>, otherProfile
+                    (4), notification, echoes (2), comment_screen
+                  </li>
+                  <li>
+                    Refactored <strong>9 additional files</strong> (events,
+                    contests, security_and_privacy, report_screen, loading_page,
+                    google_login, user_is_banned_page, subscription_builder)
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Blind Date — critical fixes
+                  <span class="tag fix">fix</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    <strong>#1</strong> — <code>_startTimer</code> →
+                    <code>_startTimer()</code> to actually start the countdown
+                    timer
+                  </li>
+                  <li>
+                    <strong>#2</strong> — Moved navigation out of
+                    <code>build()</code> in blind_date_waiting.dart and
+                    blind_date_lobby.dart; added <code>_navigated</code> flags
+                    and transition guards to prevent duplicate navigations
+                  </li>
+                  <li>
+                    <strong>#3</strong> — Added
+                    <code>_pollTimer?.cancel()</code> in
+                    <code>reveal()</code> and auto-stop polling when session
+                    status is revealed/expired
+                  </li>
+                  <li>
+                    <strong>#4</strong> — Replaced
+                    <code>Future.doWhile</code> with
+                    <code>Timer.periodic</code> + cancel in
+                    <code>dispose()</code>
+                  </li>
+                  <li>
+                    <strong>#5</strong> — Wrapped async <code>_init()</code> in
+                    <code>addPostFrameCallback</code>
+                  </li>
+                  <li>
+                    <strong>#6</strong> — Changed <code>_prefs</code> from
+                    nullable to <code>late SharedPreferences</code>
+                  </li>
+                  <li>
+                    <strong>#7/#14</strong> — <code>_onTimeUp</code> now
+                    navigates to BlindDateExpired (was incorrectly navigating to
+                    BlindDateWaiting)
+                  </li>
+                  <li>
+                    <strong>#8</strong> — Converted BlindDateSection from
+                    ConsumerWidget to ConsumerStatefulWidget, added
+                    <code>fetchEvents()</code> in initState
+                  </li>
+                  <li>
+                    <strong>#10</strong> — Replaced all
+                    <code>Navigator.pushReplacement</code> with
+                    <code>context.router.replace</code>
+                  </li>
+                  <li>
+                    <strong>#11</strong> — Removed unused import of
+                    <code>blind_date_provider.dart</code> from
+                    echo_feed_page.dart
+                  </li>
+                  <li>
+                    <strong>#12/#13</strong> — Replaced
+                    <code>clearError</code> bool with sentinel pattern in
+                    <code>copyWith</code>
+                  </li>
+                  <li>
+                    <strong>#15</strong> — Added
+                    <code>EasyLoading.showError</code> in
+                    <code>pollStatus</code> catch block
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Restructured BlindDateCall reveal flow
+                  <span class="tag feature">feature</span>
+                </div>
+                <p>
+                  Cameras start off; tap Reveal turns on MY camera (they see
+                  me); poll detects mutual reveal; 2s delay then navigate to
+                  BlindDateReveal. <code>_onTimeUp</code> now calls
+                  <code>skip()</code> before navigating to properly end the Zego
+                  call.
+                </p>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Fixed blind_date_reveal.dart reactivity
+                  <span class="tag fix">fix</span>
+                </div>
+                <p>
+                  Replaced one-time
+                  <code>ref.read(blindDateProvider)</code> with
+                  <code>ref.listen</code> to reactively detect partner data;
+                  <code>_checkMatch</code> now receives
+                  <code>matchInfo</code> as parameter.
+                </p>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Splash animation from configs
+                  <span class="tag fix">fix</span>
+                </div>
+                <p>
+                  <strong>splash_gif_anim.dart</strong> — show anim from configs
+                  (NetworkImage) with fallback to local asset (AssetImage) from
+                  <code>AppConstants.splashAnim</code>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============================================================ -->
+          <!-- 2026-06-29 — License System Rewrite                            -->
+          <!-- ============================================================ -->
+          <div class="timeline-row">
+            <div class="version-meta">
+              <span class="version-badge">Security</span>
+              <span class="version-number">v5.2.0</span>
+              <span class="version-date">Jun 29, 2026</span>
+            </div>
+            <div class="version-content">
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="glow-accent g1"></div>
+                <div class="entry-title">
+                  License system overhaul
+                  <span class="tag refactor">refactor</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Refactored license generation: removed LMT format, now uses
+                    <strong>SRC format</strong>
+                    (<code>PRODUCT-SRC-R/E-XXXXXXXX-XXXXXXXX-XXXXXXXX</code>)
+                    for all products
+                  </li>
+                  <li>
+                    Fixed license verification bug: SRC codes from admin
+                    generator now verify correctly
+                  </li>
+                  <li>
+                    Removed backward compatibility for old LMT format licenses
+                  </li>
+                  <li>
+                    Made admin dashboard multi-product aware (product selector,
+                    per-product stats, source purchases tab)
+                  </li>
+                  <li>
+                    Added <code>admin-list-source-purchases</code> API endpoint
+                  </li>
+                  <li>
+                    Unified license storage: removed
+                    <code>lamat_licenses</code> table, all licenses now in
+                    <code>source_purchases</code>
+                  </li>
+                  <li>
+                    Renamed <code>users</code> table to
+                    <code>license_verifications</code>
+                  </li>
+                  <li>Updated all PHP code to use new table names</li>
+                  <li>
+                    Created migrations:
+                    <code>012_drop_lamat_licenses_table.sql</code>,
+                    <code>013_rename_users_to_license_verifications.sql</code>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Rewrite create_update_zip.sh
+                  <span class="tag fix">fix</span>
+                </div>
+                <p>
+                  Now creates timestamped folder at script location instead of
+                  hardcoded zip path; cross-platform (macOS, Windows via Git
+                  Bash/WSL).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============================================================ -->
+          <!-- 2026-06-28 — Plugins & Profile Data                            -->
+          <!-- ============================================================ -->
+          <div class="timeline-row">
+            <div class="version-meta">
+              <span class="version-number">v5.1.0</span>
+              <span class="version-date">Jun 28, 2026</span>
+            </div>
+            <div class="version-content">
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Advanced filter screen &amp; swipe preferences
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Created <code>users_swipe_preferences</code> table (uid,
+                    category, value with unique constraint)
+                  </li>
+                  <li>
+                    Added <code>updateUserSwipePreference</code> route +
+                    controller method (updateOrInsert pattern)
+                  </li>
+                  <li>
+                    Created <strong>AdvancedFilterOptionsScreen</strong> showing
+                    23 category dropdowns from DB answers
+                  </li>
+                  <li>
+                    Added <code>updateUserSwipePreference</code> method to
+                    <strong>UserProfileNotifier</strong>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Profile list constants — questions &amp; answers
+                  <span class="tag feature">feature</span>
+                </div>
+                <p>
+                  Inserted 26 questions and 165 answer options across 4 batches
+                  covering: report reasons, here_to, religion, hair/eye/skin
+                  color, zodiac, education, personality, family_plans, drinking,
+                  smoking, working, diet, social_media_activity,
+                  sleeping_habits, going_out, weekends, phone habits, drugs,
+                  pets, children, love_language, has_baby, language, com_style.
+                </p>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  App Images Icons plugin
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Created <strong>AppImagesIcons</strong> model class with 20
+                    fields (background, splash, icons, etc.)
+                  </li>
+                  <li>
+                    Added <code>appImagesIcons</code> field to
+                    <strong>Plugins</strong> class
+                  </li>
+                  <li>
+                    Inserted plugin (id=91) and 20 settings into plugins +
+                    plugins_settings tables
+                  </li>
+                  <li>
+                    Backend: Added <code>getAppImagesIcons()</code> method in
+                    <strong>ConfigService.php</strong>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Mobile App Colors plugin
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Created <strong>MobileAppColors</strong> model class with 37
+                    color fields (primary, secondary, gradients, etc.)
+                  </li>
+                  <li>
+                    Added <code>mobileAppColors</code> field to
+                    <strong>Plugins</strong> class
+                  </li>
+                  <li>
+                    Inserted plugin (id=90) and 37 settings into plugins +
+                    plugins_settings tables
+                  </li>
+                  <li>
+                    Backend: Added <code>getMobileAppColors()</code> method in
+                    <strong>ConfigService.php</strong>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  UI / App configuration fields from AppConstants
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Expanded <strong>Settings</strong> model with 34 new fields
+                    (app_name, is_demo, web_app_url, toggles, etc.)
+                  </li>
+                  <li>
+                    Inserted 34 new settings into plugins_settings for General
+                    Settings plugin
+                  </li>
+                  <li>
+                    Backend: Expanded <code>getSettingsPlugin()</code> method
+                    with all new config fields
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Rewards plugin — all reward/credit fields
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Expanded <strong>Rewards</strong> model with 64 new fields
+                    (teel_upload_reward through hot_takes_win_debate_reward)
+                  </li>
+                  <li>
+                    Inserted 64 new settings into plugins_settings for Rewards
+                    plugin
+                  </li>
+                  <li>
+                    Backend: Expanded <code>getRewards()</code> method with all
+                    new reward credit fields
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  Sentry plugin
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Added <strong>Sentry</strong> model class with
+                    <code>enabled</code> and <code>dsn</code> fields
+                  </li>
+                  <li>
+                    Added <code>sentry</code> field to
+                    <strong>Plugins</strong> class
+                  </li>
+                  <li>
+                    Inserted plugin (id=89) and 2 settings into plugins +
+                    plugins_settings tables
+                  </li>
+                  <li>
+                    Backend: Added <code>getSentry()</code> method in
+                    <strong>ConfigService.php</strong>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  RevenueCart plugin
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Added <strong>RevenueCart</strong> model class with
+                    <code>enabled</code>, <code>apple_api_key</code>,
+                    <code>google_api_key</code>, <code>entitlement_id</code>,
+                    <code>app_id</code> fields
+                  </li>
+                  <li>
+                    Added <code>revenueCart</code> field to
+                    <strong>Plugins</strong> class
+                  </li>
+                  <li>
+                    Inserted plugin (id=88) and 5 settings into plugins +
+                    plugins_settings tables
+                  </li>
+                  <li>
+                    Backend: Added <code>getRevenueCart()</code> method in
+                    <strong>ConfigService.php</strong>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="entry-title">
+                  AdMob plugin
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    Added <strong>Admob</strong> model class with
+                    <code>enabled</code>, <code>android_*_id</code>,
+                    <code>ios_*_id</code> fields
+                  </li>
+                  <li>
+                    Added <code>admob</code> field to
+                    <strong>Plugins</strong> class
+                  </li>
+                  <li>
+                    Inserted plugin (id=87) and 11 settings into plugins +
+                    plugins_settings tables
+                  </li>
+                  <li>
+                    Backend: Added <code>getAdmob()</code> method in
+                    <strong>ConfigService.php</strong>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============================================================ -->
+          <!-- 2026-06-14 — Push Notifications Admin Page                     -->
+          <!-- ============================================================ -->
+          <div class="timeline-row">
+            <div class="version-meta">
+              <span class="version-number">v5.0.0</span>
+              <span class="version-date">Jun 14, 2026</span>
+            </div>
+            <div class="version-content">
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="glow-accent g2"></div>
+                <div class="entry-title">
+                  Push Notifications admin page
+                  <span class="tag feature">feature</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    <strong>Marketing tab</strong> (OneSignal): send to all or
+                    specific user, writes to activity table
+                  </li>
+                  <li>
+                    <strong>Real Messages tab</strong> (FCM + users_chats): send
+                    to specific user, inserts into users_chats + activity table
+                    + FCM push
+                  </li>
+                  <li>
+                    Added <code>fcm_server_key</code> and
+                    <code>fcm_project_id</code> to plugins_settings for the
+                    OneSignal plugin
+                  </li>
+                  <li>
+                    Route: <code>/push-notifications</code> → PushNotifications
+                  </li>
+                  <li>
+                    Sidebar: added "Push Notifications" nav item after Theme
+                    Manager
+                  </li>
+                  <li>
+                    Reuses existing: <code>FcmService::sendChatMessage()</code>,
+                    <code>OneSignalService::sendPromotional()</code>/<code
+                      >sendToUser()</code
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============================================================ -->
+          <!-- PRIOR VERSIONS                    -->
+          <!-- ============================================================ -->
+          <div class="timeline-row">
+            <div class="version-meta">
+              <span class="version-number">v1 - 4</span>
+              <span class="version-date">Jun 14, 2026</span>
+            </div>
+            <div class="version-content">
+              <div class="entry-card">
+                <div class="grid-bg"></div>
+                <div class="glow-accent g2"></div>
+                <div class="entry-title">
+                  Older versions (v1 - v4)
+                  <span class="tag feature">archive</span>
+                </div>
+                <ul class="detail-list">
+                  <li>
+                    For full changelog history, please refer to the
+                    <a href="#">GitHub releases page</a> or the
+                    <a href="#">GitHub commit history</a>.
+                  </li>
+                  <li>
+                    Contact the development team for any specific version
+                    details or inquiries regarding past releases.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function loadMore() {
+        document.getElementById("older-entries").classList.add("visible");
+        document.getElementById("loadMoreBtn").classList.add("hidden");
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        var contents = document.querySelectorAll(".version-content");
+        for (var i = 0; i < contents.length; i++) {
+          var vc = contents[i];
+          var cards = [];
+          for (var j = 0; j < vc.children.length; j++) {
+            if (vc.children[j].classList.contains("entry-card")) {
+              cards.push(vc.children[j]);
+            }
+          }
+          if (cards.length > 3) {
+            for (var k = 3; k < cards.length; k++) {
+              cards[k].classList.add("hidden-entry");
+            }
+            var btn = document.createElement("button");
+            btn.className = "load-more-btn version-more-btn";
+            btn.textContent = "Show More";
+            (function (vc, btn) {
+              btn.onclick = function () {
+                var hidden = vc.querySelectorAll(".hidden-entry");
+                for (var h = 0; h < hidden.length; h++) {
+                  hidden[h].classList.remove("hidden-entry");
+                }
+                btn.classList.add("hidden");
+              };
+            })(vc, btn);
+            cards[2].parentNode.insertBefore(btn, cards[2].nextSibling);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

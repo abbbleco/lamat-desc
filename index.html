@@ -1,0 +1,4380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lamat Dating App — Installation Guide & User Manual</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+    <style>
+      :root {
+        --primary: #6c5ce7;
+        --primary-dark: #5a4bd1;
+        --bg: #f8f9fa;
+        --card: #fff;
+        --text: #2d3436;
+        --text-muted: #636e72;
+        --border: #e9ecef;
+        --success: #00b894;
+        --warning: #fdcb6e;
+        --danger: #e17055;
+        --info: #0984e3;
+        --font:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        --mono: "SF Mono", SFMono-Regular, "Fira Code", "Consolas", monospace;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font);
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.7;
+        font-size: 15px;
+      }
+
+      .wrapper {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 280px;
+        background: var(--card);
+        border-right: 1px solid var(--border);
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        overflow-y: auto;
+        z-index: 100;
+      }
+
+      .sidebar-header {
+        padding: 24px 20px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .sidebar-header h1 {
+        font-size: 16px;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .sidebar-header .version {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .sidebar nav {
+        padding: 12px 0;
+      }
+
+      .sidebar nav a {
+        display: block;
+        padding: 7px 20px 7px 24px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 13.5px;
+        border-left: 3px solid transparent;
+        transition: all 0.15s;
+      }
+
+      .sidebar nav a:hover {
+        background: #f1f0ff;
+        border-left-color: var(--primary);
+      }
+
+      .sidebar nav a.active {
+        background: #f1f0ff;
+        border-left-color: var(--primary);
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .sidebar nav .section-title {
+        padding: 12px 20px 4px 24px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-muted);
+        font-weight: 700;
+      }
+
+      .content {
+        margin-left: 280px;
+        flex: 1;
+        max-width: 960px;
+        padding: 48px 56px 80px;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          display: none;
+        }
+
+        .content {
+          margin-left: 0;
+          padding: 24px 20px 60px;
+        }
+      }
+
+      h2 {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 48px 0 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--primary);
+      }
+
+      h2:first-of-type {
+        margin-top: 0;
+      }
+
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 32px 0 10px;
+      }
+
+      h4 {
+        font-size: 15px;
+        font-weight: 600;
+        margin: 20px 0 8px;
+        color: var(--primary-dark);
+      }
+
+      p {
+        margin: 0 0 12px;
+      }
+
+      ul,
+      ol {
+        margin: 0 0 16px 20px;
+      }
+
+      li {
+        margin-bottom: 4px;
+      }
+
+      code {
+        font-family: var(--mono);
+        font-size: 13px;
+        background: #f1f0ff;
+        color: var(--primary-dark);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      pre {
+        font-family: var(--mono);
+        font-size: 13px;
+        background: #1e1e2e;
+        color: #cdd6f4;
+        padding: 16px 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 12px 0 20px;
+        line-height: 1.5;
+      }
+
+      pre .comment {
+        color: #6c7086;
+      }
+
+      .alert {
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin: 16px 0;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .alert-info {
+        background: #dff0ff;
+        border-left: 4px solid var(--info);
+        color: #0652a0;
+      }
+
+      .alert-success {
+        background: #d4f5ed;
+        border-left: 4px solid var(--success);
+        color: #00856a;
+      }
+
+      .alert-warning {
+        background: #fef4d9;
+        border-left: 4px solid var(--warning);
+        color: #856404;
+      }
+
+      .alert-danger {
+        background: #fde8e3;
+        border-left: 4px solid var(--danger);
+        color: #943828;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0 20px;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 8px 12px;
+        text-align: left;
+      }
+
+      th {
+        background: #f1f0ff;
+        font-weight: 600;
+        font-size: 13px;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 32px 0;
+      }
+
+      .step-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 20px 24px;
+        margin: 12px 0 16px;
+      }
+
+      .step-box .step-num {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+        background: var(--primary);
+        color: #fff;
+        border-radius: 50%;
+        font-size: 13px;
+        font-weight: 700;
+        margin-right: 8px;
+      }
+
+      .step-box h4 {
+        display: inline;
+        margin: 0;
+      }
+
+      .step-box p {
+        margin: 6px 0 0 36px;
+      }
+
+      .faq-item {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin: 8px 0;
+        overflow: hidden;
+        transition: border-color 0.15s;
+      }
+
+      .faq-item:hover {
+        border-color: var(--primary);
+      }
+
+      .faq-item summary {
+        cursor: pointer;
+        padding: 14px 20px;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text);
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        user-select: none;
+      }
+
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-item summary::before {
+        content: "+";
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary);
+        flex-shrink: 0;
+        width: 22px;
+        height: 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        transition: transform 0.2s;
+      }
+
+      .faq-item[open] summary::before {
+        content: "−";
+      }
+
+      .faq-item summary::-moz-list-bullet {
+        list-style: none;
+      }
+
+      .faq-item summary:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: -2px;
+        border-radius: 8px;
+      }
+
+      .faq-item > p {
+        padding: 0 20px 14px 52px;
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .faq-section {
+        background: none;
+        border: none;
+        margin-bottom: 0;
+      }
+
+      .faq-section > summary {
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+        padding: 0;
+      }
+
+      .faq-section > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-section > summary::-moz-list-bullet {
+        list-style: none;
+      }
+
+      .badge {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 1px 8px;
+        border-radius: 999px;
+        margin-left: 4px;
+      }
+
+      .badge-configured {
+        background: #d4f5ed;
+        color: #00856a;
+      }
+
+      .badge-api {
+        background: #fef4d9;
+        color: #856404;
+      }
+
+      .badge-req {
+        background: #fde8e3;
+        color: #943828;
+      }
+
+      .badge-opt {
+        background: #fef4d9;
+        color: #856404;
+      }
+
+      .config-key {
+        font-family: var(--mono);
+        color: #0984e3;
+      }
+
+      .third-party h3 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .third-party .desc {
+        margin: 0 0 8px;
+        color: var(--text-muted);
+      }
+
+      .third-party .get-link {
+        display: block;
+        font-family: var(--mono);
+        font-size: 13px;
+        margin: 4px 0 12px;
+      }
+
+      .third-party .get-link a {
+        color: var(--info);
+        text-decoration: none;
+      }
+
+      .third-party .get-link a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1>Lamat</h1>
+          <div class="version">v5.0.0+50 &middot; Flutter + Laravel</div>
+        </div>
+        <nav>
+          <div class="section-title">Introduction</div>
+          <a href="#intro">Overview</a>
+          <a href="#requirements">System Requirements</a>
+          <a href="#quickstart">Quick Start</a>
+
+          <div class="section-title">Backend Setup</div>
+          <a href="#server-setup">Server Setup</a>
+          <a href="#local-dev">Local Development Environment</a>
+          <a href="#database">Database</a>
+          <a href="#backend">Laravel Configuration</a>
+
+          <div class="section-title">Installation</div>
+          <a href="#wizard">Installation Wizard</a>
+
+          <div class="section-title">Flutter App</div>
+          <a href="#flutter-local-dev">Local Flutter Development</a>
+          <a href="#flutter-setup">Flutter App Setup</a>
+          <a href="#flutter-build">Building the App</a>
+          <a href="#user-signup">User Sign Up Walkthrough</a>
+          <a href="#matching-process">Matching process Walkthrough</a>
+
+          <div class="section-title">Customization</div>
+          <a href="#branding-app">Branding the App</a>
+          <a href="#color-scheme">Coloring the App</a>
+
+          <div class="section-title">Getting Started</div>
+          <a href="#admin-basic-usage">Basic Usage</a>
+          <a href="#content-management">Content Management Guide</a>
+
+          <div class="section-title">Reference</div>
+          <a href="#config-ref">Configuration Reference</a>
+          <a href="#third-party">Third Party Integrations</a>
+          <a href="#architecture">App Architecture</a>
+          <a href="#troubleshooting">Troubleshooting</a>
+          <a href="#security">Security Notes</a>
+          <div class="section-title">More</div>
+          <a href="#faqs">FAQS</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <h2 id="intro">Introduction</h2>
+        <img src="assets/img/LAMAT.png" width="100%" />
+        <p>
+          <strong>Lamat</strong> is a modern dating application built with
+          <strong>Flutter</strong> (cross-platform Android, iOS, Web) and a
+          <strong>Laravel 11</strong> PHP backend. It includes a powerful REST
+          API backend with 150+ endpoints, an admin dashboard, real-time
+          messaging, voice and video calls, and a complete monetization system.
+          Designed to launch all in one social dating solution.
+        </p>
+        <div class="alert alert-success">
+          <strong>Detailed features list</strong>
+          <a href="https://lamat-documentation.abbble.co.za/features.html"
+            >here</a
+          >
+        </div>
+
+        <div class="alert alert-danger">
+          <strong>Changelog</strong>
+          <a href="https://lamat-documentation.abbble.co.za/changelog.html"
+            >here</a
+          >
+        </div>
+
+        <div class="alert alert-info">
+          <strong>Document version:</strong> 1.0 &middot; App version 5.0.0+50
+        </div>
+
+        <h2 id="requirements">System Requirements</h2>
+
+        <h3>Server (Production)</h3>
+        <table>
+          <tr>
+            <th>Component</th>
+            <th>Minimum</th>
+            <th>Recommended</th>
+          </tr>
+          <tr>
+            <td>Web Server</td>
+            <td>Apache 2.4</td>
+            <td>Apache 2.4 / Nginx 1.24</td>
+          </tr>
+          <tr>
+            <td>PHP</td>
+            <td>8.1</td>
+            <td>8.2 or 8.3</td>
+          </tr>
+          <tr>
+            <td>MySQL / MariaDB</td>
+            <td>MySQL 8.0 / MariaDB 10.4</td>
+            <td>MariaDB 10.11</td>
+          </tr>
+          <tr>
+            <td>RAM</td>
+            <td>2 GB</td>
+            <td>4 GB</td>
+          </tr>
+          <tr>
+            <td>Disk</td>
+            <td>10 GB</td>
+            <td>20 GB SSD</td>
+          </tr>
+          <tr>
+            <td>HTTPS</td>
+            <td>Let's Encrypt</td>
+            <td>Paid SSL</td>
+          </tr>
+        </table>
+
+        <h3>Local Development</h3>
+        <table>
+          <tr>
+            <th>Tool</th>
+            <th>Version</th>
+          </tr>
+          <tr>
+            <td>XAMPP / Laragon</td>
+            <td>PHP 8.3, MariaDB 10.11</td>
+          </tr>
+          <tr>
+            <td>Flutter</td>
+            <td>3.27+ (stable channel)</td>
+          </tr>
+          <tr>
+            <td>Dart SDK</td>
+            <td>^3.6.1</td>
+          </tr>
+          <tr>
+            <td>Composer</td>
+            <td>2.7+</td>
+          </tr>
+        </table>
+
+        <h3>Required PHP Extensions</h3>
+        <p>
+          BCMath, Ctype, cURL, DOM, Fileinfo, GD, JSON, Mbstring, OpenSSL, PCRE,
+          PDO, PDO_MySQL, Tokenizer, XML, Zip, Intl.
+        </p>
+
+        <h3>External Services</h3>
+        <table>
+          <tr>
+            <th>Service</th>
+            <th>Purpose</th>
+            <th>Required?</th>
+          </tr>
+          <tr>
+            <td>Firebase</td>
+            <td>Push notifications, Phone Auth, Crashlytics</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Pusher</td>
+            <td>Real-time chat &amp; presence</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>RevenueCat</td>
+            <td>Subscription management</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Google Maps / MapKit</td>
+            <td>Location &amp; map view</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Google Gemini</td>
+            <td>AI features</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>ZegoUIKit</td>
+            <td>Live video/audio streaming</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Paystack / Flutterwave / Stripe</td>
+            <td>In-app payments</td>
+            <td>Yes (at least 1)</td>
+          </tr>
+        </table>
+
+        <h2 id="quickstart">Quick Start (5 Minutes)</h2>
+
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Place files on server</h4>
+          <p>
+            Download the file from CodeCanyon and extract it on your PC. You
+            will get 4 folders:
+          </p>
+          <ul>
+            <li>documentation</li>
+            <li>flutter-app</li>
+            <li>laravel-admin</li>
+            <li>update_xxxxx_xxxx</li>
+          </ul>
+          <p>
+            Open the <code>laravel-admin</code> folder - you will find a zip
+            file. Upload it to your server via FTP or cpanel file manager. It
+            must be in root of domain e.g in <code>public_html</code>. Then
+            extract it.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Configure environment</h4>
+          <img src="assets/img/APP_URL.png" width="100%" />
+          <p>
+            Open and Edit <code>.env</code>. Set your <code>APP_URL</code> which
+            is your backend domain for example
+            <code>https://domain.com</code> without the closing/end slash
+            <code>/</code>
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Run the wizard</h4>
+          <p>
+            Visit <code>https://your-domain.com/install</code> in a browser. The
+            5-step wizard handles purchase verification, database import, and
+            admin setup.
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Setup Flutter app</h4>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4.1</span>
+          <ol>
+            <li>
+              Go to the root folder of project, enter
+              <code>flutter-app</code> folder.
+            </li>
+            <li>
+              <strong>Extract here</strong> the zip in it so that you have
+              <code
+                >flutter-app/android, flutter-app/assets, flutter-app/ios
+                etc</code
+              >.
+            </li>
+            <li>
+              Open the <code>flutter-app</code> folder in your desired code
+              editor e.g <code>VS CODE</code>.
+            </li>
+            <li>Run <code>flutter pub get</code> in terminal.</li>
+          </ol>
+        </div>
+        <img src="assets/img/homeUrl.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">4.2</span>
+          <p>Update <code>lib/constants.dart</code> with your server URL.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">5</span>
+          <h4>Run Flutter app</h4>
+          <p>Run <code>flutter run</code> with with emulator open.</p>
+        </div>
+        <div class="alert alert-info">
+          <strong>Note:</strong> You must already have flutter installed in your
+          local machine. For more info visit
+          <a href="https://docs.flutter.dev/install">Flutter documentation</a>
+        </div>
+
+        <h2 id="server-setup">Server Setup</h2>
+        <div class="alert alert-info">
+          <strong>Note:</strong> This part is for users hosting on VPS not
+          shared hosting. skip to next section
+          <a href="#wizard">Skip</a>
+        </div>
+        <h3>Directory Structure</h3>
+        <pre>
+<span class="comment">/var/www/html/               # Web root</span>
+<span class="comment">/var/www/html/lamat/         # Laravel backend</span>
+<span class="comment">/var/www/html/lamat/app/</span>
+<span class="comment">/var/www/html/lamat/bootstrap/</span>
+<span class="comment">/var/www/html/lamat/config/</span>
+<span class="comment">/var/www/html/lamat/database/</span>
+<span class="comment">/var/www/html/lamat/public/  # ← DocumentRoot must point here</span>
+<span class="comment">/var/www/html/lamat/resources/views/</span>
+<span class="comment">/var/www/html/lamat/routes/</span>
+<span class="comment">/var/www/html/lamat/storage/</span>
+</pre>
+
+        <h3>Apache Configuration</h3>
+        <pre>
+&lt;VirtualHost *:443&gt;
+    ServerName yourdomain.com
+    DocumentRoot /var/www/html/lamat/public
+
+    &lt;Directory /var/www/html/lamat/public&gt;
+        AllowOverride All
+        Require all granted
+    &lt;/Directory&gt;
+
+    SSLEngine on
+    SSLCertificateFile /path/to/fullchain.pem
+    SSLCertificateKeyFile /path/to/privkey.pem
+&lt;/VirtualHost&gt;
+</pre
+        >
+
+        <h3>Nginx Configuration</h3>
+        <pre>
+server {
+    listen 443 ssl;
+    server_name yourdomain.com;
+    root /var/www/html/lamat/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known) { deny all; }
+
+    ssl_certificate /path/to/fullchain.pem;
+    ssl_certificate_key /path/to/privkey.pem;
+}
+</pre
+        >
+
+        <h2 id="local-dev">Local Development Environment</h2>
+        <div class="alert alert-info">
+          <strong>Note:</strong> This section covers setting up a local
+          development environment for the Laravel backend on your local machine
+          (Windows, macOS, or Linux).
+        </div>
+
+        <h3>Prerequisites</h3>
+        <ul>
+          <li>PHP 8.1 or higher</li>
+          <li>Composer (dependency manager)</li>
+          <li>MySQL/MariaDB or SQLite</li>
+          <li>Git (for version control)</li>
+        </ul>
+
+        <h3>Windows Setup (using XAMPP)</h3>
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Install XAMPP</h4>
+          <p>
+            Download and install XAMPP from
+            <a href="https://www.apachefriends.org/">apachefriends.org</a>. This
+            includes Apache, PHP, and MySQL.
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Install Composer</h4>
+          <p>
+            Download and install Composer from
+            <a href="https://getcomposer.org/">getcomposer.org</a>. Make sure to
+            select PHP from XAMPP during installation.
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Clone the Project</h4>
+          <pre>
+cd C:\xampp\htdocs
+git clone [your-repository-url] lamat
+cd lamat
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Install Dependencies</h4>
+          <pre>
+composer install
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">5</span>
+          <h4>Configure Environment</h4>
+          <pre>
+copy .env.example .env
+notepad .env
+</pre
+          >
+          <p>Update the following settings:</p>
+          <pre>
+APP_URL=http://localhost/lamat
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=lamat
+DB_USERNAME=root
+DB_PASSWORD=
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">6</span>
+          <h4>Generate Application Key</h4>
+          <pre>
+php artisan key:generate
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">7</span>
+          <h4>Run Migrations</h4>
+          <pre>
+php artisan migrate
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">8</span>
+          <h4>Start Development Server</h4>
+          <pre>
+php artisan serve
+</pre
+          >
+          <p>
+            Access your local development environment at
+            <code>http://localhost:8000</code>
+          </p>
+        </div>
+
+        <h3>macOS Setup (using Homebrew)</h3>
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Install Homebrew</h4>
+          <pre>
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Install PHP and MySQL</h4>
+          <pre>
+brew install php mysql
+brew services start mysql
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Install Composer</h4>
+          <pre>
+brew install composer
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Clone and Setup Project</h4>
+          <pre>
+cd /Applications/XAMPP/xamppfiles/htdocs
+git clone [your-repository-url] lamat
+cd lamat
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+</pre
+          >
+        </div>
+
+        <h3>Linux Setup (Ubuntu/Debian)</h3>
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Install Dependencies</h4>
+          <pre>
+sudo apt update
+sudo apt install php php-cli php-common php-mysql php-zip php-gd php-mbstring php-curl php-xml php-bcmath
+sudo apt install mysql-server composer git
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Configure MySQL</h4>
+          <pre>
+sudo mysql_secure_installation
+sudo mysql -u root -p
+CREATE DATABASE lamat CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'lamat_user'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON lamat.* TO 'lamat_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Clone and Setup Project</h4>
+          <pre>
+cd /var/www/html
+sudo git clone [your-repository-url] lamat
+cd lamat
+sudo chown -R $USER:$USER .
+composer install
+cp .env.example .env
+nano .env
+</pre
+          >
+          <p>Update your database credentials in .env:</p>
+          <pre>
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=lamat
+DB_USERNAME=lamat_user
+DB_PASSWORD=your_password
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Complete Setup</h4>
+          <pre>
+php artisan key:generate
+php artisan migrate
+php artisan serve
+</pre
+          >
+        </div>
+
+        <h3>Development Tips</h3>
+        <ul>
+          <li>
+            Use <code>php artisan serve</code> for local development (runs on
+            port 8000)
+          </li>
+          <li>
+            Enable debug mode in <code>.env</code>: <code>APP_DEBUG=true</code>
+          </li>
+          <li>
+            Use <code>php artisan cache:clear</code> to clear application cache
+          </li>
+          <li>
+            Use <code>php artisan config:clear</code> to clear configuration
+            cache
+          </li>
+          <li>
+            Use <code>php artisan migrate:fresh --seed</code> to reset database
+            with seeders
+          </li>
+          <li>
+            Set up virtual hosts for cleaner local URLs (e.g.,
+            <code>lamat.local</code>)
+          </li>
+        </ul>
+
+        <div class="alert alert-warning">
+          <strong>Security Note:</strong> Never use local development settings
+          in production. Always disable debug mode and use secure credentials
+          when deploying to production servers.
+        </div>
+
+        <h2 id="database">Database</h2>
+        <p>
+          The backend uses a single MySQL/MariaDB database named
+          <code>lamat</code>.
+        </p>
+
+        <h3>Manual Import</h3>
+        <pre>
+<span class="comment"># Create the database</span>
+mysql -u root -p -e "CREATE DATABASE lamat CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+
+<span class="comment"># Import the schema</span>
+mysql -u root -p lamat &lt; database/backup/database.sql
+</pre>
+
+        <div class="alert alert-info">
+          The installation wizard can download the
+          <code>database.sql</code> automatically from the license server during
+          Step 2. You only need a local backup if you don't set
+          <code>LICENSE_SERVER_URL</code>.
+        </div>
+
+        <h2 id="backend">Laravel Configuration</h2>
+
+        <pre>
+<span class="comment"># Navigate to the backend directory</span>
+cd lamat
+
+<span class="comment"># Generate app key</span>
+php artisan key:generate
+
+<span class="comment"># Edit .env with your settings</span>
+nano .env
+</pre>
+
+        <h3>Key .env Settings</h3>
+        <table>
+          <tr>
+            <th>Key</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><code>APP_URL</code></td>
+            <td>Yes</td>
+            <td>
+              Your backend's base URL (must match the domain users will access)
+            </td>
+          </tr>
+          <tr>
+            <td><code>DB_*</code></td>
+            <td>Yes</td>
+            <td>Database connection settings</td>
+          </tr>
+          <tr>
+            <td><code>PUSHER_*</code></td>
+            <td>Yes</td>
+            <td>Pusher credentials for real-time features</td>
+          </tr>
+          <tr>
+            <td><code>LICENSE_SERVER_URL</code></td>
+            <td>Yes</td>
+            <td>URL to the license server's <code>index.php</code></td>
+          </tr>
+          <tr>
+            <td><code>FCM_SERVER_KEY</code></td>
+            <td>Yes</td>
+            <td>Firebase Cloud Messaging server key</td>
+          </tr>
+          <tr>
+            <td><code>MAIL_*</code></td>
+            <td>Yes</td>
+            <td>SMTP settings for transactional emails</td>
+          </tr>
+          <tr>
+            <td><code>APP_DEBUG</code></td>
+            <td>Yes</td>
+            <td>Set to <code>false</code> in production</td>
+          </tr>
+        </table>
+
+        <h3>Storage Permissions</h3>
+        <pre>
+chmod -R 775 storage bootstrap/cache
+</pre
+        >
+
+        <h2 id="wizard">Installation Wizard</h2>
+        <p>
+          Access the wizard at
+          <code>https://your-domain.com/install</code> after uploading the
+          backend files. It runs in 5 steps and is locked after completion .
+        </p>
+        <img src="assets/img/step1.png" width="100%" />
+        <h3>Step 1 — Requirements</h3>
+        <div class="step-box">
+          <p>
+            The wizard checks PHP version, required extensions, file permissions
+            (<code>storage/</code>, <code>bootstrap/cache/</code>), and required
+            configuration values. All checks must pass.
+          </p>
+        </div>
+        <img src="assets/img/step2.png" width="100%" />
+        <h3>Step 2 — Purchase Verification</h3>
+        <div class="step-box">
+          <p>
+            Enter your Envato purchase code
+            (<code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>).
+          </p>
+          <p>
+            If <code>LICENSE_SERVER_URL</code> is configured, verification is
+            handled by the license server automatically. Otherwise, you'll be
+            asked for an Envato Personal Token.
+          </p>
+          <p>
+            On success, a <strong>30-minute download token</strong> is generated
+            and the database schema is downloaded from the license server.
+          </p>
+          <div class="alert alert-success">
+            Purchase data is encrypted at <code>storage/app/purchase.json</code>
+          </div>
+        </div>
+        <img src="assets/img/step3.png" width="100%" />
+        <h3>Step 3 — Database Setup</h3>
+        <div class="step-box">
+          <p>
+            Enter your database credentials and click
+            <strong>Test Connection</strong>.
+          </p>
+          <p>
+            If the schema was downloaded in Step 2, you'll see a green
+            confirmation. If not, click <strong>Retry Download</strong>. If the
+            token expired, click <strong>Refresh Token &amp; Retry</strong> to
+            get a new one.
+          </p>
+          <p>Click <strong>Import Database</strong> to execute the schema.</p>
+        </div>
+        <img src="assets/img/step4.png" width="100%" />
+        <h3>Step 4 — Admin Account</h3>
+        <div class="step-box">
+          <p>Create the super admin account:</p>
+          <ul>
+            <li><strong>Name</strong> — display name for the admin panel</li>
+            <li><strong>Email</strong> — login email</li>
+            <li>
+              <strong>Password</strong> — minimum 8 characters (bcrypt hashed)
+            </li>
+          </ul>
+        </div>
+        <img src="assets/img/step5.png" width="100%" />
+        <h3>Step 5 — Complete</h3>
+        <div class="step-box">
+          <p>The wizard locks itself so it can't be re-run.</p>
+          <p><strong>Post-install:</strong></p>
+          <ul>
+            <li>Delete <code>database/backup/database.sql</code></li>
+            <li>Verify the Flutter app can reach the API</li>
+            <li>Set <code>APP_DEBUG=false</code> in .env</li>
+          </ul>
+        </div>
+
+        <h2 id="flutter-local-dev">Local Flutter Development</h2>
+        <div class="alert alert-info">
+          <strong>Note:</strong> This section covers setting up a local
+          development environment for the Flutter app on your local machine
+          (Windows, macOS, or Linux).
+        </div>
+
+        <h3>Prerequisites</h3>
+        <ul>
+          <li>Flutter SDK 3.27+ (<code>flutter doctor</code> should pass)</li>
+          <li>Dart SDK (included with Flutter)</li>
+          <li>IDE: VS Code, Android Studio, or IntelliJ IDEA</li>
+          <li>For Android development: Android Studio with Android SDK</li>
+          <li>For iOS development: Xcode (macOS only)</li>
+          <li>For web development: Chrome browser</li>
+        </ul>
+
+        <h3>Windows Setup</h3>
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Install Flutter SDK</h4>
+          <p>
+            Download Flutter SDK from
+            <a href="https://docs.flutter.dev/get-started/install/windows"
+              >Flutter documentation</a
+            >. Extract to a location like <code>C:\flutter</code>.
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Add Flutter to PATH</h4>
+          <p>
+            Add <code>C:\flutter\bin</code> to your system PATH environment
+            variable.
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Install Android Studio</h4>
+          <p>
+            Download and install Android Studio from
+            <a href="https://developer.android.com/studio"
+              >developer.android.com/studio</a
+            >. Install Android SDK and Android SDK Platform-Tools.
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Install VS Code (Optional)</h4>
+          <p>Download VS Code and install the Flutter and Dart extensions.</p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">5</span>
+          <h4>Run Flutter Doctor</h4>
+          <pre>
+flutter doctor
+</pre
+          >
+          <p>
+            Follow the instructions to fix any issues. All items should show
+            checkmarks for optimal development.
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">6</span>
+          <h4>Clone the Flutter Project</h4>
+          <pre>
+cd D:\projects
+git clone [your-repository-url] flutter-app
+cd flutter-app
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">7</span>
+          <h4>Install Dependencies</h4>
+          <pre>
+flutter pub get
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">8</span>
+          <h4>Run the App</h4>
+          <p>For development on different platforms:</p>
+          <pre>
+# Web development
+flutter run -d chrome
+
+# Android development (ensure device/emulator connected)
+flutter run -d android
+
+# Check available devices
+flutter devices
+</pre
+          >
+        </div>
+
+        <h3>macOS Setup</h3>
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Install Flutter SDK</h4>
+          <pre>
+brew install flutter
+</pre
+          >
+          <p>
+            Or download from
+            <a href="https://docs.flutter.dev/get-started/install/macos"
+              >Flutter documentation</a
+            >.
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Install Xcode (for iOS development)</h4>
+          <pre>
+brew install xcode
+</pre
+          >
+          <p>
+            Or install from the Mac App Store. Open Xcode and accept the license
+            agreement.
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Install Android Studio (for Android development)</h4>
+          <pre>
+brew install --cask android-studio
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Install VS Code</h4>
+          <pre>
+brew install --cask visual-studio-code
+</pre
+          >
+          <p>Install Flutter and Dart extensions in VS Code.</p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">5</span>
+          <h4>Setup and Run</h4>
+          <pre>
+flutter doctor
+cd ~/projects/flutter-app
+flutter pub get
+flutter run -d macos        # macOS desktop
+flutter run -d ios          # iOS simulator
+flutter run -d chrome       # Web
+</pre
+          >
+        </div>
+
+        <h3>Linux Setup</h3>
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Install Flutter SDK</h4>
+          <pre>
+sudo apt update
+sudo apt install git unzip xz-utils zip libglu1-mesa
+cd /opt
+wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.0-stable.tar.xz
+tar xf flutter_linux_3.27.0-stable.tar.xz
+export PATH="$PATH:/opt/flutter/bin"
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Install Android Studio</h4>
+          <pre>
+sudo apt install android-studio
+</pre
+          >
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Install VS Code</h4>
+          <pre>
+sudo apt install code
+</pre
+          >
+          <p>Install Flutter and Dart extensions in VS Code.</p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Setup and Run</h4>
+          <pre>
+flutter doctor
+cd ~/projects/flutter-app
+flutter pub get
+flutter run -d linux        # Linux desktop
+flutter run -d chrome       # Web
+flutter run -d android      # Android device/emulator
+</pre
+          >
+        </div>
+
+        <h3>Development Tips</h3>
+        <ul>
+          <li>
+            Use <code>flutter devices</code> to list available development
+            targets
+          </li>
+          <li>
+            Use <code>flutter run -d [device-id]</code> to run on specific
+            device
+          </li>
+          <li>
+            Use <code>flutter hot-reload</code> for quick UI updates (press 'r'
+            in terminal)
+          </li>
+          <li>
+            Use <code>flutter hot-restart</code> for full restart (press 'R' in
+            terminal)
+          </li>
+          <li>
+            Use <code>flutter clean</code> to clean build cache when facing
+            issues
+          </li>
+          <li>Use <code>flutter pub upgrade</code> to update dependencies</li>
+          <li>
+            Enable Dart DevTools for debugging:
+            <code>flutter pub global activate devtools</code>
+          </li>
+          <li>Use <code>flutter analyze</code> to check code for issues</li>
+          <li>Test on multiple screen sizes using device emulator</li>
+        </ul>
+
+        <h3>VS Code Extensions Recommended</h3>
+        <ul>
+          <li>Flutter (official Flutter extension)</li>
+          <li>Dart (official Dart extension)</li>
+          <li>Flutter Widget Snippets (widget code snippets)</li>
+          <li>Awesome Flutter Snippets (additional snippets)</li>
+          <li>Bracket Pair Colorizer (code readability)</li>
+          <li>Error Lens (inline error display)</li>
+        </ul>
+
+        <h3>Debugging Tools</h3>
+        <ul>
+          <li>
+            <strong>Flutter DevTools:</strong> Performance profiling, memory
+            analysis, network inspection
+          </li>
+          <li>
+            <strong>Android Studio Debugger:</strong> Full-featured debugging
+            for Android
+          </li>
+          <li>
+            <strong>VS Code Debugger:</strong> Lightweight debugging with
+            breakpoints
+          </li>
+          <li>
+            <strong>Flutter Inspector:</strong> Widget tree inspection and
+            property modification
+          </li>
+        </ul>
+
+        <div class="alert alert-warning">
+          <strong>Platform-Specific Notes:</strong>
+          <ul>
+            <li>
+              <strong>iOS:</strong> Requires macOS and Xcode. Cannot develop iOS
+              apps on Windows or Linux.
+            </li>
+            <li>
+              <strong>Android:</strong> Requires Android SDK. Emulator setup can
+              be resource-intensive.
+            </li>
+            <li>
+              <strong>Web:</strong> Works on all platforms but has some platform
+              limitations.
+            </li>
+            <li>
+              <strong>Desktop:</strong> Linux, Windows, and macOS desktop apps
+              are supported.
+            </li>
+          </ul>
+        </div>
+
+        <h2 id="flutter-setup">Flutter App Setup</h2>
+
+        <h3>Prerequisites</h3>
+        <ul>
+          <li>Flutter SDK 3.27+ (<code>flutter doctor</code> should pass)</li>
+          .
+          <a href="https://docs.flutter.dev/install">Flutter installation</a>
+          <li>VS CODE, Android Studio or Xcode</li>
+          <li>A Firebase project with Android + iOS apps registered</li>
+          in
+          <a href="console.firebase.google.com">Firebase console</a>
+        </ul>
+
+        <h3>Step 1: Configure Constants</h3>
+        <p>Edit <code>lib/constants.dart</code>:</p>
+        <table>
+          <tr>
+            <th>Line</th>
+            <th>Constant</th>
+            <th>Your Value</th>
+          </tr>
+          <tr>
+            <td>~20</td>
+            <td><code>homeUrl</code></td>
+            <td><code>https://yourdomain.com</code></td>
+          </tr>
+          <tr>
+            <td>~32</td>
+            <td><code>isDemo</code></td>
+            <td><code>false</code></td>
+          </tr>
+        </table>
+
+        <h3>Step 2: Create a Firebase Project</h3>
+        <p>
+          To enable features like authentication, analytics, or remote config in
+          your app, you'll need to create a Firebase project and link both your
+          Android and iOS apps to it.
+        </p>
+
+        <h4>Steps to get started</h4>
+        <ol>
+          <li>
+            <strong>Go to the Firebase Console</strong><br />
+            Visit
+            <a href="https://console.firebase.google.com" target="_blank"
+              >https://console.firebase.google.com</a
+            >
+            and sign in with your Google account.
+          </li>
+          <img src="assets/img/firebase-create-project.png" width="100%" />
+          <li>
+            <strong>Create a new project</strong><br />
+            Click "Add project" and follow the steps. Make sure to enable Google
+            Analytics.
+          </li>
+        </ol>
+
+        <h4>Add your Android app</h4>
+        <ol>
+          <img src="assets/img/firebase-choose-app.png" width="100%" />
+          <li>
+            In your new Firebase project, click "Add app" and choose the Android
+            icon.
+          </li>
+          <img
+            src="assets/img/firebase-android-package-name.png"
+            width="100%"
+          />
+          <li>
+            Enter your app's package name (e.g.
+            <code>com.example.myapp</code>) — this must match your actual
+            Android package.
+          </li>
+          <img
+            src="assets/img/firebase-android-google-services-file.png"
+            width="100%"
+          />
+          <li>
+            Download the <code>google-services.json</code> file and place it in:
+            <pre>androidApp/google-services.json</pre>
+            This will replace the placeholder file already in that location.
+          </li>
+        </ol>
+
+        <h4>Add your iOS app</h4>
+        <ol>
+          <li>
+            Still in the Firebase Console, click "Add app" and choose the iOS
+            icon.
+          </li>
+          <li>
+            Enter your iOS app's bundle ID (e.g.
+            <code>com.example.myapp</code>) — this must match exactly.
+          </li>
+          <li>
+            Download the <code>GoogleService-Info.plist</code> file and place it
+            in:
+            <pre>iosApp/iosApp/Firebase/GoogleService-Info.plist</pre>
+            This will replace the placeholder file already included in the
+            project.
+          </li>
+        </ol>
+
+        <h3>Step 3: Connect Firebase to Flutter App</h3>
+        <img src="assets/img/firebase-connect-flutter.png" width="100%" />
+        <p>
+          After creating your Firebase project and registering your apps, you
+          need to connect them to your Flutter project using the FlutterFire
+          CLI. This generates the <code>firebase_options.dart</code> file and
+          handles all native configuration files.
+        </p>
+
+        <h4>1. Install Firebase CLI & FlutterFire CLI</h4>
+        <pre>
+# Install Firebase CLI (if not already installed)
+npm install -g firebase-tools
+
+# Log in to Firebase
+firebase login
+
+# Install FlutterFire CLI
+dart pub global activate flutterfire_cli
+</pre
+        >
+
+        <h4>2. Run <code>flutterfire configure</code></h4>
+        <p>
+          From your Flutter project root, run the following command. It
+          registers your apps, downloads the native config files, and generates
+          <code>lib/firebase_options.dart</code>.
+        </p>
+        <pre>
+flutterfire configure
+</pre
+        >
+        <p>This interactive command will:</p>
+        <ul>
+          <li>Prompt you to select a Firebase project from your console.</li>
+          <li>Detect your platforms (Android, iOS, Web) from the project.</li>
+          <li>
+            Match or create Firebase apps for each platform based on your
+            package/bundle IDs.
+          </li>
+          <li>
+            Download <code>google-services.json</code> to
+            <code>android/app/</code>.
+          </li>
+          <li>
+            Download <code>GoogleService-Info.plist</code> to
+            <code>ios/Runner/</code>.
+          </li>
+          <li>
+            Generate <code>lib/firebase_options.dart</code> with the
+            <code>DefaultFirebaseOptions</code> class.
+          </li>
+          <li>
+            Create or update a <code>firebase.json</code> in your project root
+            to track the configuration.
+          </li>
+        </ul>
+
+        <h4>3. The <code>firebase.json</code> file</h4>
+        <img src="assets/img/firebase-json.png" width="100%" />
+        <p>
+          The <code>firebase.json</code> file is created in your project root
+          and tracks where each platform's native service files are placed. It
+          is used by <code>flutterfire reconfigure</code> to rewrite service
+          files in place when you add new Firebase products or platforms.
+        </p>
+        <pre>
+{
+  "flutterfire": {
+    "platforms": ["android", "ios", "web"],
+    "android": {
+      "out": "android/app/google-services.json"
+    },
+    "ios": {
+      "out": "ios/Runner/GoogleService-Info.plist"
+    }
+  }
+}
+</pre
+        >
+        <p>
+          Commit this file to your repository. It ensures that subsequent
+          <code>flutterfire reconfigure</code> calls know where to place
+          platform config files without re-prompting.
+        </p>
+
+        <h4>4. The <code>firebase_options.dart</code> file</h4>
+        <img src="assets/img/firebase-options.png" width="100%" />
+        <p>
+          This auto-generated file in <code>lib/</code> exports a
+          <code>DefaultFirebaseOptions</code> class with a static getter
+          <code>currentPlatform</code> that returns the correct
+          <code>FirebaseOptions</code> for the current build target:
+        </p>
+        <pre>
+// Generated by FlutterFire CLI.
+// lib/firebase_options.dart
+
+import 'package:firebase_core/firebase_core.dart'
+    show FirebaseOptions;
+
+class DefaultFirebaseOptions {
+  static FirebaseOptions get currentPlatform {
+    // Returns the correct options based on Platform.isXxx
+  }
+
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: '...',
+    appId: '...',
+    messagingSenderId: '...',
+    projectId: '...',
+    storageBucket: '...',
+  );
+
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: '...',
+    appId: '...',
+    messagingSenderId: '...',
+    projectId: '...',
+    storageBucket: '...',
+    iosBundleId: '...',
+  );
+
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: '...',
+    appId: '...',
+    messagingSenderId: '...',
+    projectId: '...',
+    authDomain: '...',
+    storageBucket: '...',
+    measurementId: '...',
+  );
+}
+</pre
+        >
+        <p>
+          The values are non-secret identifiers for your Firebase project. Do
+          <strong>not</strong> edit this file manually — run
+          <code>flutterfire configure</code> again if you need to update it
+          (e.g. after adding a new platform or switching projects).
+        </p>
+
+        <h4>5. (Optional) Reconfigure after adding products</h4>
+        <p>
+          If you enable new Firebase services (e.g. Crashlytics, Analytics,
+          Realtime Database), run the reconfigure command to update all native
+          config files without re-prompting:
+        </p>
+        <pre>
+flutterfire reconfigure
+</pre
+        >
+
+        <div class="alert alert-info">
+          <strong>Note:</strong> Each time you add a new platform or enable a
+          new Firebase product, run <code>flutterfire configure</code> or
+          <code>flutterfire reconfigure</code> to keep the native config files
+          and <code>firebase_options.dart</code> in sync.
+        </div>
+
+        <h3>Step 4: Dependencies</h3>
+        <pre>
+flutter pub get
+</pre
+        >
+
+        <h3>Step 5: Generate Routes</h3>
+        <p>
+          The app uses <code>auto_route</code>. After modifying
+          <code>lib/routes.dart</code>:
+        </p>
+        <pre>
+flutter pub run build_runner build --delete-conflicting-outputs
+</pre
+        >
+
+        <div class="alert alert-info">
+          Generated files: <code>lib/routes.gr.dart</code> (~5k lines) and
+          <code>lib/generated/locale_keys.g.dart</code>. These are committed to
+          the repo; regenerate after route changes.
+        </div>
+
+        <h3>Step 6: Google Location / Geocoding / Maps</h3>
+        <p>
+          To use Google Maps, Places, and Geocoding APIs in your Flutter app,
+          you need a Google Cloud project with the relevant APIs enabled and a
+          restricted API key per platform. Below is the complete setup as of
+          2026.
+        </p>
+
+        <h4>1. Enable the required APIs</h4>
+        <img src="assets/img/google-maps-apis.png" width="100%" />
+        <p>
+          Go to the
+          <a
+            href="https://console.cloud.google.com/apis/library"
+            target="_blank"
+            >Google Cloud Console → APIs &amp; Services → Library</a
+          >
+          and enable the following APIs for your project:
+        </p>
+        <ul>
+          <li>
+            <strong>Maps SDK for Android</strong> — native maps on Android
+          </li>
+          <li><strong>Maps SDK for iOS</strong> — native maps on iOS</li>
+          <li><strong>Maps JavaScript API</strong> — maps on Flutter Web</li>
+          <li>
+            <strong>Places API (New)</strong> — place search, autocomplete, and
+            details
+          </li>
+          <li>
+            <strong>Geocoding API</strong> — convert coordinates to addresses
+            and vice versa
+          </li>
+          <li>
+            <strong>Directions API</strong> — (optional) route calculations
+          </li>
+        </ul>
+
+        <h4>2. Create &amp; restrict API keys</h4>
+        <img src="assets/img/google-api-credential.png" width="100%" />
+        <p>
+          Create an API key in
+          <a
+            href="https://console.cloud.google.com/apis/credentials"
+            target="_blank"
+            >Credentials</a
+          >. For security, create <strong>separate keys</strong> for each
+          platform and apply both application and API restrictions.
+        </p>
+
+        <h5>Android API key</h5>
+        <ul>
+          <li>
+            <strong>Application restriction:</strong> Android apps → enter your
+            package name (e.g. <code>com.lamat.app</code>) and the SHA-1
+            certificate fingerprint.
+          </li>
+          <li>
+            <strong>API restriction:</strong> Restrict to
+            <em>Maps SDK for Android</em>, <em>Places API (New)</em>, and
+            <em>Geocoding API</em>.
+          </li>
+        </ul>
+
+        <h5>iOS API key</h5>
+        <ul>
+          <li>
+            <strong>Application restriction:</strong> iOS apps → enter your
+            bundle ID (e.g. <code>com.lamat.app</code>).
+          </li>
+          <li>
+            <strong>API restriction:</strong> Restrict to
+            <em>Maps SDK for iOS</em>, <em>Places API (New)</em>, and
+            <em>Geocoding API</em>.
+          </li>
+        </ul>
+
+        <h5>Web API key</h5>
+        <ul>
+          <li>
+            <strong>Application restriction:</strong> HTTP referrers → add your
+            domain(s), e.g. <code>https://yourdomain.com/*</code> and
+            <code>http://localhost:*</code> for development.
+          </li>
+          <li>
+            <strong>API restriction:</strong> Restrict to
+            <em>Maps JavaScript API</em>, <em>Places API (New)</em>, and
+            <em>Geocoding API</em>.
+          </li>
+        </ul>
+
+        <h4>3. Configure Android</h4>
+        <p>
+          Add the API key to
+          <code>android/app/src/main/AndroidManifest.xml</code> inside the
+          <code>&lt;application&gt;</code> tag:
+        </p>
+        <pre>
+&lt;meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="YOUR_ANDROID_API_KEY" /&gt;
+</pre
+        >
+        <p>
+          For production, use the Secrets Gradle Plugin to keep the key out of
+          version control:
+        </p>
+        <pre>
+# 1. In root build.gradle (buildscript > dependencies):
+classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
+
+# 2. In app build.gradle (plugins):
+id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+
+# 3. In local.properties (do NOT commit):
+MAPS_API_KEY=YOUR_ANDROID_API_KEY
+
+# 4. Reference in AndroidManifest.xml:
+# android:value="${MAPS_API_KEY}"
+</pre
+        >
+        <p>Ensure <code>minSdkVersion</code> is at least 21.</p>
+
+        <h4>4. Configure iOS</h4>
+        <p>
+          Add the API key (replace YOUR_IOS_API_KEY) to
+          <code>ios/Runner/AppDelegate.swift</code> (or
+          <code>AppDelegate.m</code>):
+        </p>
+        <pre>
+import GoogleMaps
+
+@main
+class AppDelegate: FlutterAppDelegate {
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    GMSServices.provideAPIKey("YOUR_IOS_API_KEY")
+    GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+}
+</pre
+        >
+
+        <h4>5. Configure Web</h4>
+        <p>
+          Replace YOUR_WEB_API_KEY for the Maps JavaScript API loader in
+          <code>web/index.html</code> inside the <code>&lt;head&gt;</code> tag:
+        </p>
+        <pre>
+&lt;script src="https://maps.googleapis.com/maps/api/js?key=YOUR_WEB_API_KEY"&gt;&lt;/script&gt;
+</pre
+        >
+
+        <h4>6. Flutter packages</h4>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Package</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>google_maps_flutter</code></td>
+              <td>Embed interactive maps in your app (Android, iOS, Web)</td>
+            </tr>
+            <tr>
+              <td><code>geocoding</code></td>
+              <td>
+                Convert addresses ↔ coordinates (forward &amp; reverse
+                geocoding)
+              </td>
+            </tr>
+            <tr>
+              <td><code>geolocator</code></td>
+              <td>Get the user's current location</td>
+            </tr>
+            <tr>
+              <td>
+                <code>google_places_flutter</code> or
+                <code>places_flutter</code>
+              </td>
+              <td>Place autocomplete, search, and details UI</td>
+            </tr>
+            <tr>
+              <td><code>http</code></td>
+              <td>Direct REST calls to Geocoding / Places / Directions APIs</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="alert alert-info">
+          <strong>Best practices:</strong> Use separate API keys per platform
+          with strict application + API restrictions. Never commit keys to
+          version control. Set billing alerts and quota caps in the Google Cloud
+          Console to avoid unexpected charges.
+        </div>
+
+        <h2 id="flutter-build">Building the App</h2>
+
+        <h3>Web</h3>
+        <pre>
+<span class="comment"># Development</span>
+flutter run -d chrome --web-port=8080
+
+<span class="comment"># Production</span>
+flutter build web --web-renderer canvaskit --release
+
+<span class="comment"># Deploy to server</span>
+cp -r build/web/* /var/www/html/lamat/public/
+</pre>
+
+        <h3>Android</h3>
+        <pre>
+flutter build apk --release
+flutter build appbundle --release    <span class="comment"># Play Store</span>
+</pre>
+
+        <h3>iOS</h3>
+        <pre>
+flutter build ios --release
+open ios/Runner.xcworkspace          <span class="comment"># Archive in Xcode</span>
+</pre>
+
+        <h2 id="user-signup">User Sign Up Walkthrough</h2>
+        <div class="alert alert-info">
+          <strong>NOTE:</strong> By this time the app should be connecting to
+          backend.
+        </div>
+        <div class="step-box">
+          <p>
+            After running
+            <code>Flutter run</code> or <code>Flutter build</code> commands you
+            will open the app for testing.
+          </p>
+        </div>
+        <br />
+        <img src="assets/img/fluid_onboarding.png" width="100%" />
+
+        <h3>Step 1</h3>
+        <div class="step-box">
+          <p>The User will pick their app language. And continue</p>
+        </div>
+        <h3>Step 2</h3>
+        <div class="step-box">
+          <p>
+            The User will pick their preffered login/register method and verify
+            with OTP
+          </p>
+        </div>
+        <h3>Step 3</h3>
+        <div class="step-box">
+          <p>
+            New users will be sent to user on-boarding screen to set their basic
+            details like Full names, Profile picture, email, username, gender,
+            d.o.b, profiles filter, location and profile images.
+          </p>
+        </div>
+        <h3>Step 4</h3>
+        <div class="step-box">
+          <p>Finally user will be asked set a new password.</p>
+        </div>
+        <img src="assets/img/profile_edit.png" width="100%" />
+        <h3>Step 5</h3>
+        <div class="step-box">
+          <p>
+            After on-boarding the user will be sent to the home screen and an
+            optional complete profile window will be shown for user to set other
+            optional profile details.
+          </p>
+          <ol>
+            <li>This tab is profile editing tab</li>
+            <li>
+              This tab is your profile preview how others see your profile
+            </li>
+            <li>Scroll down to see more profile details options</li>
+          </ol>
+        </div>
+
+        <h2 id="matching-process">Matching Process Walkthrough</h2>
+        <div class="alert alert-info">
+          <strong>NOTE:</strong> By this time the app should have a few users
+          matching the other users filters and within range.
+        </div>
+        <div class="step-box">
+          <p>
+            After user has finished profile setup they can then start swiping
+            left/right on user cards. Swipe Right to like a user and Swipe Left
+            to dislike and pass.
+          </p>
+        </div>
+        <br />
+        <img src="assets/img/swiping_screen.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Like User/Swipe Right</h4>
+          <p>
+            This button is for liking the current profile. It's the same as a
+            Swipe Right
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Dislike User/Swipe Left</h4>
+          <p>
+            This button is for disliking and skipping the current profile. It's
+            the same as a Swipe Left
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Super Like User/Swipe Up</h4>
+          <p>
+            This button is for super liking and the current profile. It's the
+            same as a Swipe Up
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Rewind User</h4>
+          <p>
+            This button is for rewinding to previous profile. It requires a
+            pro/premium membership.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">5</span>
+          <h4>Request Chat with User</h4>
+          <p>
+            This button is for sending and request chat before swipe. It
+            requires the setting to be turned on in admin panel.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">6</span>
+          <h4>Open Detailed User Profile</h4>
+          <p>This button will open the users detailed profile page.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">7</span>
+          <h4>User Profile Details</h4>
+          <p>
+            Here user will see profile details like name, city, age, and
+            distance away.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">8</span>
+          <h4>User Profile Filters</h4>
+          <p>
+            This button will open the filters screen for the user to adjust
+            their matching preferences.
+          </p>
+        </div>
+        <img src="assets/img/match_screen.png" width="100%" />
+        <div class="alert alert-info">
+          <strong>MATCH:</strong> When a user swipes right on a user that has
+          also swiped right on them the match screen will open.
+        </div>
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Text Message</h4>
+          <p>The user can then start a chat with text message</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Emoji Message</h4>
+          <p>Or they can send an emoji message picking from list.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Media Message</h4>
+          <p>Or the user can send an image, sticker, gift, audio message.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Media Message</h4>
+          <p>
+            This button will open the filters screen for the user to adjust
+            their matching preferences.
+          </p>
+        </div>
+
+        <h2 id="branding-app">Branding the App</h2>
+
+        <p>
+          Customize your app's identity — icon, splash screen, name, package,
+          and version — using the latest tools available in 2026.
+        </p>
+
+        <h3>App Icon (all platforms)</h3>
+
+        <h4>1. Add the package</h4>
+        <pre>
+flutter pub add -d flutter_launcher_icons
+</pre
+        >
+
+        <h4>2. Generate a config file (auto)</h4>
+        <pre>
+dart run flutter_launcher_icons:generate
+</pre
+        >
+        <p>
+          This creates a <code>flutter_launcher_icons.yaml</code> in your
+          project root.
+        </p>
+
+        <h4>3. Edit the config</h4>
+        <pre>
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/app_icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "assets/icon/app_icon.png"
+    background_color: "#FFFFFF"
+    theme_color: "#0175C2"
+  windows:
+    generate: true
+    image_path: "assets/icon/app_icon.png"
+    icon_size: 48
+  macos:
+    generate: true
+    image_path: "assets/icon/app_icon.png"
+</pre
+        >
+        <p>
+          Use a high-resolution source image (at least 1024×1024 px, square,
+          PNG). For Android adaptive icons, add:
+        </p>
+        <pre>
+  android_adaptive_icon_foreground: "assets/icon/adaptive_foreground.png"
+  android_adaptive_icon_background: "assets/icon/adaptive_background.png"
+</pre
+        >
+
+        <h4>4. Generate icons</h4>
+        <pre>
+flutter pub get
+dart run flutter_launcher_icons
+</pre
+        >
+        <p>
+          This generates all required sizes into
+          <code>android/app/src/main/res/mipmap-*/</code>,
+          <code>ios/Runner/Assets.xcassets/AppIcon.appiconset/</code>,
+          <code>web/icons/</code>, and the respective Windows/macOS asset
+          catalogs.
+        </p>
+
+        <h3>Splash Screen</h3>
+
+        <h4>1. Add the package</h4>
+        <pre>
+flutter pub add flutter_native_splash
+</pre
+        >
+
+        <h4>2. Configure</h4>
+        <p>
+          Edit in your <code>pubspec.yaml</code> or create
+          <code>flutter_native_splash.yaml</code>:
+        </p>
+        <pre>
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/splash/splash.png
+  branding: assets/splash/branding.png
+  color_dark: "#121212"
+  image_dark: assets/splash/splash_dark.png
+  branding_dark: assets/splash/branding_dark.png
+
+  android_12:
+    image: assets/splash/splash_android12.png
+    icon_background_color: "#FFFFFF"
+    image_dark: assets/splash/splash_android12_dark.png
+    icon_background_color_dark: "#121212"
+
+  android: true
+  ios: true
+  web: true
+
+  fullscreen: true
+</pre
+        >
+
+        <h4>3. Generate splash assets</h4>
+        <pre>
+dart run flutter_native_splash:create
+</pre
+        >
+
+        <h4>4. (Optional) Keep splash during initialization</h4>
+        <pre>
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  runApp(const MyApp());
+}
+
+// Later, when initialization is complete:
+FlutterNativeSplash.remove();
+</pre
+        >
+
+        <h4>5. Rebuild</h4>
+        <pre>
+flutter clean
+flutter run
+</pre
+        >
+
+        <h3>Web Favicon & App Icons</h3>
+        <p>
+          If you use <code>flutter_launcher_icons</code> with
+          <code>web.generate: true</code>, favicons and manifest icons are
+          generated automatically. To manually replace them:
+        </p>
+        <pre>
+web/
+  favicon.png     → 32×32 px
+  icons/
+    Icon-192.png  → 192×192 px
+    Icon-512.png  → 512×512 px
+</pre
+        >
+        <p>
+          Update <code>web/manifest.json</code> with the correct icon paths and
+          theme color.
+        </p>
+
+        <h3>App Name / Label</h3>
+        <p>
+          Use the <code>rename_app</code> package to update the display name
+          across all platforms at once:
+        </p>
+        <pre>
+flutter pub add -d rename_app
+dart run rename_app:main all="Your App Name"
+</pre
+        >
+        <p>
+          Or set per-platform names and define defaults in
+          <code>pubspec.yaml</code>:
+        </p>
+        <pre>
+config_name:
+  name: "My App"
+
+# Then run with no arguments:
+dart run rename_app:main
+</pre
+        >
+        <p>Per-platform overrides:</p>
+        <pre>
+dart run rename_app:main android="Android Name" ios="iOS Name" others="Other Name"
+</pre
+        >
+
+        <h3>Package Name (Bundle ID / Application ID)</h3>
+        <p>
+          Change the Android <code>applicationId</code> and iOS
+          <code>PRODUCT_BUNDLE_IDENTIFIER</code> with a single command using
+          <code>change_package_name</code>:
+        </p>
+        <pre>
+flutter pub add -d change_package_name
+dart run change_package_name:main com.lamat.app
+</pre
+        >
+        <p>
+          This updates <code>AndroidManifest.xml</code>,
+          <code>build.gradle</code>, <code>MainActivity</code> directory
+          structure, and iOS <code>project.pbxproj</code> /
+          <code>Info.plist</code>.
+        </p>
+        <p>Platform-specific:</p>
+        <pre>
+# Android only
+dart run change_package_name:main com.lamat.app --android
+
+# iOS only
+dart run change_package_name:main com.lamat.app --ios
+</pre
+        >
+
+        <h3>App Version & Build Number</h3>
+        <p>
+          The canonical source is <code>pubspec.yaml</code> under the
+          <code>version</code> field using the format
+          <code>version_name+version_code</code>:
+        </p>
+        <pre>
+version: 1.0.0+1
+#         ^     ^
+#         |     build number (Android versionCode / iOS CFBundleVersion)
+#         version name (Android versionName / iOS CFBundleShortVersionString)
+</pre
+        >
+        <p>
+          Increment the build number for each release. You can also override
+          during build:
+        </p>
+        <pre>
+flutter build apk --build-name=1.0.0 --build-number=2
+flutter build ipa --build-name=1.0.0 --build-number=2
+</pre
+        >
+        <p>
+          For Android, the version is written to
+          <code>android/app/build.gradle</code>. For iOS, it is written to
+          <code>ios/Runner/Info.plist</code> and
+          <code>ios/Runner.xcodeproj/project.pbxproj</code> during the build.
+        </p>
+
+        <h2 id="color-scheme">Coloring the App (Color Schemes)</h2>
+        <div class="alert alert-info">
+          <strong>NOTE:</strong> Your admin panel must be already installed for
+          this section.
+        </div>
+        <div class="step-box">
+          <p>
+            Open your admin panel at
+            <code>https://yourdomain.com/admin</code>, and login if not already
+          </p>
+        </div>
+        <br />
+        <img src="assets/img/admin-mobile-app-theming.png" width="100%" />
+        <h3>Step 1</h3>
+        <div class="step-box">
+          <p>
+            On left side panel scroll down to Settings and Expand Settings Tab
+            and select
+            <code>Mobile App Colors</code>
+          </p>
+        </div>
+        <h3>Step 2</h3>
+        <div class="step-box">
+          <p>Click on color widget and a color picker will open.</p>
+        </div>
+        <h3>Step 3</h3>
+        <div class="step-box">
+          <p>
+            Move color picker dot and adjust to desired color. Or set by hex
+            code. Do this for all colors you want to change.
+          </p>
+        </div>
+        <h3>Step 4</h3>
+        <div class="step-box">
+          <p>Finally click SAVE button to save all your changes.</p>
+        </div>
+
+        <h2 id="admin-basic-usage">Basic Admin Panel Usage</h2>
+
+        <h3>Dashboard and Stats</h3>
+        <img src="assets/img/admin-dashboard.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Daily Stats</h4>
+          <p>Stats here update instantly on page reload</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Blogs</h4>
+          <p>Read blogs and news about announcements.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Graphs</h4>
+          <p>Sales and transactions graphs.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Side Bar Navigator</h4>
+          <p>Here you can scroll to show more tabs.</p>
+        </div>
+        <h3>Navigating Admin</h3>
+        <img src="assets/img/admin-navigating.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Navigation Panel</h4>
+          <p>Use this panel to scroll up/down to jump to desired page.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Content Panel</h4>
+          <p>Here is the page content and lists.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Top Navigation Bar</h4>
+          <p>Use the mini widget to search, sign out or view notifications.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Admin Themer</h4>
+          <p>
+            This button open the Admin Themer panel to change colors and style
+            of the admin panel.
+          </p>
+        </div>
+        <h2 id="content-management">Content Management</h2>
+        <h3>App Translations</h3>
+        <img src="assets/img/admin-translations.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Languages</h4>
+          <p>Find Languages on sidebar navigation panel</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Language picker</h4>
+          <p>Pick the language you want to edit.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Language String Key</h4>
+          <p>Only change keys if you know what you're doing</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Language String</h4>
+          <p>Write the String for the language key.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">5</span>
+          <h4>Save</h4>
+          <p>Save your changes after making adjustments.</p>
+        </div>
+        <h3>Add New Translation</h3>
+        <img src="assets/img/admin-add-translation.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Languages</h4>
+          <p>Find Languages on sidebar navigation panel</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Add Language Button</h4>
+          <p>Click this button if you want to add a new language.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Export Language</h4>
+          <p>First Export the English language file</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Import Language</h4>
+          <p>
+            Then in the new language you just add import the default English
+            language file.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">5</span>
+          <h4>Language String</h4>
+          <p>
+            Translate the English string to the desired language. Do this for
+            all the strings in the file.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">6</span>
+          <h4>Save</h4>
+          <p>Finally save your new language file translations.</p>
+        </div>
+        <h3>Admob Setup</h3>
+        <img src="assets/img/admin-admob.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Admob Setup</h4>
+          <p>
+            Scroll down on the sidebar navigation panel, expand Settings menu
+            and keep scrolling down until you see Admob and click on it.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Status Switch</h4>
+          <p>Turn admob on or off.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Admob keys</h4>
+          <p>Add your admob ads keys here.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Save</h4>
+          <p>Save changes before leaving page.</p>
+        </div>
+        <h3>Revenue Cart Configuration</h3>
+        <img src="assets/img/admin-revenuecart.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Sidebar panel</h4>
+          <p>Scroll to Revenue cart under Settings in the sidebar panel.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Switch Button</h4>
+          <p>Turn RevenueCat on/off</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3-5</span>
+          <h4>Api Keys & ids</h4>
+          <p>Here paste your revenucat keys and the entitlement id.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">6</span>
+          <h4>Save</h4>
+          <p>Save your changes before leaving page.</p>
+        </div>
+        <h3>Users Management</h3>
+        <img src="assets/img/admin-users.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Sidebar Panel</h4>
+          <p>Scroll sidebar panel to find Users Management</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Actions</h4>
+          <p>Perfom actions on a user like edit or delete.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>New User Button</h4>
+          <p>This button will show the new user creation panel.</p>
+        </div>
+        <h3>Medias Management</h3>
+        <img src="assets/img/admin-content-management.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Sidebar Panel</h4>
+          <p>Find the desired media you want to manage in the sidebar panel.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Actions</h4>
+          <p>Perfom actions on an item like view, edit or delete.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>New Item Button</h4>
+          <p>This button will show the new item creation panel.</p>
+        </div>
+        <h3>Theme Manager (Landing Pages)</h3>
+        <img src="assets/img/admin-theme.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Sidebar Panel</h4>
+          <p>Scroll to find the Theme Manager in the sidebar panel.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Actions</h4>
+          <p>Perfom actions on a theme like preview, editor or delete.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Save</h4>
+          <p>Save the changes before leaving the page.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>New Theme Button</h4>
+          <p>This button will show the new theme creation panel.</p>
+        </div>
+
+        <h3>Push Notifications</h3>
+        <img src="assets/img/admin-push.png" width="100%" />
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Sidebar Panel</h4>
+          <p>Scroll to find the Push Notifications in the sidebar panel.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Type Picker</h4>
+          <p>Choose either Marketing or Real Messages</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Broadcast Type</h4>
+          <p>
+            Choose to either broadcast the push notification to all users or a
+            specific user.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Content</h4>
+          <p>
+            Fill in the title and the body of the push notification. The body
+            does not support html. It support image links though. So you can
+            paste an ad image here. Then press the SEND Button.
+          </p>
+        </div>
+
+        <h2 id="config-ref">Configuration Reference</h2>
+
+        <h3>Laravel .env</h3>
+        <table>
+          <tr>
+            <th>Key</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><code>APP_URL</code></td>
+            <td><code>https://example.com</code></td>
+            <td>Backend base URL — used by CORS, Sanctum, and deep links</td>
+          </tr>
+          <tr>
+            <td><code>APP_DEBUG</code></td>
+            <td><code>false</code></td>
+            <td>Must be <code>false</code> in production</td>
+          </tr>
+          <tr>
+            <td><code>DB_CONNECTION</code></td>
+            <td><code>mysql</code></td>
+            <td>Database driver</td>
+          </tr>
+          <tr>
+            <td><code>DB_HOST</code></td>
+            <td><code>127.0.0.1</code></td>
+            <td>Database host</td>
+          </tr>
+          <tr>
+            <td><code>DB_PORT</code></td>
+            <td><code>3306</code></td>
+            <td>Database port</td>
+          </tr>
+          <tr>
+            <td><code>DB_DATABASE</code></td>
+            <td><code>lamat</code></td>
+            <td>Database name</td>
+          </tr>
+          <tr>
+            <td><code>DB_USERNAME</code></td>
+            <td><code>root</code></td>
+            <td>Database user</td>
+          </tr>
+          <tr>
+            <td><code>DB_PASSWORD</code></td>
+            <td></td>
+            <td>Database password</td>
+          </tr>
+          <tr>
+            <td><code>BROADCAST_DRIVER</code></td>
+            <td><code>pusher</code></td>
+            <td>Broadcasting driver</td>
+          </tr>
+          <tr>
+            <td><code>PUSHER_APP_ID</code></td>
+            <td></td>
+            <td>Pusher app ID</td>
+          </tr>
+          <tr>
+            <td><code>PUSHER_APP_KEY</code></td>
+            <td></td>
+            <td>Pusher app key</td>
+          </tr>
+          <tr>
+            <td><code>PUSHER_APP_SECRET</code></td>
+            <td></td>
+            <td>Pusher app secret</td>
+          </tr>
+          <tr>
+            <td><code>PUSHER_APP_CLUSTER</code></td>
+            <td><code>eu</code></td>
+            <td>Pusher cluster</td>
+          </tr>
+          <tr>
+            <td><code>MAIL_MAILER</code></td>
+            <td><code>smtp</code></td>
+            <td>Mail driver</td>
+          </tr>
+          <tr>
+            <td><code>MAIL_HOST</code></td>
+            <td></td>
+            <td>SMTP host</td>
+          </tr>
+          <tr>
+            <td><code>MAIL_PORT</code></td>
+            <td><code>587</code></td>
+            <td>SMTP port</td>
+          </tr>
+          <tr>
+            <td><code>MAIL_FROM_ADDRESS</code></td>
+            <td><code>noreply@example.com</code></td>
+            <td>Sender email</td>
+          </tr>
+          <tr>
+            <td><code>FCM_SERVER_KEY</code></td>
+            <td></td>
+            <td>Firebase Cloud Messaging server key</td>
+          </tr>
+          <tr>
+            <td><code>LICENSE_SERVER_URL</code></td>
+            <td></td>
+            <td>License server URL for purchase verification</td>
+          </tr>
+          <tr>
+            <td><code>ONESIGNAL_APP_ID</code></td>
+            <td></td>
+            <td>OneSignal app ID (optional)</td>
+          </tr>
+          <tr>
+            <td><code>ONESIGNAL_REST_API_KEY</code></td>
+            <td></td>
+            <td>OneSignal REST API key (optional)</td>
+          </tr>
+          <tr>
+            <td><code>REMOTE_DB_URL</code></td>
+            <td></td>
+            <td>
+              Override DB download URL (leave empty to derive from
+              <code>LICENSE_SERVER_URL</code>)
+            </td>
+          </tr>
+        </table>
+
+        <h3>Flutter constants.dart</h3>
+        <table>
+          <tr>
+            <th>Key</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><code>homeUrl</code></td>
+            <td>Backend API base URL — must match <code>APP_URL</code></td>
+          </tr>
+          <tr>
+            <td><code>isDemo</code></td>
+            <td>Set to <code>false</code> for production</td>
+          </tr>
+          <tr>
+            <td><code>locationApiKey</code></td>
+            <td>Google Maps / MapKit API key</td>
+          </tr>
+          <tr>
+            <td><code>geminiApiKey</code></td>
+            <td>Google Gemini AI API key (optional)</td>
+          </tr>
+          <tr>
+            <td><code>isAdmobAvailable</code></td>
+            <td>Enable AdMob ads</td>
+          </tr>
+          <tr>
+            <td><code>isSubscriptionAvail</code></td>
+            <td>Enable RevenueCat subscriptions</td>
+          </tr>
+        </table>
+
+        <h2 id="third-party">Third Party Integrations</h2>
+        <p>
+          Every external service Lamat connects to, what it needs, and where
+          it's configured.
+        </p>
+        <p style="color: var(--text-muted); font-size: 13px">
+          Sources: pubspec.yaml &bull; lib/models/config_model.dart
+        </p>
+
+        <div class="third-party">
+          <h3>
+            Firebase <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">
+            Core Firebase services including Cloud Messaging (FCM push), phone
+            authentication, and AI services.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://console.firebase.google.com" target="_blank"
+              >Firebase Console</a
+            ></span
+          >
+          <h4>Files Needed</h4>
+          <table>
+            <tr>
+              <th>File</th>
+              <th>Platform</th>
+              <th>Notes</th>
+            </tr>
+            <tr>
+              <td><code>google-services.json</code></td>
+              <td>Android</td>
+              <td>From Firebase Console → Project settings → General</td>
+            </tr>
+            <tr>
+              <td><code>GoogleService-Info.plist</code></td>
+              <td>iOS</td>
+              <td>From Firebase Console → Project settings → General</td>
+            </tr>
+            <tr>
+              <td><code>firebase_options.dart</code></td>
+              <td>All</td>
+              <td>Generated via <code>flutterfire configure</code></td>
+            </tr>
+          </table>
+          <h4>FCM Config (Backend)</h4>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Config Key</th>
+            </tr>
+            <tr>
+              <td>Server Key</td>
+              <td class="config-key">onesignal → fcm_server_key</td>
+            </tr>
+            <tr>
+              <td>Project ID</td>
+              <td class="config-key">onesignal → fcm_project_id</td>
+            </tr>
+          </table>
+
+          <h3>
+            RevenueCat <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">
+            In-app purchases and subscription management across iOS and Android.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://app.revenuecat.com" target="_blank"
+              >RevenueCat Dashboard</a
+            ></span
+          >
+          <p>Config section: <code>plugins.revenue_cart</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Apple API Key</td>
+              <td class="config-key">apple_api_key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Google API Key</td>
+              <td class="config-key">google_api_key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Entitlement ID</td>
+              <td class="config-key">entitlement_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>App ID</td>
+              <td class="config-key">app_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+
+          <h3>
+            OneSignal <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">
+            Push notification service for promotional campaigns and targeted
+            notifications.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://app.onesignal.com" target="_blank"
+              >OneSignal Dashboard</a
+            ></span
+          >
+          <p>Config section: <code>plugins.onesignal</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>App ID</td>
+              <td class="config-key">app_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+          <h4>Also Needs (Backend)</h4>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Config Key</th>
+            </tr>
+            <tr>
+              <td>FCM Server Key</td>
+              <td class="config-key">onesignal → fcm_server_key</td>
+            </tr>
+            <tr>
+              <td>FCM Project ID</td>
+              <td class="config-key">onesignal → fcm_project_id</td>
+            </tr>
+          </table>
+
+          <h3>Pusher <span class="badge badge-configured">Configured</span></h3>
+          <p class="desc">
+            Real-time WebSocket events (diamond earnings, live interactions,
+            etc.).
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://dashboard.pusher.com" target="_blank"
+              >Pusher Dashboard</a
+            ></span
+          >
+          <p>Config section: <code>plugins.pusher</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>App Key</td>
+              <td class="config-key">app_key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Cluster</td>
+              <td class="config-key">cluster</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Encrypted</td>
+              <td class="config-key">encrypted</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+            <tr>
+              <td>Auth Endpoint</td>
+              <td class="config-key">auth_endpoint</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+          </table>
+
+          <h3>
+            Google Sign-In
+            <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">OAuth social login via Google accounts.</p>
+          <span class="get-link"
+            >&#8594;
+            <a
+              href="https://console.cloud.google.com/apis/credentials"
+              target="_blank"
+              >Google Cloud Credentials</a
+            ></span
+          >
+          <p>Config section: <code>plugins.google</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Key (Client ID)</td>
+              <td class="config-key">key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Secret</td>
+              <td class="config-key">secret</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+
+          <h3>
+            Facebook Sign-In
+            <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">OAuth social login via Facebook accounts.</p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://developers.facebook.com/apps" target="_blank"
+              >Facebook Developers</a
+            ></span
+          >
+          <p>Config section: <code>plugins.facebook</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>App ID</td>
+              <td class="config-key">id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Secret</td>
+              <td class="config-key">secret</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+
+          <h3>
+            Apple Sign-In <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">Sign in with Apple for iOS users.</p>
+          <span class="get-link"
+            >&#8594;
+            <a
+              href="https://developer.apple.com/account/resources/identifiers/list"
+              target="_blank"
+              >Apple Developer Portal</a
+            ></span
+          >
+          <table>
+            <tr>
+              <th>Step</th>
+              <th>Details</th>
+            </tr>
+            <tr>
+              <td>Xcode Capability</td>
+              <td>
+                Target → Signing &amp; Capabilities → "+" → "Sign in with Apple"
+              </td>
+            </tr>
+            <tr>
+              <td>Service ID</td>
+              <td>Create in Apple Developer → Identifiers → Services IDs</td>
+            </tr>
+            <tr>
+              <td>Domain/Return URL</td>
+              <td>Configure in Apple Developer for the Service ID</td>
+            </tr>
+          </table>
+
+          <h3>Sentry <span class="badge badge-configured">Configured</span></h3>
+          <p class="desc">
+            Error tracking and performance monitoring for Flutter and backend
+            PHP.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://sentry.io/settings/projects" target="_blank"
+              >Sentry Projects</a
+            ></span
+          >
+          <p>Config section: <code>plugins.sentry</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>DSN</td>
+              <td class="config-key">dsn</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+
+          <h3>
+            Google AdMob <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">
+            Monetization via banner, interstitial, rewarded, and native ads.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://apps.admob.com" target="_blank"
+              >AdMob Console</a
+            ></span
+          >
+          <p>Config section: <code>plugins.admob</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Android App ID</td>
+              <td class="config-key">android_app_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Android Banner ID</td>
+              <td class="config-key">android_banner_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Android Interstitial ID</td>
+              <td class="config-key">android_interstitial_id</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+            <tr>
+              <td>Android Rewarded ID</td>
+              <td class="config-key">android_rewarded_id</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+            <tr>
+              <td>Android Native ID</td>
+              <td class="config-key">android_native_id</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+            <tr>
+              <td>iOS App ID</td>
+              <td class="config-key">ios_app_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>iOS Banner ID</td>
+              <td class="config-key">ios_banner_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+
+          <h3>
+            Zego UIKit <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">
+            Real-time audio/video calls, live streaming, live audio rooms.
+            Powers BlindDate, VoiceParty, LiveStream, LiveMingle.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://console.zegocloud.com" target="_blank"
+              >ZegoConsole</a
+            ></span
+          >
+          <p>Config section: <code>plugins.live</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Pub Token</td>
+              <td class="config-key">pub_token</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Account ID</td>
+              <td class="config-key">account_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+
+          <h3>
+            Google Maps <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">
+            Location services, map display, geocoding, place picking.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a
+              href="https://console.cloud.google.com/google/maps-apis/credentials"
+              target="_blank"
+              >Google Maps Credentials</a
+            ></span
+          >
+          <p>Config section: <code>plugins.settings</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Geolocation API Key</td>
+              <td class="config-key">geolocation_api_key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+          <h4>Native Files</h4>
+          <table>
+            <tr>
+              <th>File</th>
+              <th>Platform</th>
+            </tr>
+            <tr>
+              <td>AndroidManifest.xml (meta-data)</td>
+              <td>Android</td>
+            </tr>
+            <tr>
+              <td>AppDelegate.swift (GMSServices)</td>
+              <td>iOS</td>
+            </tr>
+          </table>
+
+          <h3>Giphy <span class="badge badge-configured">Configured</span></h3>
+          <p class="desc">GIF search and sharing in chat.</p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://developers.giphy.com/dashboard" target="_blank"
+              >Giphy Developers</a
+            ></span
+          >
+          <p>Config section: <code>plugins.giphy</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>API Key</td>
+              <td class="config-key">apiKey</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+
+          <h3>
+            Deep Links <span class="badge badge-configured">Configured</span>
+          </h3>
+          <p class="desc">
+            Universal links (iOS) and app links (Android) for deep navigation.
+          </p>
+          <table>
+            <tr>
+              <th>Platform</th>
+              <th>Requirement</th>
+            </tr>
+            <tr>
+              <td>Android</td>
+              <td>
+                <code>assetlinks.json</code> served at
+                <code>/.well-known/assetlinks.json</code>
+              </td>
+            </tr>
+            <tr>
+              <td>iOS</td>
+              <td>
+                <code>apple-app-site-association</code> served at
+                <code>/.well-known/apple-app-site-association</code>
+              </td>
+            </tr>
+          </table>
+
+          <h3>Instagram <span class="badge badge-api">API Key Needed</span></h3>
+          <p class="desc">
+            Instagram Basic Display API for social login / content sharing.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a
+              href="https://developers.facebook.com/docs/instagram-basic-display-api"
+              target="_blank"
+              >Instagram Basic Display API</a
+            ></span
+          >
+          <p>Config section: <code>plugins.instagram</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Key</td>
+              <td class="config-key">key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Secret</td>
+              <td class="config-key">secret</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+
+          <h3>Twitter <span class="badge badge-api">API Key Needed</span></h3>
+          <p class="desc">
+            Twitter API v2 for OAuth 2.0 login / content sharing.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a
+              href="https://developer.twitter.com/en/portal/dashboard"
+              target="_blank"
+              >Twitter Developer Portal</a
+            ></span
+          >
+          <p>Config section: <code>plugins.twitter</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Key</td>
+              <td class="config-key">key</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Secret</td>
+              <td class="config-key">secret</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="architecture">App Architecture</h2>
+
+        <h3>Flutter</h3>
+        <table>
+          <tr>
+            <th>Layer</th>
+            <th>Directory</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>Entry</td>
+            <td><code>lib/main.dart</code></td>
+            <td>
+              Initializes Firebase, Hive, WorkManager, EasyLocalization,
+              SessionManager
+            </td>
+          </tr>
+          <tr>
+            <td>App</td>
+            <td><code>lib/myapp.dart</code></td>
+            <td><code>MyApp</code> — Riverpod + auto_route + theming</td>
+          </tr>
+          <tr>
+            <td>Routes</td>
+            <td><code>lib/routes.dart</code></td>
+            <td><code>AppRouter</code> with ~40 route definitions</td>
+          </tr>
+          <tr>
+            <td>State</td>
+            <td><code>lib/state/</code></td>
+            <td>Riverpod providers</td>
+          </tr>
+          <tr>
+            <td>API</td>
+            <td><code>lib/providers/api_service.dart</code></td>
+            <td>Dio singleton with Sanctum token interceptor</td>
+          </tr>
+          <tr>
+            <td>Auth</td>
+            <td><code>lib/providers/token_service.dart</code></td>
+            <td>FlutterSecureStorage for Sanctum tokens</td>
+          </tr>
+          <tr>
+            <td>Models</td>
+            <td><code>lib/models/</code></td>
+            <td>Data models</td>
+          </tr>
+          <tr>
+            <td>Views</td>
+            <td><code>lib/views/</code></td>
+            <td>UI screens by feature</td>
+          </tr>
+          <tr>
+            <td>Widgets</td>
+            <td><code>lib/widgets/</code></td>
+            <td>Reusable components</td>
+          </tr>
+          <tr>
+            <td>Services</td>
+            <td><code>lib/services/</code></td>
+            <td>Pusher, DeepLink, Notifications</td>
+          </tr>
+        </table>
+
+        <h4>State Management</h4>
+        <ul>
+          <li>
+            <code>ConsumerStatefulWidget</code> — screens with mutable state
+          </li>
+          <li>
+            <code>StateNotifierProvider</code> — complex state (auth, wallet,
+            deep links)
+          </li>
+          <li><code>StateProvider</code> — simple primitive state</li>
+          <li>
+            <code>ProviderContainer</code> — shared globally for background
+            services
+          </li>
+        </ul>
+
+        <h4>Route Groups</h4>
+        <ul>
+          <li><strong>Splash</strong> → Splash, SplashAnimation</li>
+          <li>
+            <strong>Auth</strong> → Login, PhoneLogin, VerifyOTP, EmailLogin,
+            Password
+          </li>
+          <li><strong>Main</strong> → BottomNavBar (tabs)</li>
+          <li>
+            <strong>Swipe</strong> → Swipe, Match, Explore, FilterOptions, Map
+          </li>
+          <li><strong>Social</strong> → Feed, Teels (videos), Stories</li>
+          <li><strong>Chat</strong> → Messages, ChatScreen</li>
+          <li>
+            <strong>Profile</strong> → EditProfile, AccountSettings,
+            OtherProfile, Gallery
+          </li>
+          <li><strong>Wallet</strong> → Wallet, Withdrawal, Transactions</li>
+        </ul>
+
+        <h3>Backend</h3>
+        <table>
+          <tr>
+            <th>Component</th>
+            <th>Path</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>API Controllers</td>
+            <td><code>app/Http/Controllers/Api/</code></td>
+            <td>REST endpoints for auth, profiles, wallet, uploads</td>
+          </tr>
+          <tr>
+            <td>API Routes</td>
+            <td><code>routes/api.php</code></td>
+            <td>Sanctum-protected routes under <code>api/V1/*</code></td>
+          </tr>
+          <tr>
+            <td>Web Routes</td>
+            <td><code>routes/web.php</code></td>
+            <td>Install wizard, deep links, payment checkouts</td>
+          </tr>
+          <tr>
+            <td>Models</td>
+            <td><code>app/Models/</code></td>
+            <td>Eloquent models</td>
+          </tr>
+          <tr>
+            <td>Middleware</td>
+            <td><code>app/Http/Middleware/</code></td>
+            <td>Sanctum auth, CORS, CheckInstalled</td>
+          </tr>
+        </table>
+
+        <h3>API Endpoint Pattern</h3>
+        <pre>
+<span class="comment"># All mobile API routes are under api/V1/</span>
+GET    /api/V1/config              <span class="comment"># App configuration</span>
+POST   /api/V1/auth/login          <span class="comment"># Email login</span>
+POST   /api/V1/auth/phone-login    <span class="comment"># Phone auth</span>
+POST   /api/V1/auth/register       <span class="comment"># Registration</span>
+GET    /api/V1/user/profile        <span class="comment"># Current user profile</span>
+POST   /api/V1/user/update         <span class="comment"># Update profile</span>
+GET    /api/V1/swipe/feed          <span class="comment"># Swipe cards</span>
+POST   /api/V1/swipe/action        <span class="comment"># Like / dislike / superlike</span>
+GET    /api/V1/matches             <span class="comment"># Match list</span>
+GET    /api/V1/messages            <span class="comment"># Chat messages</span>
+POST   /api/V1/messages/send       <span class="comment"># Send message</span>
+GET    /api/V1/wallet/balance      <span class="comment"># Wallet</span>
+POST   /api/V1/upload/image        <span class="comment"># Image upload</span>
+</pre>
+
+        <h2 id="troubleshooting">Troubleshooting</h2>
+
+        <table>
+          <tr>
+            <th>Problem</th>
+            <th>Solution</th>
+          </tr>
+          <tr>
+            <td><code>/install</code> returns 500</td>
+            <td>
+              Check <code>storage/logs/laravel.log</code>. Ensure
+              <code>storage/</code> and <code>bootstrap/cache/</code> are
+              writable. Verify all PHP extensions are installed.
+            </td>
+          </tr>
+          <tr>
+            <td>Purchase verification fails</td>
+            <td>
+              Confirm <code>LICENSE_SERVER_URL</code> is correct in
+              <code>.env</code>. The server must be reachable and have a valid
+              SSL certificate.
+            </td>
+          </tr>
+          <tr>
+            <td>Database import fails</td>
+            <td>
+              Check that the database exists and connection credentials are
+              correct. The SQL file must not be empty
+              (<code>database/backup/database.sql</code>).
+            </td>
+          </tr>
+          <tr>
+            <td>Download token expired</td>
+            <td>
+              Click <strong>Refresh Token &amp; Retry Download</strong> on Step
+              3 of the wizard.
+            </td>
+          </tr>
+          <tr>
+            <td>Flutter shows "Purchase not verified"</td>
+            <td>
+              <code>storage/app/purchase.json</code> is missing or invalid.
+              Re-run the wizard.
+            </td>
+          </tr>
+          <tr>
+            <td>Pusher connection fails</td>
+            <td>
+              Verify <code>PUSHER_*</code> keys. The
+              <code>/broadcasting/auth</code> endpoint must be accessible from
+              the app.
+            </td>
+          </tr>
+          <tr>
+            <td>Sanctum 401 errors</td>
+            <td>
+              Tokens expire after 24 hours. Re-login. Ensure
+              <code>APP_URL</code> matches the actual domain (used in CORS /
+              Sanctum config).
+            </td>
+          </tr>
+          <tr>
+            <td>Push notifications not working</td>
+            <td>
+              Verify <code>FCM_SERVER_KEY</code>. Check notification permissions
+              on the device.
+            </td>
+          </tr>
+          <tr>
+            <td>Images not uploading</td>
+            <td>
+              Check PHP upload limits (<code>upload_max_filesize</code>,
+              <code>post_max_size</code>). Verify
+              <code>storage/</code> permissions.
+            </td>
+          </tr>
+          <tr>
+            <td>Web shows blank screen</td>
+            <td>
+              Build with <code>--web-renderer canvaskit</code>. Check the
+              browser console for errors.
+            </td>
+          </tr>
+          <tr>
+            <td><code>Target of URI doesn't exist</code></td>
+            <td>
+              Run
+              <code
+                >flutter pub run build_runner build
+                --delete-conflicting-outputs</code
+              >
+            </td>
+          </tr>
+          <tr>
+            <td><code>SQLSTATE[HY000] [2002]</code></td>
+            <td>MySQL not running — start the MySQL service.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>400 | BAD_REQUEST</code> or <code>419</code> on API calls
+            </td>
+            <td>
+              CSRF token mismatch. Ensure <code>APP_URL</code> matches the exact
+              domain in the browser. For Flutter, set
+              <code>SESSION_DRIVER=cookie</code> and verify Sanctum config in
+              <code>config/sanctum.php</code> includes your app's domain in
+              <code>stateful</code> array.
+            </td>
+          </tr>
+          <tr>
+            <td>CORS errors (Flutter Web)</td>
+            <td>
+              Add your Flutter web origin to <code>config/cors.php</code>
+              <code>allowed_origins</code>. For development, you can use
+              <code>allowed_origins = ['*']</code> but restrict in production.
+              Also ensure <code>supports_credentials = true</code>.
+            </td>
+          </tr>
+          <tr>
+            <td>Flutter app can't reach local backend (emulator)</td>
+            <td>
+              Android emulator: use <code>10.0.2.2</code> in
+              <code>homeUrl</code> instead of <code>localhost</code>. iOS
+              simulator: use <code>localhost</code>. Real device: use your LAN
+              IP (<code>192.168.x.x</code>). Both devices must be on the same
+              network.
+            </td>
+          </tr>
+          <tr>
+            <td>Mixed content blocked (HTTPS + HTTP)</td>
+            <td>
+              If your Flutter web is served over HTTPS, the backend must also
+              use HTTPS. Set <code>APP_URL=https://yourdomain.com</code> and
+              ensure your server has a valid SSL certificate. For development,
+              use <code>http://localhost</code> for both.
+            </td>
+          </tr>
+          <tr>
+            <td><code>No application encryption key</code></td>
+            <td>
+              Run <code>php artisan key:generate</code> to generate
+              <code>APP_KEY</code> in <code>.env</code>. This is required for
+              session encryption, CSRF protection, and Sanctum tokens.
+            </td>
+          </tr>
+          <tr>
+            <td><code>Class "..." not found</code> or blank Laravel page</td>
+            <td>
+              Dependencies not installed. Run
+              <code>composer install --no-dev</code> from the backend root. If
+              memory is insufficient, use
+              <code>COMPOSER_MEMORY_LIMIT=-1 composer install</code>.
+            </td>
+          </tr>
+          <tr>
+            <td>Install wizard stuck at Step 1 — requirements check</td>
+            <td>
+              Missing PHP extensions. Ensure all required extensions are
+              installed (BCMath, Ctype, cURL, DOM, Fileinfo, GD, JSON, Mbstring,
+              OpenSSL, PCRE, PDO, PDO_MySQL, Tokenizer, XML, Zip, Intl). On
+              Ubuntu:
+              <code
+                >sudo apt install php8.2-bcmath php8.2-curl php8.2-dom php8.2-gd
+                php8.2-mbstring php8.2-mysql php8.2-xml php8.2-zip
+                php8.2-intl</code
+              >.
+            </td>
+          </tr>
+          <tr>
+            <td>Database import times out</td>
+            <td>
+              Increase PHP <code>max_execution_time</code> and
+              <code>max_input_time</code> in <code>php.ini</code>. Import via
+              command line instead:
+              <code
+                >mysql -u root -p lamat &lt; database/backup/database.sql</code
+              >.
+            </td>
+          </tr>
+          <tr>
+            <td><code>Storage path not found</code> or images return 404</td>
+            <td>
+              Run <code>php artisan storage:link</code> to create the symbolic
+              link from <code>public/storage</code> to
+              <code>storage/app/public</code>. Verify <code>storage/</code>
+              directory has write permissions.
+            </td>
+          </tr>
+          <tr>
+            <td>.env changes not taking effect</td>
+            <td>
+              Laravel caches config in production. Run
+              <code>php artisan config:clear</code> after every
+              <code>.env</code>
+              change. For persistent caching in production, run
+              <code>php artisan config:cache</code> after verifying all values.
+            </td>
+          </tr>
+          <tr>
+            <td>ModRewrite / 404 on all routes except <code>/</code></td>
+            <td>
+              Apache: ensure <code>mod_rewrite</code> is enabled and
+              <code>AllowOverride All</code> is set in the VirtualHost for the
+              Laravel <code>public/</code> directory. Nginx: verify the
+              <code>try_files</code> directive is present in your server block.
+            </td>
+          </tr>
+          <tr>
+            <td>PHP upload fails for large files</td>
+            <td>
+              Increase <code>upload_max_filesize = 20M</code>,
+              <code>post_max_size = 20M</code>, and
+              <code>memory_limit = 128M</code> in <code>php.ini</code>. Restart
+              the web server after changes.
+            </td>
+          </tr>
+          <tr>
+            <td>Email not sending (SMTP)</td>
+            <td>
+              Verify <code>MAIL_*</code> settings in <code>.env</code>. Test
+              with <code>php artisan tinker</code>:
+              <code
+                >Mail::raw('test', fn($m) => $m->to('you@example.com'));</code
+              >. Check your SMTP provider's firewall rules and port availability
+              (587/TLS or 465/SSL).
+            </td>
+          </tr>
+          <tr>
+            <td>Sanctum CSRF cookie not set (Flutter)</td>
+            <td>
+              Flutter must call <code>/sanctum/csrf-cookie</code> before POST
+              requests. Verify <code>APP_URL</code> in Flutter's
+              <code>lib/constants.dart</code> matches the backend origin exactly
+              (protocol + host + port). Check that
+              <code>SESSION_DOMAIN</code> is not set (or matches the backend
+              domain) in <code>.env</code>.
+            </td>
+          </tr>
+          <tr>
+            <td>Deep links not opening the app</td>
+            <td>
+              Verify <code>/.well-known/assetlinks.json</code> (Android) and
+              <code>/.well-known/apple-app-site-association</code> (iOS) are
+              accessible via browser. Confirm the SHA-256 fingerprint in
+              assetlinks.json matches your signing certificate. For iOS, ensure
+              the app's Associated Domains entitlement includes
+              <code>applinks:yourdomain.com</code>.
+            </td>
+          </tr>
+          <tr>
+            <td>Firebase phone auth fails on Android</td>
+            <td>
+              Add your app's SHA-256 (and SHA-1) certificate fingerprint to
+              Firebase Console → Project Settings → General → Your Android app.
+              Both debug and release keystore fingerprints must be added. Verify
+              <code>google-services.json</code> is the latest version from
+              Firebase.
+            </td>
+          </tr>
+          <tr>
+            <td>Pusher WebSocket not connecting (production)</td>
+            <td>
+              Ensure the Pusher cluster matches your app's cluster in the Pusher
+              dashboard. Use <code>wss://</code> (secure WebSocket) — override
+              in <code>config/websockets.php</code> if using a custom Pusher
+              server. Verify port 443 is not blocked by a firewall.
+            </td>
+          </tr>
+          <tr>
+            <td>Flutter build fails with NDK version error</td>
+            <td>
+              Set <code>ndkVersion</code> in
+              <code>android/app/build.gradle</code> to match your installed NDK.
+              Run <code>flutter doctor -v</code> to see the detected NDK
+              version. Install a specific NDK via Android Studio SDK Manager if
+              needed.
+            </td>
+          </tr>
+          <tr>
+            <td>OneSignal push not delivered to iOS</td>
+            <td>
+              OneSignal uses FCM to relay to APNs for iOS. Ensure
+              <code>FCM_SERVER_KEY</code> and <code>FCM_PROJECT_ID</code> are
+              set in the backend <code>.env</code>. Also verify the OneSignal
+              app has the correct APNs key (.p8) uploaded in OneSignal dashboard
+              Settings.
+            </td>
+          </tr>
+          <tr>
+            <td>Install wizard re-appears after install</td>
+            <td>
+              The file <code>storage/app/installed.lock</code> was not created.
+              Check <code>storage/</code> permissions — the web server must be
+              able to write files. Manually create the lock file:
+              <code>touch storage/app/installed.lock</code>
+              or re-run the wizard to completion.
+            </td>
+          </tr>
+          <tr>
+            <td>RevenueCat webhook returns 500</td>
+            <td>
+              Check <code>storage/logs/laravel.log</code> for the error. Ensure
+              <code>QUEUE_CONNECTION</code> is set to <code>database</code> or
+              <code>redis</code> (not <code>sync</code>) for production webhook
+              processing. Verify the webhook secret in <code>.env</code> matches
+              RevenueCat dashboard.
+            </td>
+          </tr>
+          <tr>
+            <td><code>Composer install</code> fails with memory error</td>
+            <td>
+              Run
+              <code>COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev</code>
+              to disable the memory limit. Alternatively, increase the memory
+              limit in <code>php.ini</code> (<code>memory_limit = 512M</code>).
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Flutter <code>flutter pub get</code> fails / package not found
+            </td>
+            <td>
+              Ensure you're in the correct directory (<code>flutter-app/</code>
+              folder). Run <code>flutter clean</code> then
+              <code>flutter pub get</code>. If using a VPN or proxy, try
+              disabling it. Set <code>PUB_HOSTED_URL</code> environment variable
+              if in a region with restricted access to pub.dev.
+            </td>
+          </tr>
+          <tr>
+            <td>Backend returns <code>500</code> after .env changes</td>
+            <td>
+              Run <code>php artisan config:clear</code> and
+              <code>php artisan cache:clear</code>. If that doesn't help, check
+              <code>storage/logs/laravel.log</code> for the specific error.
+              Common causes: missing <code>APP_KEY</code>, invalid database
+              credentials, or a syntax error in <code>.env</code> (e.g. value
+              containing spaces without quotes).
+            </td>
+          </tr>
+          <tr>
+            <td><code>Call to undefined function bcrypt()</code></td>
+            <td>
+              PHP BCMath extension is missing. Install it:
+              <code>sudo apt install php8.2-bcmath</code> (or equivalent for
+              your PHP version and OS). This is a Laravel core requirement used
+              by hashing and encryption.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>stream_socket_enable_crypto(): SSL operation failed</code>
+            </td>
+            <td>
+              OpenSSL extension is missing or CA certificates are outdated.
+              Install OpenSSL PHP extension and update CA bundle:
+              <code>sudo apt install php8.2-openssl ca-certificates</code>. On
+              Windows, ensure <code>openssl</code> is enabled in
+              <code>php.ini</code> and <code>curl.cainfo</code> points to a
+              valid <code>cacert.pem</code>.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>file_get_contents(): SSL: Connection reset by peer</code>
+            </td>
+            <td>
+              Outbound HTTPS connections are failing. Check your server's
+              firewall rules — ensure port 443 is allowed outbound. If behind a
+              proxy, set <code>HTTP_PROXY</code> and <code>HTTPS_PROXY</code>
+              environment variables or configure Guzzle's proxy in
+              <code>config/http-client.php</code>.
+            </td>
+          </tr>
+        </table>
+
+        <h2 id="security">Security Notes</h2>
+
+        <div class="alert alert-danger">
+          <strong>Production checklist:</strong>
+        </div>
+
+        <ol>
+          <li><code>APP_DEBUG=false</code> — never expose debug output</li>
+          <li>
+            HTTPS everywhere — the app enforces SSL, no
+            <code>MyHttpOverrides</code>
+          </li>
+          <li>
+            <code>APP_URL</code> controls CORS — only your domain is allowed
+          </li>
+          <li>
+            Sanctum tokens expire after 24 hours, stored in encrypted
+            FlutterSecureStorage
+          </li>
+          <li>
+            Purchase data is encrypted at <code>storage/app/purchase.json</code>
+          </li>
+          <li>
+            Delete <code>database/backup/database.sql</code> after installation
+          </li>
+          <li>
+            Use strong, unique passwords for the admin account and database
+          </li>
+          <li>
+            Keep your <code>.env</code> file outside the web root (it's in the
+            parent directory)
+          </li>
+        </ol>
+
+        <h2 id="faqs">FAQS</h2>
+
+        <details class="faq-item">
+          <summary>
+            How do I change the app name from "Lamat" to my own brand?
+          </summary>
+          <p>
+            Run <code>dart run rename_app:main all="Your App Name"</code> from
+            the Flutter project root. This updates all platform display names.
+            For the backend, update <code>app_name</code> in General Settings
+            plugin from the admin panel.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I change the package name (bundle ID)?</summary>
+          <p>
+            Run
+            <code>dart run change_package_name:main com.yourcompany.app</code>.
+            This updates Android's <code>AndroidManifest.xml</code> /
+            <code>build.gradle</code>, iOS project files, Firebase registration,
+            and all folder structures. After changing, re-run
+            <code>flutterfire configure</code> to download fresh
+            <code>google-services.json</code> and
+            <code>GoogleService-Info.plist</code>.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Where do I set the backend API URL?</summary>
+          <p>
+            Edit <code>lib/constants.dart</code> and change the
+            <code>homeUrl</code> constant to your backend domain (e.g.
+            <code>https://yourdomain.com</code>). Also ensure
+            <code>isDemo</code> is set to <code>false</code>.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I find my SHA-1 fingerprint for Firebase?</summary>
+          <p>
+            Run
+            <code>cd android && gradlew signingReport</code> (Linux/macOS) or
+            <code>cd android && gradlew.bat signingReport</code> (Windows). Look
+            for the <code>SHA1</code> value under the
+            <code>debug</code> variant. For production releases, use the SHA-1
+            from your keystore. Add this fingerprint in Firebase Console under
+            Project Settings → General → Your Android app.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            Push notifications are not showing on Android. What's wrong?
+          </summary>
+          <p>
+            Check these in order: (1) Ensure
+            <code>google-services.json</code> is placed in
+            <code>android/app/</code> and matches your Firebase project. (2)
+            Verify <code>FCM_SERVER_KEY</code> and
+            <code>FCM_PROJECT_ID</code> are set in the backend's
+            <code>.env</code>. (3) On Android 13+, request
+            <code>POST_NOTIFICATIONS</code> permission at runtime (the app
+            handles this automatically). (4) Ensure notification channels are
+            registered — the app uses channel ID <code>basic_channel</code>. (5)
+            Check that the device has Google Play Services and is not in Doze
+            mode.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why does the map not load on Android?</summary>
+          <p>
+            The most common cause is a missing or incorrect Google Maps API key
+            in <code>AndroidManifest.xml</code>. Ensure you've added:
+            <code
+              >&lt;meta-data android:name="com.google.android.geo.API_KEY"
+              android:value="YOUR_KEY"/&gt;</code
+            >
+            inside the <code>&lt;application&gt;</code> tag. Also verify the
+            <strong>Maps SDK for Android</strong> is enabled in your Google
+            Cloud Console and the API key is restricted to your Android app
+            (package name + SHA-1).
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I enable or disable specific features?</summary>
+          <p>
+            Log into the admin panel at <code>/admin</code>, navigate to
+            <strong>Settings → Plugins</strong>, and select the feature you want
+            to toggle. Each plugin (Swiping, Chat, Stories, Live, Hot Takes,
+            Echoes, etc.) has an enable/disable switch. After changing, the
+            Flutter app fetches the latest config on next launch.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            How do I configure Pusher for real-time chat and features?
+          </summary>
+          <p>
+            In the backend <code>.env</code>, set <code>PUSHER_APP_ID</code>,
+            <code>PUSHER_APP_KEY</code>, <code>PUSHER_APP_SECRET</code>, and
+            <code>PUSHER_APP_CLUSTER</code> from your Pusher dashboard. In the
+            Flutter app, Pusher is initialized in
+            <code>lib/services/pusher_service.dart</code> and read from the
+            API's <code>/config</code> endpoint — no manual Flutter-side
+            configuration is needed.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            How do I set up ZegoCloud for voice/video calls and live streaming?
+          </summary>
+          <p>
+            Register at <a href="https://console.zegocloud.com">ZegoConsole</a>,
+            create an application, and note your <code>appID</code> and
+            <code>appSign</code>. In the admin panel, go to
+            <strong>Settings → Plugins → Live</strong> and enter your Zego
+            credentials. The Flutter app uses the Zego prebuilt UI Kits — no
+            additional code changes required.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            RevenueCat is not processing purchases. What should I check?
+          </summary>
+          <p>
+            Verify: (1) RevenueCat plugin is enabled in admin panel under
+            Plugins. (2) <code>apple_api_key</code>,
+            <code>google_api_key</code>, <code>entitlement_id</code>, and
+            <code>app_id</code> are set correctly. (3) Your products are
+            configured in both RevenueCat dashboard and the respective app
+            stores (App Store Connect / Google Play Console). (4) The webhook
+            URL <code>https://yourdomain.com/webhook/revenuecat</code> is
+            configured in RevenueCat dashboard. (5)
+            <code>QUEUE_CONNECTION</code> in <code>.env</code> is set to
+            <code>database</code> or <code>redis</code> (not <code>sync</code>)
+            for production.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            How do I switch from synchronous to async queue processing?
+          </summary>
+          <p>
+            The default <code>QUEUE_CONNECTION=sync</code> is fine for
+            development but will block HTTP responses. For production, change it
+            to <code>QUEUE_CONNECTION=database</code> in <code>.env</code>, then
+            run <code>php artisan queue:table && php artisan migrate</code> to
+            create the <code>jobs</code> table. Finally, run
+            <code>php artisan queue:work</code> (supervisor recommended). The
+            <code>HandleRevenueCatWebhook</code> job and other queueable tasks
+            will then process asynchronously.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I configure payment gateways?</summary>
+          <p>
+            In the admin panel, go to <strong>Settings → Plugins</strong> and
+            configure each gateway individually. For Stripe: enter the
+            publishable key and secret key. For PayPal: client ID and secret.
+            For Paystack, Razorpay, Mercado Pago, Mollie, Flutterwave: enter the
+            respective API keys and webhook URLs. Exchange rates can be set per
+            gateway. Each gateway has a <strong>sandbox mode</strong> toggle for
+            testing.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            Flutter build fails with "minSdkVersion" or "compileSdk" errors.
+          </summary>
+          <p>
+            This app targets <code>minSdk 24</code>, <code>compileSdk 36</code>,
+            <code>targetSdk 36</code>. If a plugin requires a higher version,
+            update <code>android/app/build.gradle</code>:
+            <code>minSdk 24</code>, <code>compileSdk 36</code>,
+            <code>targetSdk 36</code>. Run
+            <code>flutter clean && flutter pub get</code> after changes. For NDK
+            issues, ensure <code>ndkVersion "27.0.12077973"</code> is set or
+            install the required NDK via SDK Manager.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How does the color theming work?</summary>
+          <p>
+            The app uses two theming layers.
+            <strong>Admin Panel:</strong> Settings → Mobile App Colors plugin
+            lets you set 37+ colors (primary, secondary, gradients, backgrounds,
+            text, buttons, etc.) that are fetched by the Flutter app on startup.
+            <strong>Admin Panel UI:</strong>
+            Settings → Configurator lets you customize the admin sidebar color,
+            navbar style, and dark mode. Theme changes take effect immediately
+            on both platforms.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why is the installation wizard stuck at Step 1?</summary>
+          <p>
+            The wizard checks PHP 8.1+, required extensions (BCMath, Ctype,
+            cURL, DOM, Fileinfo, GD, JSON, Mbstring, OpenSSL, PCRE, PDO,
+            PDO_MySQL, Tokenizer, XML, Zip, Intl), and directory permissions
+            (<code>storage/</code> and <code>bootstrap/cache/</code> must be
+            writable). Run <code>php -m</code> to verify extensions are
+            installed. Ensure the <code>.env</code> file exists and
+            <code>LICENSE_SERVER_URL</code> points to a valid license server
+            endpoint.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            How do I generate the firebase_options.dart file again?
+          </summary>
+          <p>
+            From the Flutter project root, run
+            <code>flutterfire configure</code>. This re-prompts you to select a
+            Firebase project and regenerates
+            <code>lib/firebase_options.dart</code> along with fresh
+            <code>google-services.json</code> and
+            <code>GoogleService-Info.plist</code>. For a non-interactive update,
+            use <code>flutterfire reconfigure</code> (uses existing
+            <code>firebase.json</code> config).
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            The app shows "Connection failed" or "Server error".
+          </summary>
+          <p>
+            Check: (1) <code>homeUrl</code> in
+            <code>lib/constants.dart</code> points to the correct backend URL
+            with no trailing slash. (2) The backend is accessible from the
+            device/emulator — use <code>10.0.2.2</code> for Android emulator,
+            <code>localhost</code> for iOS simulator, or your network IP for
+            real devices. (3) CORS is configured correctly in
+            <code>config/cors.php</code> to allow requests from your Flutter Web
+            origin. (4) Run <code>php artisan serve</code> to verify the backend
+            starts without errors.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I add a new language to the app?</summary>
+          <p>
+            <strong>Backend:</strong> Admin panel → Settings → Languages → Add
+            Language. Enter the language name, native name, abbreviation (e.g.
+            <code>fr</code>), and upload a JSON translation file.
+            <strong>Flutter:</strong> The app uses
+            <code>easy_localization</code>
+            with 22 pre-built locales. Translation files are in
+            <code>assets/translations/</code>. To add a new locale, create a
+            <code>lang.json</code> file and register it in
+            <code>main.dart</code> under <code>EasyLocalization</code>'s
+            <code>supportedLocales</code> list. The backend serves translations
+            via the <code>/config</code> API endpoint.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            How does the freemium model work — what limits can I configure?
+          </summary>
+          <p>
+            All limits are configured in the admin panel under
+            <strong>Settings → Plugins → Swiping</strong>. You can set separate
+            daily caps for free and pro users on: likes, superlikes, dislikes,
+            rewinds, and monthly boosts. Other plugins (Chat, Live, Stories,
+            etc.) have their own per-feature limits and credit costs. The app
+            enforces these server-side via the API.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why are profile photos not uploading or showing?</summary>
+          <p>
+            Check: (1) PHP's <code>upload_max_filesize</code> and
+            <code>post_max_size</code> are set to at least 20MB in
+            <code>php.ini</code>. (2) The <code>storage/</code> directory is
+            writable (<code>chmod -R 775 storage</code>). (3) The
+            <code>GD</code> or <code>Imagick</code> extension is installed for
+            image processing. (4) If using cloud storage (Firebase Storage or
+            S3), ensure credentials are configured. The app defaults to local
+            storage at <code>storage/app/public/</code>.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            How do I reset the installation wizard to re-run it?
+          </summary>
+          <p>
+            Delete <code>storage/app/installed.lock</code> and
+            <code>.env</code> files, then visit
+            <code>https://yourdomain.com/install</code> again. WARNING: This
+            will not drop the existing database — you must manually drop and
+            recreate it if you want a fresh install. For security, the wizard is
+            locked after completion and cannot be re-run without deleting these
+            files.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            What are the required external services and do they cost money?
+          </summary>
+          <p>
+            <strong>Required (paid):</strong> Pusher (real-time chat), ZegoCloud
+            (calls/streaming), SMTP (emails), at least one payment gateway
+            (Stripe, PayPal, etc.). <strong>Required (free):</strong> Firebase
+            (FCM, Auth), Google Maps/Geolocation (free tier available).
+            <strong>Optional:</strong> RevenueCat ($), OneSignal (free tier),
+            Sentry (free tier), Sight Engine ($), AdMob, Giphy (free). Refer to
+            the "External Services" table in the System Requirements section for
+            full details.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            Can I run the app without all external services during development?
+          </summary>
+          <p>
+            Yes. The app has graceful fallbacks for most services. For basic
+            testing: skip Pusher (chat won't be real-time but API polling
+            works), skip ZegoCloud (calls/streaming won't work), use a dummy
+            SMTP. You must configure Firebase (for auth and FCM) and Google Maps
+            (for location features). Set <code>isDemo = true</code> in
+            <code>lib/constants.dart</code> to bypass some checks during
+            development.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I update the app to a new version?</summary>
+          <p>
+            The update process varies by version. Generally: (1) Back up your
+            database and <code>.env</code> file. (2) Download the latest release
+            from CodeCanyon. (3) Replace the backend files (keeping your
+            <code>.env</code> and <code>storage/</code> directory). (4) Run
+            <code>composer install --no-dev</code> and
+            <code>php artisan migrate</code>. (5) For the Flutter app, extract
+            the new <code>flutter-app</code> zip and copy over your
+            <code>lib/constants.dart</code>, <code>.env</code> values, and
+            Firebase configs. (6) Run <code>flutter pub get</code> and rebuild.
+            Each release includes an <code>update_xxxxx_xxxx</code> folder with
+            version-specific instructions.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How does the fake users generator work?</summary>
+          <p>
+            Enable it in Admin → Settings → Plugins → Fake Users Generator.
+            Configure the generation rate (users per API call), country
+            reference for ethnicity, force online mode, and auto-answer profile
+            questions. The engine generates realistic profiles with photos and
+            bio data. You can also enable Fake Users Interactions to have them
+            auto-visit, like, and message real users — useful for populating an
+            empty app during launch.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            Why is the web build blank or showing a white screen?
+          </summary>
+          <p>
+            (1) Use
+            <code>flutter build web --web-renderer canvaskit --release</code>
+            (canvaskit is required for this app). (2) Ensure the Firebase web
+            app is registered in Firebase Console and
+            <code>firebase_options.dart</code> has web options. (3) Check
+            browser console for CORS errors — add your web domain to
+            <code>config/cors.php</code>'s allowed origins. (4) Deploy the
+            <code>build/web/</code> folder to your server's
+            <code>public/</code> directory or a subdomain.
+          </p>
+        </details>
+
+        <hr />
+        <p
+          style="text-align: center; color: var(--text-muted); font-size: 13px"
+        >
+          Lamat Dating App v5.0.0+50 &middot; Documentation v1.0
+        </p>
+      </main>
+    </div>
+  </body>
+</html>
