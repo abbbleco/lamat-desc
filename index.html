@@ -424,6 +424,126 @@
       .third-party .get-link a:hover {
         text-decoration: underline;
       }
+
+      .screenshots-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+        margin: 16px 0 20px;
+      }
+
+      .screenshots-grid figure {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 0;
+        transition: border-color 0.15s;
+      }
+
+      .screenshots-grid figure:hover {
+        border-color: var(--primary);
+      }
+
+      .screenshots-grid img {
+        width: 100%;
+        height: auto;
+        display: block;
+        background: #f1f0ff;
+        cursor: zoom-in;
+      }
+
+      .screenshots-grid figcaption {
+        padding: 10px 12px;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .screenshots-grid figcaption strong {
+        display: block;
+        font-size: 13.5px;
+        margin-bottom: 2px;
+      }
+
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 20, 30, 0.92);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+        padding: 24px;
+        z-index: 1000;
+      }
+
+      .lightbox.open {
+        display: flex;
+      }
+
+      .lightbox img {
+        max-width: 92vw;
+        max-height: 80vh;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+        background: #fff;
+      }
+
+      .lightbox-caption {
+        color: #fff;
+        font-size: 14px;
+        text-align: center;
+        max-width: 720px;
+      }
+
+      .lightbox-counter {
+        color: #b2bec3;
+        font-size: 12px;
+      }
+
+      .lightbox-close,
+      .lightbox-prev,
+      .lightbox-next {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s;
+      }
+
+      .lightbox-close:hover,
+      .lightbox-prev:hover,
+      .lightbox-next:hover {
+        background: var(--primary);
+      }
+
+      .lightbox-close {
+        top: 16px;
+        right: 16px;
+      }
+
+      .lightbox-prev {
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .lightbox-next {
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     </style>
   </head>
 
@@ -437,6 +557,7 @@
         <nav>
           <div class="section-title">Introduction</div>
           <a href="#intro">Overview</a>
+          <a href="#screenshots">Screenshots</a>
           <a href="#requirements">System Requirements</a>
           <a href="#quickstart">Quick Start</a>
 
@@ -457,8 +578,13 @@
           <a href="#matching-process">Matching process Walkthrough</a>
 
           <div class="section-title">Customization</div>
-          <a href="#branding-app">Branding the App</a>
-          <a href="#color-scheme">Coloring the App</a>
+          <a href="#branding-app">Customization Guide</a>
+          <a href="#customization-app-name">App Name</a>
+          <a href="#customization-bundle-id">Bundle Identifier</a>
+          <a href="#customization-icon">App Icon</a>
+          <a href="#customization-logo">Logo</a>
+          <a href="#customization-splash">Splash Screen</a>
+          <a href="#color-scheme">App Colors</a>
 
           <div class="section-title">Getting Started</div>
           <a href="#admin-basic-usage">Basic Usage</a>
@@ -486,6 +612,17 @@
           messaging, voice and video calls, and a complete monetization system.
           Designed to launch all in one social dating solution.
         </p>
+        <div class="alert alert-danger">
+          <strong>WARNING:</strong>
+          Third-party services like Google Gemini AI, Pusher, Giphy, Zego Cloud,
+          Firebase Cloud Messaging (FCM), OneSignal, Google Geolocation API,
+          Google Maps API, Stripe, PayPal, Paystack, Razorpay, Mercado Pago,
+          Mollie, Flutterwave, Sight Engine, Google OAuth, Apple OAuth, Facebook
+          OAuth, SMTP Email Service, and Google Analytics require separate paid
+          subscriptions or API costs not covered by the purchase price. The
+          buyer is responsible for any costs associated with the third-party
+          services used by the application.
+        </div>
         <div class="alert alert-success">
           <strong>Detailed features list</strong>
           <a href="https://lamat-documentation.abbble.co.za/features.html"
@@ -502,6 +639,206 @@
 
         <div class="alert alert-info">
           <strong>Document version:</strong> 1.0 &middot; App version 5.0.0+50
+        </div>
+
+        <h2 id="screenshots">Screenshots</h2>
+        <p>
+          A visual tour of the main screens in the Lamat app — from
+          authentication and discovery to chat, social features, and live
+          experiences. Click any screenshot to view it fullscreen.
+        </p>
+        <div class="screenshots-grid">
+          <figure>
+            <img
+              src="assets/img/screenshots/authentication.png"
+              alt="Authentication screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Authentication</strong>Login, registration, and OTP
+              verification.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/swiping.png"
+              alt="Discover swiping screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Discover / Swiping</strong>Swipe cards to like, dislike,
+              or super like profiles.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/matching.png"
+              alt="Matching screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Matching</strong>Match celebration screen when two users
+              like each other.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/chat.png"
+              alt="Chat screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Chat</strong>Real-time messaging with text, emoji, and
+              media.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/profile.png"
+              alt="Profile screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Profile</strong>User profile view and profile editing.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/mapview_1920x1080.png"
+              alt="Map view screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Map View</strong>Discover nearby profiles on the map.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/feeds.png"
+              alt="Feeds screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Feeds</strong>Social feed with posts, likes, and comments.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/stories.png"
+              alt="Stories screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Stories</strong>Share and view ephemeral photo/video
+              stories.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/reels.png"
+              alt="Reels screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Reels</strong>Short-form vertical videos.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/livestreaming.png"
+              alt="Live streaming screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Live Streaming</strong>Go live, watch streams, and
+              interact in real time.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/voiceparty_1920x1080.png"
+              alt="Voice party screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Voice Party</strong>Live audio rooms with multiple
+              speakers.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/blinddate_1920x1080.png"
+              alt="Blind date screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Blind Date</strong>Audio-first blind date matching
+              experience.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/hottakes_intro_1920x1080.png"
+              alt="Hot takes intro screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Hot Takes — Intro</strong>Intro to the timed Hot Takes
+              chat game.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/hottakes_1920x1080.png"
+              alt="Hot takes screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Hot Takes</strong>Quick-fire Q&amp;A to spark
+              conversations.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/popballoon_1920x1080.png"
+              alt="Pop balloon screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Pop Balloon</strong>Pop-the-balloon dating game screen.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/gifting.png"
+              alt="Gifting screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Gifting</strong>Send virtual gifts to other users.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/music.png"
+              alt="Music screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Music</strong>Music integration for profiles and moments.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="assets/img/screenshots/languages.png"
+              alt="Languages screen"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Languages</strong>Multi-language picker and app
+              localization.
+            </figcaption>
+          </figure>
         </div>
 
         <h2 id="requirements">System Requirements</h2>
@@ -576,6 +913,7 @@
         </p>
 
         <h3>External Services</h3>
+
         <table>
           <tr>
             <th>Service</th>
@@ -1816,8 +2154,8 @@ flutter pub run build_runner build --delete-conflicting-outputs
         <ul>
           <li>
             <strong>Application restriction:</strong> Android apps → enter your
-            package name (e.g. <code>com.lamat.app</code>) and the SHA-1
-            certificate fingerprint.
+            package name (e.g. <code>com.yourcompany.appname</code>) and the
+            SHA-1 certificate fingerprint.
           </li>
           <li>
             <strong>API restriction:</strong> Restrict to
@@ -1830,7 +2168,7 @@ flutter pub run build_runner build --delete-conflicting-outputs
         <ul>
           <li>
             <strong>Application restriction:</strong> iOS apps → enter your
-            bundle ID (e.g. <code>com.lamat.app</code>).
+            bundle ID (e.g. <code>com.yourcompany.appname</code>).
           </li>
           <li>
             <strong>API restriction:</strong> Restrict to
@@ -2149,14 +2487,39 @@ open ios/Runner.xcworkspace          <span class="comment"># Archive in Xcode</s
           </p>
         </div>
 
-        <h2 id="branding-app">Branding the App</h2>
+        <h2 id="branding-app">Customization Guide</h2>
 
         <p>
-          Customize your app's identity — icon, splash screen, name, package,
-          and version — using the latest tools available in 2026.
+          This customization guide explains how to update the
+          <strong>app name</strong>, <strong>bundle identifier</strong> (package
+          name / application ID), <strong>colors</strong>,
+          <strong>logo</strong>, <strong>icon</strong>, and
+          <strong>splash screen</strong>.
         </p>
+        <ul>
+          <li><a href="#customization-app-name">App name</a> — display name</li>
+          <li>
+            <a href="#customization-bundle-id">Bundle identifier</a> — package
+            name / application ID
+          </li>
+          <li>
+            <a href="#customization-icon">App icon</a> — launcher icon on all
+            platforms
+          </li>
+          <li>
+            <a href="#customization-logo">Logo</a> — in-app logo images in
+            <code>assets/logos/</code>
+          </li>
+          <li>
+            <a href="#customization-splash">Splash screen</a> — launch screen
+          </li>
+          <li>
+            <a href="#color-scheme">Colors</a> — admin panel &gt; Mobile App
+            Colors
+          </li>
+        </ul>
 
-        <h3>App Icon (all platforms)</h3>
+        <h3 id="customization-icon">App Icon (all platforms)</h3>
 
         <h4>1. Add the package</h4>
         <pre>
@@ -2179,30 +2542,31 @@ dart run flutter_launcher_icons:generate
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/app_icon.png"
+  image_path: "assets/logos/icon.png"
   min_sdk_android: 21
   remove_alpha_ios: true
   web:
     generate: true
-    image_path: "assets/icon/app_icon.png"
+    image_path: "assets/logos/icon.png"
     background_color: "#FFFFFF"
     theme_color: "#0175C2"
   windows:
     generate: true
-    image_path: "assets/icon/app_icon.png"
+    image_path: "assets/logos/icon.png"
     icon_size: 48
   macos:
     generate: true
-    image_path: "assets/icon/app_icon.png"
+    image_path: "assets/logos/icon.png"
 </pre
         >
         <p>
           Use a high-resolution source image (at least 1024×1024 px, square,
-          PNG). For Android adaptive icons, add:
+          PNG) saved as <code>assets/logos/icon.png</code>. For Android adaptive
+          icons, add:
         </p>
         <pre>
-  android_adaptive_icon_foreground: "assets/icon/adaptive_foreground.png"
-  android_adaptive_icon_background: "assets/icon/adaptive_background.png"
+  android_adaptive_icon_foreground: "assets/logos/icon.png"
+  android_adaptive_icon_background: "#FFFFFF"
 </pre
         >
 
@@ -2220,33 +2584,102 @@ dart run flutter_launcher_icons
           catalogs.
         </p>
 
-        <h3>Splash Screen</h3>
-
-        <h4>1. Add the package</h4>
+        <h3 id="customization-logo">Logo</h3>
+        <p>
+          The in-app logo is separate from the launcher
+          <a href="#customization-icon">app icon</a>. Replace the files in
+          <code>flutter-app/assets/logos/</code> with your own branding, keeping
+          the same file names and sizes:
+        </p>
+        <h4>App and site logos in Admin Panel (General Settings)</h4>
+        <p>
+          You can change the app and site logos from the admin panel — no code
+          changes needed. Go to
+          <strong>Settings &gt; General Settings</strong> and upload your logos.
+        </p>
+        <img
+          src="assets/img/Logos.png"
+          width="100%"
+          alt="General Settings logos"
+        />
+        <h4>App Logo (in-app logo images)</h4>
+        <table>
+          <tr>
+            <th>File</th>
+            <th>Used for</th>
+          </tr>
+          <tr>
+            <td><code>assets/logos/logo-wh-tr.png</code></td>
+            <td>
+              Main in-app logo (<code>appLogo</code> in lib/constants.dart)
+            </td>
+          </tr>
+          <tr>
+            <td><code>assets/logos/logo.png</code></td>
+            <td>Color logo variant / headers</td>
+          </tr>
+          <tr>
+            <td><code>assets/logos/logo-anim.gif</code></td>
+            <td>Animated splash logo (<code>splashAnim</code>)</td>
+          </tr>
+          <tr>
+            <td><code>assets/logos/icon.png</code></td>
+            <td>
+              Icon source for launcher icon and splash image (see
+              <code>pubspec.yaml</code> &gt; <code>flutter_native_splash</code>)
+            </td>
+          </tr>
+          <tr>
+            <td><code>assets/logos/background.png</code></td>
+            <td>Splash / onboarding background (<code>splashBg</code>)</td>
+          </tr>
+          <tr>
+            <td><code>assets/logos/background-dark.png</code></td>
+            <td>Dark-mode splash / onboarding background</td>
+          </tr>
+          <tr>
+            <td><code>assets/logos/profile_pic.png</code></td>
+            <td>Default profile picture placeholder</td>
+          </tr>
+        </table>
+        <p>After replacing the files, rebuild the app:</p>
         <pre>
-flutter pub add flutter_native_splash
+flutter clean
+flutter pub get
+flutter run
 </pre
         >
-
-        <h4>2. Configure</h4>
+        <h3 id="customization-splash">Splash Screen</h3>
         <p>
-          Edit in your <code>pubspec.yaml</code> or create
-          <code>flutter_native_splash.yaml</code>:
+          This project configures the splash screen in
+          <code>pubspec.yaml</code> under <code>flutter_native_splash</code>:
+        </p>
+        <pre>
+flutter_native_splash:
+  android: true
+  ios: true
+  web: true
+  background_image: "assets/logos/background.png"
+  image: "assets/logos/icon.png"
+
+  android_12:
+    color: "#FFFFFF"
+    image: assets/logos/icon.png
+    image_dark: assets/logos/icon.png
+</pre
+        >
+        <p>
+          To use a different background color or branding image instead of the
+          background image, use:
         </p>
         <pre>
 flutter_native_splash:
   color: "#FFFFFF"
-  image: assets/splash/splash.png
-  branding: assets/splash/branding.png
+  image: assets/logos/icon.png
+  branding: assets/logos/logo.png
   color_dark: "#121212"
-  image_dark: assets/splash/splash_dark.png
-  branding_dark: assets/splash/branding_dark.png
-
-  android_12:
-    image: assets/splash/splash_android12.png
-    icon_background_color: "#FFFFFF"
-    image_dark: assets/splash/splash_android12_dark.png
-    icon_background_color_dark: "#121212"
+  image_dark: assets/logos/icon.png
+  branding_dark: assets/logos/logo-wh-tr.png
 
   android: true
   ios: true
@@ -2256,13 +2689,13 @@ flutter_native_splash:
 </pre
         >
 
-        <h4>3. Generate splash assets</h4>
+        <h4>Generate splash assets</h4>
         <pre>
 dart run flutter_native_splash:create
 </pre
         >
 
-        <h4>4. (Optional) Keep splash during initialization</h4>
+        <h4>(Optional) Keep splash during initialization</h4>
         <pre>
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -2277,14 +2710,14 @@ FlutterNativeSplash.remove();
 </pre
         >
 
-        <h4>5. Rebuild</h4>
+        <h4>Rebuild</h4>
         <pre>
 flutter clean
 flutter run
 </pre
         >
 
-        <h3>Web Favicon & App Icons</h3>
+        <h3>Web Favicon &amp; App Icons</h3>
         <p>
           If you use <code>flutter_launcher_icons</code> with
           <code>web.generate: true</code>, favicons and manifest icons are
@@ -2303,7 +2736,7 @@ web/
           theme color.
         </p>
 
-        <h3>App Name / Label</h3>
+        <h3 id="customization-app-name">App Name / Label</h3>
         <p>
           Use the <code>rename_app</code> package to update the display name
           across all platforms at once:
@@ -2331,7 +2764,9 @@ dart run rename_app:main android="Android Name" ios="iOS Name" others="Other Nam
 </pre
         >
 
-        <h3>Package Name (Bundle ID / Application ID)</h3>
+        <h3 id="customization-bundle-id">
+          Package Name (Bundle Identifier / Application ID)
+        </h3>
         <p>
           Change the Android <code>applicationId</code> and iOS
           <code>PRODUCT_BUNDLE_IDENTIFIER</code> with a single command using
@@ -2339,7 +2774,7 @@ dart run rename_app:main android="Android Name" ios="iOS Name" others="Other Nam
         </p>
         <pre>
 flutter pub add -d change_package_name
-dart run change_package_name:main com.lamat.app
+dart run change_package_name:main com.yourcompany.appname
 </pre
         >
         <p>
@@ -2351,10 +2786,10 @@ dart run change_package_name:main com.lamat.app
         <p>Platform-specific:</p>
         <pre>
 # Android only
-dart run change_package_name:main com.lamat.app --android
+dart run change_package_name:main com.yourcompany.appname --android
 
 # iOS only
-dart run change_package_name:main com.lamat.app --ios
+dart run change_package_name:main com.yourcompany.appname --ios
 </pre
         >
 
@@ -2387,7 +2822,13 @@ flutter build ipa --build-name=1.0.0 --build-number=2
           <code>ios/Runner.xcodeproj/project.pbxproj</code> during the build.
         </p>
 
-        <h2 id="color-scheme">Coloring the App (Color Schemes)</h2>
+        <h2 id="color-scheme">Customization Guide — App Colors</h2>
+        <p>
+          This section of the customization guide explains how to update the app
+          <strong>colors</strong>. No code changes are needed — colors are
+          managed from the admin panel and applied by the Flutter app on
+          startup.
+        </p>
         <div class="alert alert-info">
           <strong>NOTE:</strong> Your admin panel must be already installed for
           this section.
@@ -4376,5 +4817,92 @@ POST   /api/V1/upload/image        <span class="comment"># Image upload</span>
         </p>
       </main>
     </div>
+    <div
+      class="lightbox"
+      id="screenshot-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Screenshot fullscreen viewer"
+    >
+      <button class="lightbox-close" type="button" aria-label="Close">
+        &times;
+      </button>
+      <button class="lightbox-prev" type="button" aria-label="Previous">
+        &#8249;
+      </button>
+      <img id="lightbox-img" src="" alt="" />
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+      <div class="lightbox-counter" id="lightbox-counter"></div>
+      <button class="lightbox-next" type="button" aria-label="Next">
+        &#8250;
+      </button>
+    </div>
+    <script>
+      (function () {
+        var grid = document.querySelector(".screenshots-grid");
+        var lightbox = document.getElementById("screenshot-lightbox");
+        if (!grid || !lightbox) return;
+        var figures = Array.prototype.slice.call(
+          grid.querySelectorAll("figure"),
+        );
+        var imgEl = document.getElementById("lightbox-img");
+        var captionEl = document.getElementById("lightbox-caption");
+        var counterEl = document.getElementById("lightbox-counter");
+        var current = 0;
+
+        function show(index) {
+          current = (index + figures.length) % figures.length;
+          var img = figures[current].querySelector("img");
+          var caption = figures[current].querySelector("figcaption");
+          imgEl.src = img.getAttribute("src");
+          imgEl.alt = img.getAttribute("alt") || "";
+          captionEl.textContent = caption ? caption.textContent.trim() : "";
+          counterEl.textContent =
+            current + 1 + " / " + figures.length + " - ESC to close";
+        }
+
+        function open(index) {
+          show(index);
+          lightbox.classList.add("open");
+          document.body.style.overflow = "hidden";
+        }
+
+        function close() {
+          lightbox.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+
+        figures.forEach(function (fig, i) {
+          fig.querySelector("img").addEventListener("click", function () {
+            open(i);
+          });
+        });
+
+        lightbox
+          .querySelector(".lightbox-close")
+          .addEventListener("click", close);
+        lightbox
+          .querySelector(".lightbox-prev")
+          .addEventListener("click", function (e) {
+            e.stopPropagation();
+            show(current - 1);
+          });
+        lightbox
+          .querySelector(".lightbox-next")
+          .addEventListener("click", function (e) {
+            e.stopPropagation();
+            show(current + 1);
+          });
+        lightbox.addEventListener("click", function (e) {
+          if (e.target === lightbox) close();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (!lightbox.classList.contains("open")) return;
+          if (e.key === "Escape") close();
+          else if (e.key === "ArrowLeft") show(current - 1);
+          else if (e.key === "ArrowRight") show(current + 1);
+        });
+      })();
+    </script>
   </body>
 </html>

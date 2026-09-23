@@ -484,11 +484,183 @@
         <!-- 2026-08-13 — App Store privacy fix                            -->
         <!-- ============================================================ -->
         <!-- ============================================================ -->
-        <!-- 2026-09-10 — Echoes Play Store compliance fix              -->
+        <!-- 2026-09-21 — Registration no longer stalls on slow storage -->
         <!-- ============================================================ -->
         <div class="timeline-row">
           <div class="version-meta">
             <span class="version-badge">Latest</span>
+            <span class="version-number">v5.6.2</span>
+            <span class="version-date">Sep 21, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Signing up no longer gets stuck on the loading screen
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Some new accounts never finished signing up.</strong>
+                  After creating a profile, the app could sit on the
+                  loading screen forever instead of taking you into the
+                  app.
+                </li>
+                <li>
+                  <strong>Saving your profile is now guarded.</strong>
+                  If the phone's local storage is slow or briefly stuck,
+                  the app stops waiting after a few seconds and shows a
+                  proper message instead of spinning forever — and it
+                  reopens storage itself if it was closed.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Sign-up gained an automatic safety check
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Nothing looks different — this is behind the
+                  scenes.</strong>
+                  There is now an automated test that signs up one user
+                  and verifies their account, name, and photo are saved
+                  exactly as registered, so this kind of stall gets
+                  caught before it reaches you.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Tidy-up behind the scenes
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Nothing changes in the app.</strong>
+                  Local editor and helper folders are now left out of
+                  version control to keep the project clean.
+                </li>
+                <li>
+                  <strong>Filter options load more reliably.</strong>
+                  The "here to" choices and the interests strip on the
+                  filter screen — and the "looking for" choices during
+                  sign-up — now update on their own when ready instead
+                  of depending on one-time loads.
+                </li>
+                <li>
+                  <strong>Premium-only filters stay exclusive.</strong>
+                  The "Show Premium User Only" and "Global Match"
+                  switches now appear only for premium members, not
+                  for free accounts.
+                </li>
+                <li>
+                  <strong>Finishing the first-time setup restarts
+                  cleanly everywhere.</strong>
+                  After completing the initial filters, the app now
+                  does a full restart on web as well as on mobile, so
+                  everyone lands in the app the same way.
+                </li>
+                <li>
+                  <strong>Shared posts open right on the post.</strong>
+                  Tapping a link to a specific post now opens that very
+                  post on its own page instead of the general feed.
+                </li>
+                <li>
+                  <strong>Links open the right page, properly.</strong>
+                  Taps from outside the app (profiles, chats, matches,
+                  posts) now travel through the app's own page system
+                  instead of one-off pop-ups, so back buttons and
+                  navigation behave normally.
+                </li>
+                <li>
+                  <strong>Open a post to see every detail.</strong>
+                  The single-post page now shows the full picture:
+                  photo gallery, author, caption and tags, likes and
+                  stats, music, products, sponsor info and post
+                  details — with liking and commenting right there.
+                </li>
+                <li>
+                  <strong>Tapping a match opens that person.</strong>
+                  Links about a new match now jump straight to the
+                  matched profile instead of a generic list.
+                </li>
+                <li>
+                  <strong>Event links open event swiping.</strong>
+                  Tapping a link to an event now jumps straight into
+                  swiping that event's members, just as if you had
+                  tapped the event itself.
+                </li>
+                <li>
+                  <strong>Verification links open verification.</strong>
+                  Tapping a verification link now jumps straight to
+                  the verification page instead of a generic screen.
+                </li>
+                <li>
+                  <strong>Promotions have a home now.</strong>
+                  Tapping a promotion link opens its page (or the full
+                  promotions list when the link names none), with
+                  details and a link button. New promotions appear
+                  once added on the server.
+                </li>
+                <li>
+                  <strong>The feed loads again.</strong>
+                  Posts were coming back empty because of a check on
+                  the server that asked for something the app never
+                  sends. That check is removed, so the feed fills up
+                  normally.
+                </li>
+                <li>
+                  <strong>Videos from people you follow load again.</strong>
+                  That section crashed on the server because of a
+                  leftover line that did nothing useful. It is removed,
+                  so the list opens normally (empty if you follow
+                  nobody yet).
+                </li>
+                <li>
+                  <strong>Followers and following lists load again.</strong>
+                  These were blocked by a server check asking for
+                  something the app never sends, and the app was also
+                  looking for the names under the wrong key. Both are
+                  fixed, so the lists fill up normally.
+                </li>
+                <li>
+                  <strong>The leaderboard loads again.</strong>
+                  That section failed because its address was missing
+                  on the server. It now exists and returns the top
+                  members (empty until members earn rank).
+                </li>
+                <li>
+                  <strong>Demo mode is never empty.</strong>
+                  When there is nothing to show, the demo now fills in
+                  from all members: the swipe deck, followers and
+                  following, chats (openable as new conversations),
+                  the videos feed and the following-videos tab. Live
+                  streams and posts already showed everything.
+                </li>
+                <li>
+                  <strong>Technical clean-up behind the scenes.</strong>
+                  App screens now share one central place for saved
+                  settings instead of passing them from screen to
+                  screen, page addresses no longer carry settings
+                  baggage, and a leftover duplicate settings channel
+                  is gone. Nothing looks different in the app.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-09-10 — Echoes Play Store compliance fix              -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
             <span class="version-number">v5.6.1</span>
             <span class="version-date">Sep 10, 2026</span>
           </div>
