@@ -484,11 +484,1576 @@
         <!-- 2026-08-13 — App Store privacy fix                            -->
         <!-- ============================================================ -->
         <!-- ============================================================ -->
-        <!-- 2026-09-21 — Registration no longer stalls on slow storage -->
+        <!-- 2026-10-08 — Admin panel public sign-up removed               -->
         <!-- ============================================================ -->
         <div class="timeline-row">
           <div class="version-meta">
             <span class="version-badge">Latest</span>
+            <span class="version-number">v5.6.5</span>
+            <span class="version-date">Oct 08, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Submission guides synced both ways
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Checklists share their lessons.</strong>
+                  The packaging guides for both marketplaces now
+                  include each other's applicable safeguards, while
+                  keeping their different licensing rules separate.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Menus and links editing without code
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Point, click, done.</strong>
+                  Navigation links, footer columns, and social icons
+                  in the theme editor are now simple rows you can
+                  add, edit, and remove — no more raw code blocks.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Setup guide covers every customization
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Nothing left undocumented.</strong>
+                  The manual now walks through each value buyers must
+                  replace — login keys, ad IDs, deep-link domains, the
+                  support address, call setup, and share links — with
+                  two new troubleshooting answers.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Submission package cleaned for review
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Buyer-ready copy.</strong>
+                  The release package was swept for leftover keys,
+                  private branding, and machine-specific files —
+                  everything now uses placeholders the buyer fills
+                  with their own accounts.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Theme editor shows only relevant settings
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more clutter.</strong>
+                  When customizing a landing page design, the editor
+                  now shows only the texts and images that design
+                  actually uses, instead of every setting from all
+                  designs at once.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Sign in with Apple returns to your own site
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more third-party detours.</strong>
+                  After signing in with Apple in a browser, users now
+                  land on a page you choose (a setting, or your own
+                  site address by default) instead of an address that
+                  doesn't belong to you.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Setup guide now covers both marketplaces
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>One complete manual.</strong>
+                  The main setup guide absorbed the pieces that only
+                  existed in one marketplace copy — seeded demo data,
+                  web metadata, and the full Android/iOS release
+                  signing walkthroughs — plus the latest wording
+                  updates.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Call security upgraded to per-room tokens
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Safer voice and video calls.</strong>
+                  Calls now use short-lived, single-room passes created
+                  fresh on the server for each conversation, instead of
+                  one shared key — and a setup mix-up that could leave
+                  calls unconfigured was fixed along the way.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Stronger sign-in, privacy, payments, and shop fixes
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Phone sign-in is now verified.</strong>
+                  The server double-checks the phone login directly
+                  with the login provider before handing over an
+                  account.
+                </li>
+                <li>
+                  <strong>Other people's private details stay private.</strong>
+                  Profiles you view now show dating info plus an
+                  approximate distance — never email addresses, phone
+                  numbers, exact locations, or balances.
+                </li>
+                <li>
+                  <strong>App setup data no longer leaks secrets.</strong>
+                  Technical passwords and keys were removed from the
+                  public setup download; only the IDs the app needs
+                  are shared.
+                </li>
+                <li>
+                  <strong>Payment notifications are authenticated.</strong>
+                  Every payment provider's alerts are now signature-
+                  checked, and only yours and others' own dates, posts,
+                  and products can be changed or removed — plus fixed
+                  shop pages that could crash on seller info.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Coin and premium purchases are now verified
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Payments are double-checked.</strong>
+                  Coins and premium are now granted only for a confirmed
+                  payment — every purchase is recorded once, so it can
+                  never pay out twice, and transfers between users are
+                  protected against errors. Free welcome coins are now
+                  claimed through a dedicated, one-time bonus.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                File uploads are now checked and locked down
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Photos, videos, and files are verified.</strong>
+                  Every upload (chats, stories, reels, reports, dates,
+                  and more) is now checked to be a genuine media or
+                  document file before it is saved, and the upload
+                  folders are locked so nothing stored there can ever
+                  run as a program.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                No more prefilled login details on the admin sign-in
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Sign-in starts blank.</strong>
+                  The admin login page no longer comes with an email
+                  and password already typed in, and no sample login
+                  details are left behind in the page for visitors to
+                  find.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Admin area is now staff-only, with per-role access
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Only admins and moderators can sign in.</strong>
+                  Regular app accounts can no longer open the admin
+                  pages — and each moderator role only sees the sections
+                  its permissions allow. Dangerous shortcuts (like
+                  running server commands) are limited to fully
+                  authorized roles.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Open registration removed from the admin panel
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more public sign-up page.</strong>
+                  The admin sign-in area no longer offers a way for
+                  anyone on the internet to create an account — new
+                  accounts can only be created from inside the panel by
+                  someone who is already signed in.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-10-01 — Withdrawals screen clarity fix                      -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.6.5</span>
+            <span class="version-date">Oct 01, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Withdrawals screen looks clear again
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more cloudy, washed-out panels.</strong>
+                  The totals card, filter pills, and list rows now use a
+                  single clean glass layer, so colors stay crisp instead of
+                  milky and doubled-up.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Earnings screen looks clear again
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Same cloudy-glass fix as Withdrawals.</strong>
+                  The summary card, type filters, and earning rows now use
+                  one clean glass layer instead of two stacked tints.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Upload thumbnail no longer shows a double add-button
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>One icon, one layer.</strong>
+                  The video thumbnail preview was stacking its placeholder
+                  and add-button twice under a grey wash; now it renders
+                  once, sharp. Other flagged screens (interactions,
+                  matches, blocked users, plans, followers, notifications)
+                  were audited and have no such double layer.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Notification settings readable again in Edit Profile
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more blank white cards.</strong>
+                  The notification cards now use the app's frosted-glass
+                  style with readable titles and Push / SMS / Email
+                  switches in both light and dark mode.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Upload page counter no longer shows twice
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>One clean character count.</strong>
+                  The caption box was showing two overlapping counters;
+                  now there is a single count and the photo preview is
+                  free of its grey haze.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Calling fixed: video calls, decline, and permissions
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Video calls now open video.</strong>
+                  A setup check found regular video calls were loading the
+                  voice-only screen — corrected, along with the Decline
+                  button (which never hung up) and the missing
+                  notification permissions calls need on newer Android
+                  phones.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Chat call buttons work now
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Tapping call or video actually calls.</strong>
+                  The voice and video buttons in chat were not connected
+                  to anything, so tapping them did nothing. Both now
+                  start the right kind of call immediately.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-09-29 — Marketplace review fixes                            -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.6.5</span>
+            <span class="version-date">Sep 29, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Clearer release-signing checklist for app stores
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Easier to publish with confidence.</strong>
+                  The setup guides now show the right check for each file
+                  type before you upload to Google Play, with the
+                  step-by-step signing and branding instructions unchanged.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Changing filters no longer restarts the app
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Fresh profiles, instantly.</strong>
+                  Saving filter changes now reloads your swipe deck right
+                  where you are instead of restarting the whole app.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Calls keep working when you leave the app
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Your microphone stays on in the background.</strong>
+                  Calls and livestreams now keep audio going if you switch
+                  apps, with a notification that takes you back. The first
+                  time, the app explains this and lets you opt out.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Google and Apple Pay purchases now complete properly
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more endless "Processing…".</strong>
+                  Paid coin purchases now credit your balance and finish
+                  correctly, and any store problem tells you what is wrong
+                  instead of going silent.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Settings opens instantly and stays fresh
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No waiting for the network.</strong>
+                  Settings now opens immediately from your saved profile and
+                  quietly updates itself if anything changed on the server.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Subscription packages screen fixed and themed
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Back button visible again.</strong>
+                  The packages screen matches the app theme, with readable
+                  cards instead of solid white blocks.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Cleaner Play Store permission list
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Less for reviewers to question.</strong>
+                  Removed an unused background-messaging declaration and
+                  unused background-location permission left over from old
+                  code — the app never used either.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Blocked users list can't get stuck loading
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Stops waiting after a few seconds.</strong>
+                  If the list can't load, the page now gives up gracefully
+                  and tells you there's no one blocked instead of spinning
+                  forever.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Map, leaderboard, events, AI, and uploads can't get stuck
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Blank and forever-loading screens fixed.</strong>
+                  The map now opens even with no one nearby, the leaderboard
+                  and event lists show friendly messages instead of spinning
+                  forever, Lama AI waits briefly then offers a retry instead
+                  of a blank page, and upload progress always clears. The
+                  video trimmer now allows up to 30 seconds, and payments
+                  offer just Google / Apple Pay plus card.
+                </li>
+                <li>
+                  <strong>Premium-only means premium-only.</strong>
+                  The visibility toggle in filters and edit profile stays off
+                  for free accounts.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Settings page opens again, fully themed
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more blank screen from the profile menu.</strong>
+                  Settings now always has something to show, and every row —
+                  toggles, dropdowns, sliders, and dividers — matches the
+                  app's dark theme instead of solid blocks.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Verification form now scrolls properly
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>You can now reach the submit button.</strong>
+                  The verification submission form scrolls when its content
+                  runs long, and the profile-type options are readable
+                  before you select one.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Eight more screens now match the app's dark theme
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Blocked users, subscriptions, plans, uploads, followers, edit profile, notifications, and events.</strong>
+                  All now use the same themed background and readable text —
+                  including difficult spots like the plan comparison cards,
+                  the profile theme picker, and notification menus. Fixed
+                  along the way: the Unblock confirmation that never appeared,
+                  and a crash in the Events tab switcher.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                More screens now match the app's dark theme
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more white screens.</strong>
+                  Send Dymonds, Interactions, and Matches now use the same
+                  dark themed background and styling as the rest of the app —
+                  including their loading, empty, and error states, so you
+                  never hit a bright unstyled page mid-flow.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Installer database step double-checked
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Verified safe, no changes needed.</strong>
+                  The installer's database update step was compared against
+                  the live admin runner and confirmed correct — including the
+                  setting it needs for unattended installs.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Marketplace package cleanup: easier, safer buyer setup
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more personal keys in the package.</strong>
+                  Error tracking is now off by default and only turns on when
+                  you add your own key — the app runs normally without one.
+                </li>
+                <li>
+                  <strong>Clearer app setup.</strong>
+                  The app now ships under the Lamat name everywhere, with
+                  step-by-step guides for changing the app name, connecting
+                  your own login/notification accounts, and installing the
+                  database from the included file even if the download server
+                  is unreachable.
+                </li>
+                <li>
+                  <strong>Honest cost guidance.</strong>
+                  The guides now explain that login, notification, chat, video,
+                  and payment services may charge depending on how much your
+                  app is used, so you can plan your budget before launch.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Submission guides now self-check all 7 review points
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Future updates can't silently re-break the package.</strong>
+                  Both submission guides gained a review-gates checklist with
+                  copy-paste checks for sensitive files, error-tracking keys,
+                  the bundled database, app names, SDK versions, the app
+                  readme, and cost notes — plus corrected setup paths and
+                  template references.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Readme now helps developers get started
+                <span class="tag docs">docs</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Setup guide plus clear license links.</strong>
+                  The readme now opens with quick start, configuration, and
+                  troubleshooting help, and points to the right license terms
+                  for CodeCanyon and Codester buyers.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Error-tracking setup fully documented
+                <span class="tag docs">docs</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Copy-paste commands for every build.</strong>
+                  The buyer guides now show exactly how to enable error
+                  tracking when running and when building for Android, iPhone,
+                  and web — including the reminder to repeat the settings on
+                  every release build.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                App rename guide with pictures
+                <span class="tag docs">docs</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Rename in VS Code, step by step.</strong>
+                  The renaming guide now shows how to swap the app name with
+                  VS Code search-and-replace, with a screenshot walking
+                  through each click.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Installer now finishes with migrations
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Database setup is self-healing.</strong>
+                  After loading the included database file, the installer now
+                  automatically applies any pending updates, so your install
+                  is always complete — and you'll see the result right in the
+                  setup screen.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-09-28 — Withdraw screen styling fix                        -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.6.5</span>
+            <span class="version-date">Sep 28, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Withdraw screen now matches the rest of the app
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more white screen or oversized gap at the top.</strong>
+                  The Withdraw page now uses the same dark themed background
+                  and modern input style as the New Product page, with normal
+                  spacing on phones and tablets.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-09-27 — Codester backend: offline installer, no license check -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.6.5</span>
+            <span class="version-date">Sep 27, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Simpler Codester setup: no license key needed
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Install in 4 quick steps, fully offline.</strong>
+                  The Codester backend package no longer asks for a purchase
+                  code or contacts a license server — the database installs
+                  from a file included in the package, and the buyer guides
+                  were updated to match.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-09-26 — Play Store background-permission cleanup          -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.6.5</span>
+            <span class="version-date">Sep 26, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Cleaner Play Store release, fewer permission prompts
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>One less thing standing between you and updates.</strong>
+                  We removed an unused background-sync component the store
+                  was flagging, so future releases move through review
+                  smoothly. Notifications for calls and messages are
+                  untouched.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 2026-09-25 — Envato Flutter version wording corrected         -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.6.5</span>
+            <span class="version-date">Sep 25, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice rooms stay fresh automatically
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Dead rooms clean themselves up.</strong>
+                  Empty or long-abandoned voice rooms now close on their
+                  own, lists refresh faster, and room badges show the real
+                  room type — all re-verified live.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Paid rooms and host earnings verified live
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Ticketed rooms and per-minute pay work.</strong>
+                  Live testing with real accounts proved paid entry
+                  (diamonds), host earnings per minute, and tier-ordered
+                  lists — with every test trace removed afterward.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice rooms get true Nearby sorting
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Find rooms close to you.</strong>
+                  New rooms remember where they were created, so the
+                  Nearby tab lists the closest ones first (rooms without
+                  a location appear last).
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice home: everything tappable works
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Tabs, interests and trophy now do their jobs.</strong>
+                  The top tabs filter rooms, the people row shows live
+                  hosts you can join, the trophy opens a top-rooms chart,
+                  and upcoming times display correctly.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice rooms: privacy, closing and spotlight cards
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Open, followers-only and invite-only rooms.</strong>
+                  Hosts choose who can join at creation; joining, leaving
+                  and closing now update counts correctly, and only hosts
+                  can close their room — verified live end to end.
+                </li>
+                <li>
+                  <strong>Spotlight cards on home.</strong>
+                  The busiest room, Gold hosts' rooms and upcoming rooms
+                  get their own showcase cards with live counts.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice-room spotlight cards planned
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Featured rooms, Gold hosts and announcements.</strong>
+                  The plan now includes a spotlight card for the busiest
+                  room, a gold look for Gold hosts' rooms, an announcements
+                  banner, and live speaking indicators — all for a future
+                  build.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                More voice-room ideas queued
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Room history, topics and paid entry planned.</strong>
+                  A design review lined up the next voice-room upgrades —
+                  recently visited rooms, topic tags, region browsing and
+                  ticketed entry — for a future build.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice rooms home gets a fresh look
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Cleaner tabs and livelier room cards.</strong>
+                  Categories are now sleek text tabs, and each room shows
+                  live occupancy bars with member counts — the busiest
+                  room gets a highlighted frame so members spot where the
+                  action is.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Voice rooms upgrade plan ready
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Open, followers-only and invite-only rooms ahead.</strong>
+                  A review found rooms never really closed and anyone could
+                  join anything — the new plan maps private rooms, proper
+                  leaving and closing, and host earnings, all manageable
+                  from the admin panel.
+                </li>
+                <li>
+                  <strong>Planning only.</strong>
+                  No app changes yet — this is the blueprint the upgrade
+                  will follow.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Liking, saving and view counts fixed on videos
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Your taps now actually count.</strong>
+                  A live end-to-end check (upload, watch, like, save,
+                  comment with a real test account) found views crashing
+                  and likes/saves silently failing — both fixed and
+                  re-verified green, with all test traces removed.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Reels covered by automated tests
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Video browsing now checks itself.</strong>
+                  18 automated checks using the project's real sample
+                  videos verify feeds load, pages turn, the right video
+                  plays, and failures recover with a retry — catching
+                  regressions before they reach you.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Reels overhaul finished for speed and battery
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>The full video upgrade is now in the build.</strong>
+                  Profiles load once instead of per video, buttons animate
+                  without stutter, upcoming previews preload silently, and
+                  dead code was removed — longer watch sessions, less data
+                  and battery use.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Reels feeds switch instantly without reloading
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>No more waiting when switching tabs.</strong>
+                  For You, Following and Trending now stay loaded as you
+                  move between them, and scrolling fetches the next videos
+                  just before you reach them.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Videos now load faster and play one at a time
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Smoother reels already in this build.</strong>
+                  Short videos now show a preview image while loading,
+                  start only when visible, and stop the moment you scroll
+                  past — with a retry button if one fails to load.
+                </li>
+                <li>
+                  <strong>More speed work queued.</strong>
+                  The feed rewrite (faster tab switches, no repeated
+                  downloads) follows in the next steps.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Smoother video reels plan ready
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Faster, stutter-free scrolling ahead.</strong>
+                  A technical plan now maps out how short videos will load
+                  instantly, play one at a time, and stop draining battery
+                  while browsing.
+                </li>
+                <li>
+                  <strong>Planning only.</strong>
+                  No app changes yet — this is the blueprint the upgrade
+                  will follow.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Stalled update fixed so installs finish cleanly
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Setup no longer stops halfway.</strong>
+                  A database step that already existed was blocking the
+                  remaining updates; it now skips safely when there is
+                  nothing to do. Nothing you entered was touched.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Subscription tiers are now easy to set up and buy
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Members compare plans before paying.</strong>
+                  A new plans page shows Plus, Gold and Platinum side by
+                  side with their benefits and prices — tapping a plan
+                  opens its payment screen.
+                </li>
+                <li>
+                  <strong>Everything adjustable from the admin panel.</strong>
+                  Tier names, benefits, prices, and store settings are all
+                  managed in one place, with a setup checklist for
+                  connecting the app stores.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Upgrade plan written for flexible subscription tiers
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Plus, Gold and Platinum will be fully adjustable.</strong>
+                  A build plan now describes how every subscription detail —
+                  prices, benefits, and store settings — can be managed from
+                  the admin panel, plus a new in-app page where members
+                  compare tiers before choosing one.
+                </li>
+                <li>
+                  <strong>Planning only.</strong>
+                  No app changes yet — this is the blueprint the upgrade
+                  will follow.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Listing now names the correct Flutter version
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Clearer setup requirement for buyers.</strong>
+                  The Envato description now asks for Flutter 3.47
+                  stable (tested with 3.47.2) with Dart 3.13, instead
+                  of the confusing "3.44 or higher" wording the
+                  reviewer flagged.
+                </li>
+                <li>
+                  <strong>Nothing else changed</strong> — same app, same
+                  features, just accurate version info.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-09-24 — Envato description rewritten, concise copy       -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.6.4</span>
+            <span class="version-date">Sep 24, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Top Picks moved into the swipe menu
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Another header icon removed.</strong>
+                  The Top Picks button now sits in the ⋮ menu alongside
+                  Who Likes You, Map View, Events and AI.
+                </li>
+                <li>
+                  <strong>Same premium rules.</strong>
+                  Free members still see the upgrade prompt; Gold members
+                  open Top Picks as before.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Who Likes You moved into the swipe menu
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>One less icon on the top bar.</strong>
+                  The star button that opened Who Likes You now lives in
+                  the ⋮ menu (with Map View, Events and AI), so the
+                  header stays less crowded.
+                </li>
+                <li>
+                  <strong>Same premium rules.</strong>
+                  Free members still see the upgrade prompt; Gold members
+                  open Who Likes You as before.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Safer email and phone changes from your profile
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Email changes now need a confirmation click.</strong>
+                  Enter a new address and tick save — we email you a secure
+                  link that expires in an hour. Only after you open it does
+                  your profile update.
+                </li>
+                <li>
+                  <strong>Phone changes verify with a text message.</strong>
+                  Saving a new number asks for a one-time code from SMS
+                  (same verification as sign-in), then stores the number
+                  as verified.
+                </li>
+                <li>
+                  <strong>Old behaviour removed.</strong> The email field no
+                  longer tried to save directly (which always failed) —
+                  everything goes through the confirmation steps above.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Envato description rewritten in concise, buyer-friendly copy
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Reviewer feedback addressed.</strong>
+                  The long repetitive bullet lists — especially the feature
+                  and admin dashboard sections — were condensed into short
+                  paragraphs anyone can scan.
+                </li>
+                <li>
+                  <strong>Nothing important was removed.</strong>
+                  All selling points remain: swiping, chat and calls,
+                  stories and reels, live streaming, the 6 dating games,
+                  monetization, and the admin panel. They are now grouped
+                  by benefit instead of listed setting by setting.
+                </li>
+                <li>
+                  <strong>Dashboard section simplified.</strong>
+                  The 50-plus admin settings are now one readable list of
+                  categories, with duplicate entries removed.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Flutter version added to the requirements list
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Requirements now name the Flutter version.</strong>
+                  The setup section lists Flutter 3.44 or higher (tested
+                  with 3.47.2) with Dart 3.12 or higher.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                AI usage now noted subtly throughout the Envato description
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>AI is mentioned where it matters, not everywhere.</strong>
+                  A light touch — intro, chat, Hot Takes, and safety —
+                  notes where Gemini and Sight Engine help (translation,
+                  replies, matching, moderation) without sounding like
+                  buzzword stuffing.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Vendor scripts now ship as readable source, not minified
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Admin panel scripts are now reviewable.</strong>
+                  Chart.js, Popper, Bootstrap and Smooth Scrollbar are
+                  included as their original unminified files (v2.9.4,
+                  v2.9.2, v5.0.0, v8.4.0) and pages load those — no
+                  minified files remain.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Sensitive keys and keystore removed from the Flutter package
+                <span class="tag security">security</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Private keys no longer ship.</strong>
+                  The release keystore, Firebase credentials, Google
+                  Maps key, and Play service-account key were replaced
+                  with placeholders and setup instructions. Buyers add
+                  their own keys — your accounts stay private and the
+                  app still builds.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Buyer installer unblocked — local install files removed
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Fresh uploads can now reach the installer.</strong>
+                  A leftover file marked the package as already installed,
+                  which would have locked buyers out of the setup wizard.
+                  Your own license file, local log, and test cache were
+                  removed too — all recreate themselves on the buyer's
+                  server.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Unused minified files removed from the backend package
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Three unreferenced .min files plus one stale bundle are gone.</strong>
+                  A full reference sweep proved no page loads them, so the
+                  admin panel is unaffected — it keeps using the readable
+                  sources and the four vendor files it actually needs.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Prohibited .idea and build folders removed from the package
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Reviewer feedback addressed.</strong>
+                  The .idea folder, all build output folders, nine stale
+                  .dart_tool pub caches, and two IDE module files were
+                  removed from the submission. A rescan confirms none
+                  remain — no source files were touched.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Empty folders removed from the Envato package
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Reviewer feedback addressed.</strong>
+                  Build caches (Gradle, Kotlin, CMake outputs) and 22
+                  verified-empty placeholder folders were removed from the
+                  submission's flutter_app — including empty Zego example-app
+                  skeletons and an unused voicechat search folder.
+                </li>
+                <li>
+                  <strong>Laravel storage folders were kept on purpose.</strong>
+                  They look empty but the framework needs them at runtime
+                  for compiled views, cache, and sessions. Removing them
+                  would break fresh installs.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Backend env template now explains its important keys
+                <span class="tag refactor">refactor</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Each key now has a short comment.</strong>
+                  App, logging, database, realtime and Pusher, cache,
+                  queue, session, Redis, email, and demo mode are grouped
+                  with plain-language notes on what to set and where to
+                  get the values.
+                </li>
+                <li>
+                  <strong>No values were changed</strong> — comments only,
+                  so existing setups are unaffected.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-09-23 — Photo and camera picking works again on iPhone    -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
+            <span class="version-number">v5.6.3</span>
+            <span class="version-date">Sep 23, 2026</span>
+          </div>
+          <div class="version-content">
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Splash screen type can now be set from the admin panel
+                <span class="tag feature">feature</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>The splash animation type was hard-coded.</strong>
+                  The app always treated the splash as a GIF animation,
+                  even when the admin panel was meant to allow a static
+                  image. The setting existed in code but was never read
+                  from the server.
+                </li>
+                <li>
+                  <strong>It is now a live configuration option.</strong>
+                  A new <em>Splash Animation Type</em> field appears in the
+                  <em>App Images Icons</em> settings. Set it to
+                  <code>gif</code> for an animated GIF, or
+                  <code>image</code> for a static picture. The app reads
+                  the value on every launch and switches behaviour
+                  accordingly.
+                </li>
+                <li>
+                  <strong>Defaults remain unchanged.</strong>
+                  If the field is left empty the app continues to show
+                  the built-in GIF animation, so existing installs are
+                  not affected until you choose to change it.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                The opening screen always has its artwork now
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>The splash screen could come up blank.</strong>
+                  If the artwork in the admin panel was left empty, or the
+                  app could not reach it, the opening screen showed no
+                  background and no animation at all — and a failed animation
+                  could take the screen down with it.
+                </li>
+                <li>
+                  <strong>It now falls back to the artwork built into the
+                  app.</strong>
+                  Those images ship with the app, so the opening screen
+                  always shows something. A custom image still appears as
+                  soon as it loads, and is quietly skipped if it cannot.
+                </li>
+                <li>
+                  <strong>Light and dark mode are handled separately.</strong>
+                  A custom light background no longer affects the dark one.
+                </li>
+              </ul>
+            </div>
+            <div class="entry-card">
+              <div class="grid-bg"></div>
+              <div class="glow-accent g1"></div>
+              <div class="entry-title">
+                Photo and camera picking works again on iPhone
+                <span class="tag fix">fix</span>
+              </div>
+              <ul class="detail-list">
+                <li>
+                  <strong>Choosing a photo did nothing on iPhone.</strong>
+                  On your edit-profile page, tapping an image and picking
+                  "Photo library" or "Camera" gave no response at all — no
+                  picker, no permission prompt, no error message. The same
+                  silence affected sending a picture in chat, verification
+                  selfies and ID photos, and posting to feeds.
+                </li>
+                <li>
+                  <strong>The cause was a device check meant for Android.</strong>
+                  Before opening the picker, the app asked every phone for
+                  Android system details. On iPhone that request fails, which
+                  stopped everything before the picker could appear. Those
+                  details are now requested on Android only.
+                </li>
+                <li>
+                  <strong>Found while validating the iOS 26 and 27 update.</strong>
+                  Nothing changes for you on Android — this simply restores
+                  the same behaviour on iPhone.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2026-09-21 — Registration no longer stalls on slow storage -->
+        <!-- ============================================================ -->
+        <div class="timeline-row">
+          <div class="version-meta">
             <span class="version-number">v5.6.2</span>
             <span class="version-date">Sep 21, 2026</span>
           </div>

@@ -621,7 +621,10 @@
           OAuth, SMTP Email Service, and Google Analytics require separate paid
           subscriptions or API costs not covered by the purchase price. The
           buyer is responsible for any costs associated with the third-party
-          services used by the application.
+          services used by the application. Note: Firebase and OAuth services
+          are free to start but may involve costs depending on your traffic
+          volume (Firebase Blaze usage, quotas, and provider limits) — please
+          review their pricing to plan your budget.
         </div>
         <div class="alert alert-success">
           <strong>Detailed features list</strong>
@@ -640,8 +643,7 @@
         <div class="alert alert-info">
           <strong>Document version:</strong> 1.0 &middot; App version 5.0.0+50
         </div>
-
-        <h2 id="screenshots">Screenshots</h2>
+<h2 id="screenshots">Screenshots</h2>
         <p>
           A visual tour of the main screens in the Lamat app — from
           authentication and discovery to chat, social features, and live
@@ -1377,7 +1379,88 @@ mysql -u root -p lamat &lt; database/backup/database.sql
           <code>LICENSE_SERVER_URL</code>.
         </div>
 
-        <h2 id="backend">Laravel Configuration</h2>
+        <h3>Seeded Data &amp; Placeholders</h3>
+        <p>
+          The bundled <code>database.sql</code> ships the full <strong>schema</strong>
+          plus the platform's <strong>configuration</strong> — plugin settings,
+          membership plans, credit packages, profile questions, verification types,
+          languages, genders, gifts, profile rankings, photo borders, themes and
+          landing-page presets.
+        </p>
+        <div class="alert alert-info">
+          <strong>No user content is seeded.</strong> There are no demo users, posts,
+          feeds, reels, chats, live streams, voice rooms or interests in the dump —
+          the database starts clean and you build your own content.
+        </div>
+        <p>
+          It contains <strong>no author-specific values</strong>. The only placeholder
+          left in the seed is <code>app_base_url</code>
+          (<code>https://domain.example</code>) — point it at your own domain as part
+          of your setup:
+        </p>
+        <table>
+          <tr>
+            <th>What</th>
+            <th>Where to set it</th>
+          </tr>
+          <tr>
+            <td>Site base URL (<code>app_base_url</code>)</td>
+            <td>
+              Admin panel → <strong>General Settings → App Base URL</strong>. It
+              is also used to build the landing-page links.
+            </td>
+          </tr>
+          <tr>
+            <td>Site logo, header logo, favicon</td>
+            <td>
+              Admin panel → <strong>General Settings</strong>. These ship empty —
+              upload your own.
+            </td>
+          </tr>
+          <tr>
+            <td>Gift icons</td>
+            <td>
+              Admin panel → <strong>Gifts</strong>. The gift catalogue ships with
+              its names and prices but <strong>no icons</strong> — upload one per
+              gift.
+            </td>
+          </tr>
+          <tr>
+            <td>Landing-page QR codes</td>
+            <td>
+              Admin panel → <strong>Theme Editor → QR Code Image</strong> and
+              <strong>Footer QR Image</strong>. These ship empty — upload a QR
+              pointing at your own app store listing. The sections are hidden
+              until an image is set.
+            </td>
+          </tr>
+          <tr>
+            <td>Third-party API keys &amp; secrets</td>
+            <td>
+              Ships <strong>unconfigured</strong> — no credentials of any kind.
+              That covers social login (Apple, Google), payment gateways, push
+              (FCM / OneSignal), realtime (Pusher / Ably), geolocation &amp; maps,
+              Sightengine nudity detection, the AI provider and the chat
+              auto-translate key. Add your own in the matching plugin; social
+              login is additionally <em>disabled</em> until you enable it. See
+              <a href="#third-party">Third Party Integrations</a>.
+            </td>
+          </tr>
+          <tr>
+            <td>Admin account</td>
+            <td>
+              Created by <strong>wizard Step 5</strong> — the installer creates the
+              administrator row with the name, email and password you enter there.
+            </td>
+          </tr>
+        </table>
+        <div class="alert alert-warning">
+          <strong>Uploaded media is not part of the download.</strong> Profile photos,
+          reels and live-stream thumbnails are user-generated, so none are included.
+          Theme screenshots, landing-page preset images and the photo-border / rank
+          icons (<code>public/assets/sources/uploads/</code>) <em>are</em> included.
+        </div>
+<h2 id="backend">Laravel Configuration</h2>
 
         <pre>
 <span class="comment"># Navigate to the backend directory</span>
@@ -1434,9 +1517,17 @@ nano .env
             <td>Yes</td>
             <td>Set to <code>false</code> in production</td>
           </tr>
+          <tr>
+            <td><code>APPLE_REDIRECT_URL</code></td>
+            <td>No</td>
+            <td>
+              Where browser-based (iOS / Web) users land after Sign in with
+              Apple. Use your own site; defaults to <code>APP_URL</code> when
+              empty. Also configurable in the admin panel (Plugins → Apple)
+            </td>
+          </tr>
         </table>
-
-        <h3>Storage Permissions</h3>
+<h3>Storage Permissions</h3>
         <pre>
 chmod -R 775 storage bootstrap/cache
 </pre
@@ -2316,19 +2407,265 @@ flutter build web --web-renderer canvaskit --release
 cp -r build/web/* /var/www/html/lamat/public/
 </pre>
 
-        <h3>Android</h3>
+        <h3>Android — Release Signing Setup</h3>
+        <p>
+          Release builds (<code>apk</code> / <code>appbundle</code>) must be
+          signed with <strong>your own</strong> keystore. This package ships
+          <strong>no private signing keys</strong>:
+          <code>flutter_app/android/key.properties</code> contains
+          <code>YOUR_*</code> placeholders only — replace them with your own
+          values. Without a valid signing configuration the
+          <code>--release</code> commands below will fail, so complete steps
+          1–3 first.
+        </p>
+
+        <h4>1. Generate your own keystore</h4>
+        <p>
+          Run this once on your own machine (requires a JDK; ships with
+          Android Studio). Use a strong, unique store password and key
+          password, and note down the alias:
+        </p>
+        <pre>
+keytool -genkey -v -keystore your-release.keystore -alias your_key_alias -keyalg RSA -keysize 2048 -validity 10000
+</pre
+        >
+        <div class="alert alert-warning">
+          <strong>Back it up and keep it private:</strong> store the
+          <code>.keystore</code> file and both passwords in a password manager
+          with an offline backup. If you lose the keystore, Google Play will
+          not accept updates signed with a different key. Never email it,
+          never commit it to git, and never include it when reselling or
+          redistributing the source.
+        </div>
+
+        <h4>2. Create <code>flutter_app/android/key.properties</code></h4>
+        <p>
+          Create (or overwrite the shipped placeholder) file at
+          <code>flutter_app/android/key.properties</code> with exactly these
+          four keys:
+        </p>
+        <pre>
+storePassword=YOUR_STORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=YOUR_KEY_ALIAS
+storeFile=your-release.keystore
+</pre
+        >
+        <p>
+          <code>storePassword</code> is the keystore password,
+          <code>keyPassword</code> is the key password,
+          <code>keyAlias</code> is the alias chosen with
+          <code>keytool</code>, and <code>storeFile</code> is the path to the
+          keystore file (see path rules below).
+        </p>
+
+        <h4>3. Where <code>storeFile</code> points (important)</h4>
+        <p>
+          <code>android/app/build.gradle.kts</code> loads the properties file
+          with <code>rootProject.file("key.properties")</code> — that is,
+          <code>flutter_app/android/key.properties</code> — and resolves the
+          keystore with <code>file(it)</code> inside the
+          <code>android { … }</code> block. That call resolves
+          <strong>relative to <code>android/app</code></strong>, not to
+          <code>android/</code>:
+        </p>
+        <ul>
+          <li>
+            <code>storeFile=your-release.keystore</code> → place the file at
+            <code>flutter_app/android/app/your-release.keystore</code>
+          </li>
+          <li>
+            <code>storeFile=../your-release.keystore</code> → place the file
+            at <code>flutter_app/android/your-release.keystore</code>
+          </li>
+        </ul>
+        <p>
+          Either location works as long as the value matches. An absolute path
+          also works but breaks on other machines — prefer the relative form.
+          Confirm Gradle sees the config:
+        </p>
+        <pre>
+<span class="comment"># Linux / macOS</span>
+cd android && ./gradlew signingReport
+
+<span class="comment"># Windows</span>
+cd android
+gradlew.bat signingReport
+</pre
+        >
+        <p>
+          The <code>release</code> variant must list your
+          <code>keyAlias</code> with a valid certificate. Copy the release
+          <code>SHA-1</code> / <code>SHA-256</code> fingerprints into the
+          Firebase Console (Project Settings → your Android app) and into any
+          restricted Google Cloud API keys, then re-run
+          <code>flutterfire configure</code> if the Firebase apps changed.
+        </p>
+
+        <h4>4. Build the signed APK / AAB</h4>
         <pre>
 flutter build apk --release
-flutter build appbundle --release    <span class="comment"># Play Store</span>
-</pre>
+flutter build appbundle --release    <span class="comment"># Play Store upload</span>
+</pre
+        >
+        <p>Outputs:</p>
+        <ul>
+          <li>
+            APK:
+            <code>build/app/outputs/flutter-apk/app-release.apk</code> (direct
+            distribution / testing)
+          </li>
+          <li>
+            AAB:
+            <code>build/app/outputs/bundle/release/app-release.aab</code>
+            (required for new Google Play releases)
+          </li>
+        </ul>
+        <p>
+          Debug builds (<code>flutter run</code>) keep using the automatic
+          debug key — this signing setup only affects
+          <code>--release</code> builds.
+        </p>
 
-        <h3>iOS</h3>
+        <h4>5. Verify the signature</h4>
         <pre>
-flutter build ios --release
-open ios/Runner.xcworkspace          <span class="comment"># Archive in Xcode</span>
-</pre>
+<span class="comment"># Fingerprints of your keystore</span>
+keytool -list -v -keystore your-release.keystore -alias your_key_alias
 
-        <h2 id="user-signup">User Sign Up Walkthrough</h2>
+<span class="comment"># Verify the APK (apksigner ships with Android SDK build-tools; APKs only)</span>
+apksigner verify --print-certs build/app/outputs/flutter-apk/app-release.apk
+
+<span class="comment"># Verify the App Bundle (apksigner does not verify AABs — use jarsigner from the JDK)</span>
+jarsigner -verify -verbose -certs build/app/outputs/bundle/release/app-release.aab
+
+<span class="comment"># Inspect the AAB signing certificate</span>
+keytool -printcert -jarfile build/app/outputs/bundle/release/app-release.aab
+</pre
+        >
+        <p>
+          The signing certificate fingerprints must match the keystore and the
+          fingerprints registered in Firebase / Google Cloud. Install the APK
+          on a physical device for a final smoke test before uploading the AAB
+          to Play Console (manual upload), or publish via the Gradle Play
+          Publisher <code>play</code> block in
+          <code>android/app/build.gradle.kts</code> with your own
+          <code>android/app/service-account.json</code> (the shipped file is a
+          <code>YOUR_*</code> placeholder — generate it under Google Cloud
+          Console → IAM → Service Accounts; it is only needed for automated
+          publishing, not for manual uploads).
+        </p>
+        <div class="alert alert-danger">
+          <strong>Do not ship private signing keys.</strong> Never include
+          <code>*.jks</code>, <code>*.keystore</code>, a filled-in
+          <code>key.properties</code> with real passwords, a real
+          <code>service-account.json</code>, or <code>local.properties</code>
+          when redistributing the source. Add them to
+          <code>.gitignore</code>:
+          <pre
+            style="background: none; color: inherit; padding: 8px 0 0; margin: 8px 0 0;"
+>
+*.jks
+*.keystore
+key.properties
+local.properties
+service-account.json</pre
+          >
+        </div>
+
+        <h3>iOS — Team, Signing, Provisioning &amp; Archive</h3>
+        <p>
+          iOS release builds require <strong>macOS with Xcode</strong> and a
+          paid <strong>Apple Developer Program</strong> membership. There is no
+          keystore file as on Android — signing is done with your Apple Team,
+          certificates, and provisioning profiles managed in Xcode.
+        </p>
+
+        <h4>1. Bundle identifier</h4>
+        <p>
+          The default identifier is <code>com.lamat.app</code> (see
+          <code>PRODUCT_BUNDLE_IDENTIFIER</code> in
+          <code>ios/Runner.xcodeproj/project.pbxproj</code>). It must be
+          globally unique and must exactly match the bundle ID registered in
+          Firebase (for <code>GoogleService-Info.plist</code>) and in your
+          Apple Developer account. To rebrand:
+        </p>
+        <pre>
+dart run change_package_name:main com.yourcompany.appname --ios
+flutterfire configure    <span class="comment"># regenerates GoogleService-Info.plist for the new bundle ID</span>
+</pre
+        >
+
+        <h4>2. Team, signing &amp; provisioning</h4>
+        <ol>
+          <li>
+            Open <code>ios/Runner.xcworkspace</code> (not
+            <code>.xcodeproj</code>) in Xcode.
+          </li>
+          <li>
+            Select the <strong>Runner</strong> target → <strong>Signing &amp; Capabilities</strong>.
+          </li>
+          <li>
+            Select your <strong>Team</strong> (your Apple Developer account).
+            Keep <strong>Automatically manage signing</strong> checked —
+            Xcode then creates and renews the App Store distribution
+            certificate and provisioning profile for your bundle ID.
+          </li>
+          <li>
+            For manual signing instead: create an
+            <strong>App Store distribution provisioning profile</strong> for
+            the bundle ID at
+            <a
+              href="https://developer.apple.com/account/resources/profiles/list"
+              target="_blank"
+              >developer.apple.com → Profiles</a
+            >, download it, and assign it with your distribution certificate
+            in Xcode.
+          </li>
+          <li>
+            Enable the capabilities the app needs under
+            <strong>Signing &amp; Capabilities → +</strong>: e.g.
+            <strong>Sign in with Apple</strong>,
+            <strong>Push Notifications</strong>, and
+            <strong>Associated Domains</strong> with
+            <code>applinks:yourdomain.com</code> for deep links.
+          </li>
+        </ol>
+
+        <h4>3. Archive and export</h4>
+        <pre>
+flutter build ipa --release    <span class="comment"># produces the .ipa and .xcarchive</span>
+open ios/Runner.xcworkspace    <span class="comment"># or archive manually: Product → Archive</span>
+</pre
+        >
+        <ol>
+          <li>
+            In Xcode: <strong>Product → Archive</strong> with the
+            <strong>Any iOS Device</strong> destination and the
+            <strong>Release</strong> scheme.
+          </li>
+          <li>
+            In the Organizer: <strong>Distribute App → App Store
+            Connect</strong> (production / TestFlight) or
+            <strong>Ad Hoc / Development</strong> (limited devices for
+            testing).
+          </li>
+          <li>
+            Complete <strong>Export Compliance</strong>, upload, then verify
+            the build in
+            <a href="https://appstoreconnect.apple.com" target="_blank"
+              >App Store Connect → TestFlight</a
+            >
+            before submitting for review.
+          </li>
+        </ol>
+        <p>
+          The marketing version and build number come from
+          <code>pubspec.yaml</code> (<code>version: name+code</code>) —
+          increment the build number for every upload (see
+          <a href="#customization-bundle-id">App Version &amp; Build Number</a
+          >).
+        </p>
+<h2 id="user-signup">User Sign Up Walkthrough</h2>
         <div class="alert alert-info">
           <strong>NOTE:</strong> By this time the app should be connecting to
           backend.
@@ -2736,7 +3073,75 @@ web/
           theme color.
         </p>
 
-        <h3 id="customization-app-name">App Name / Label</h3>
+        <h3>Web Metadata (web/index.html)</h3>
+        <p>
+          The Flutter <strong>web</strong> build ships a static
+          <code>web/index.html</code>. Its title, description and social-share
+          tags are <em>not</em> driven by the admin panel or by
+          <code>.env</code> — edit the file directly. A comment block at the top
+          of its <code>&lt;head&gt;</code> lists every editable value.
+        </p>
+        <table>
+          <tr>
+            <th>What</th>
+            <th>Where in <code>web/index.html</code></th>
+          </tr>
+          <tr>
+            <td>Browser tab / search-result title</td>
+            <td><code>&lt;title&gt;</code></td>
+          </tr>
+          <tr>
+            <td>Search-engine description</td>
+            <td><code>&lt;meta name="description"&gt;</code></td>
+          </tr>
+          <tr>
+            <td>Social card (Facebook, WhatsApp, Slack, iMessage)</td>
+            <td>
+              <code>og:title</code>, <code>og:description</code>,
+              <code>og:site_name</code>, <code>og:image</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Twitter / X card</td>
+            <td>
+              <code>twitter:title</code>, <code>twitter:description</code>
+            </td>
+          </tr>
+          <tr>
+            <td>iOS home-screen name</td>
+            <td><code>apple-mobile-web-app-title</code> (12 characters max)</td>
+          </tr>
+          <tr>
+            <td>Social share image</td>
+            <td><code>web/icons/social.jpeg</code></td>
+          </tr>
+          <tr>
+            <td>PWA name + description</td>
+            <td>
+              <code>web/manifest.json</code> — <code>name</code>,
+              <code>short_name</code>, <code>description</code>
+            </td>
+          </tr>
+        </table>
+        <div class="alert alert-info">
+          <strong>No <code>og:url</code> ships.</strong> Without it, crawlers use
+          the page's own URL, which is correct on any domain. Add
+          <code
+            >&lt;meta property="og:url"
+            content="https://your-domain.com/"&gt;</code
+          >
+          only if you need to force a canonical URL.
+        </div>
+        <div class="alert alert-warning">
+          If you rename the app, check the web values too. The
+          <code>rename_app</code> package covers the Android and iOS display
+          names (see <a href="#customization-app-name">App Name / Label</a>);
+          whether it also rewrites the web files depends on its version, so
+          verify <code>web/index.html</code> and <code>web/manifest.json</code>
+          afterwards — otherwise the browser tab and the installed web app keep
+          the old name.
+        </div>
+<h3 id="customization-app-name">App Name / Label</h3>
         <p>
           Use the <code>rename_app</code> package to update the display name
           across all platforms at once:
@@ -2792,8 +3197,34 @@ dart run change_package_name:main com.yourcompany.appname --android
 dart run change_package_name:main com.yourcompany.appname --ios
 </pre
         >
-
-        <h3>App Version & Build Number</h3>
+        <p>
+          The package ships with the Lamat product identity
+          (<code>com.lamat.app</code>) already set in
+          <code>android/app/build.gradle.kts</code>
+          (<code>namespace</code> + <code>applicationId</code>),
+          <code>ios/Runner.xcodeproj/project.pbxproj</code>
+          (<code>PRODUCT_BUNDLE_IDENTIFIER</code>), and
+          <code>lib/firebase_options.dart</code> (<code>iosBundleId</code>).
+          After renaming, re-run <code>flutterfire configure</code> so your
+          Firebase options (including <code>iosBundleId</code>) match the new
+          identifier.
+        </p>
+        <p>
+          <strong>Option: rename directly in VS Code.</strong> Open the
+          <code>flutter_app</code> folder, press
+          <code>Ctrl+Shift+F</code> (Windows/Linux) or
+          <code>Cmd+Shift+F</code> (macOS) for global Search, enter
+          <code>com.lamat.app</code>, then replace all with your new
+          identifier (e.g. <code>com.yourcompany.appname</code>). Review each
+          hit before replacing — the matches are exactly the three identity
+          spots listed above.
+        </p>
+        <img
+          src="assets/img/change_budle_identifier_vscode.png"
+          width="100%"
+          alt="Rename bundle identifier with VS Code global search and replace"
+        />
+<h3>App Version & Build Number</h3>
         <p>
           The canonical source is <code>pubspec.yaml</code> under the
           <code>version</code> field using the format
@@ -3114,6 +3545,95 @@ flutter build ipa --build-name=1.0.0 --build-number=2
           </p>
         </div>
 
+        <h2 id="voice-party">Voice Party Rooms</h2>
+        <p class="desc">
+          Voice rooms are Clubhouse-style audio rooms: anyone hosts, guests
+          take seats and talk, the audience reacts with gifts. Rooms come in
+          three privacy types and two of them earn the host diamonds.
+        </p>
+        <h3>Room Types</h3>
+        <table>
+          <tr>
+            <th>Type</th>
+            <th>Who can join</th>
+          </tr>
+          <tr>
+            <td>Open</td>
+            <td>Everyone (free rooms stay free).</td>
+          </tr>
+          <tr>
+            <td>Social</td>
+            <td>Only followers of the host. Strangers see a Follow button
+            that joins automatically after following.</td>
+          </tr>
+          <tr>
+            <td>Closed</td>
+            <td>Invite only. The host invites by username at creation or
+            later; invitees get a notification and join from it.</td>
+          </tr>
+        </table>
+        <h3>Paid Entry &amp; Host Earnings (diamonds)</h3>
+        <p class="desc">
+          Hosts may set an entry fee in diamonds when creating a room.
+          Guests pay once (rejoining is free) and the host receives the
+          diamonds. While hosting with at least one guest, the host also
+          accrues diamonds per minute.
+        </p>
+        <table>
+          <tr>
+            <th>Setting (Admin &gt; Voice Chat Rooms)</th>
+            <th>What it does</th>
+          </tr>
+          <tr>
+            <td>Host earnings (diamonds/min)</td>
+            <td>Diamonds per minute, 0 disables. Default 5.</td>
+          </tr>
+          <tr>
+            <td>Reaper idle hours</td>
+            <td>Empty or long-idle rooms auto-close after this long. Default 24.</td>
+          </tr>
+          <tr>
+            <td>Entry fee (per room)</td>
+            <td>Diamonds to enter, set at creation or in the room editor. 0 = free.</td>
+          </tr>
+        </table>
+        <h3>Zego Setup</h3>
+        <p class="desc">
+          Voice audio runs on Zego Cloud. Paste the App ID and
+          <strong>ServerSecret</strong> (not the AppSign) from the Zego console
+          into the Live plugin settings; the backend mints short-lived,
+          room-bound call tokens from them. Without them the
+          app shows a setup notice instead of a dead room. Microphone
+          permission is requested on join.
+        </p>
+        <h4>Troubleshooting</h4>
+        <table>
+          <tr>
+            <th>Symptom</th>
+            <th>Fix</th>
+          </tr>
+          <tr>
+            <td>"Followers only" / "Invite only" rejection</td>
+            <td>Follow the host, or ask the host for an invite.</td>
+          </tr>
+          <tr>
+            <td>"Room is full"</td>
+            <td>30 seats (50 for Platinum hosts). Try again later.</td>
+          </tr>
+          <tr>
+            <td>"Entry costs N diamonds"</td>
+            <td>Paid room — pay once from the sheet, rejoining is free.</td>
+          </tr>
+          <tr>
+            <td>Room stays listed after everyone left</td>
+            <td>Empty rooms auto-close; the hourly reaper catches the rest.</td>
+          </tr>
+          <tr>
+            <td>"Voice rooms are not configured"</td>
+            <td>Set Zego App ID + Server Secret in the Live plugin.</td>
+          </tr>
+        </table>
+
         <h2 id="config-ref">Configuration Reference</h2>
 
         <h3>Laravel .env</h3>
@@ -3236,9 +3756,84 @@ flutter build ipa --build-name=1.0.0 --build-number=2
               <code>LICENSE_SERVER_URL</code>)
             </td>
           </tr>
+          <tr>
+            <td><code>IS_DEMO</code></td>
+            <td><code>false</code></td>
+            <td>
+              Demo mode — blocks destructive admin actions (deleting users,
+              changing payments). Enable only on a public demo server.
+            </td>
+          </tr>
+          <tr>
+            <td><code>DEMO_ADMIN_EMAIL</code></td>
+            <td></td>
+            <td>
+              Admin login email pre-filled on the sign-in form when
+              <code>IS_DEMO=true</code>. Leave empty on a production install so
+              the form stays blank.
+            </td>
+          </tr>
+          <tr>
+            <td><code>DEMO_ADMIN_PASSWORD</code></td>
+            <td></td>
+            <td>
+              Admin login password pre-filled when <code>IS_DEMO=true</code>. Only
+              ever set this on a public demo server.
+            </td>
+          </tr>
+          <tr>
+            <td><code>APPLE_TEAM_ID</code></td>
+            <td></td>
+            <td>Apple Developer Team ID (Membership)</td>
+          </tr>
+          <tr>
+            <td><code>APPLE_BUNDLE_ID</code></td>
+            <td></td>
+            <td>iOS bundle identifier — must match your app</td>
+          </tr>
+          <tr>
+            <td><code>APPLE_SERVICE_ID</code></td>
+            <td></td>
+            <td>
+              Services ID — used as the OAuth <code>client_id</code> on Android
+              and Web
+            </td>
+          </tr>
+          <tr>
+            <td><code>APPLE_KEY_ID</code></td>
+            <td></td>
+            <td>"Key ID" of your Sign in with Apple key</td>
+          </tr>
+          <tr>
+            <td><code>APPLE_PRIVATE_KEY</code></td>
+            <td></td>
+            <td>
+              The <code>.p8</code> key content — or leave empty and set
+              <code>APPLE_PRIVATE_KEY_PATH</code>
+            </td>
+          </tr>
+          <tr>
+            <td><code>APPLE_REDIRECT_URI</code></td>
+            <td></td>
+            <td>
+              OAuth <strong>Return URL</strong> registered on the Services ID —
+              where Apple posts the credential, e.g.
+              <code>https://your-domain.com/apple/callback</code>
+            </td>
+          </tr>
+          <tr>
+            <td><code>APPLE_REDIRECT_URL</code></td>
+            <td><code>APP_URL</code></td>
+            <td>
+              Where a <strong>browser-based</strong> user (iOS Safari, Flutter
+              web) lands <em>after</em> that callback is handled. Must be your own
+              site. Leave empty to fall back to <code>APP_URL</code> — it is never
+              pointed at a third-party domain. Android users are returned to the
+              app through a deep link instead.
+            </td>
+          </tr>
         </table>
-
-        <h3>Flutter constants.dart</h3>
+<h3>Flutter constants.dart</h3>
         <table>
           <tr>
             <th>Key</th>
@@ -3362,7 +3957,7 @@ flutter build ipa --build-name=1.0.0 --build-number=2
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
             <tr>
-              <td>Entitlement ID</td>
+              <td>Entitlement ID (legacy default)</td>
               <td class="config-key">entitlement_id</td>
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
@@ -3371,7 +3966,49 @@ flutter build ipa --build-name=1.0.0 --build-number=2
               <td class="config-key">app_id</td>
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
+            <tr>
+              <td>Webhook Secret</td>
+              <td class="config-key">revenuecart_webhook_secret</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
           </table>
+
+          <h4>Selling Subscriptions (Plus / Gold / Platinum)</h4>
+          <p class="desc">
+            The app ships with three subscription tiers. Members compare tiers
+            and benefits on a plans page; tapping a tier opens that tier's
+            RevenueCat paywall. Everything below is configured in the admin
+            panel — no code changes needed.
+          </p>
+          <table>
+            <tr>
+              <th>Step</th>
+              <th>Where</th>
+            </tr>
+            <tr>
+              <td>Create your products, 3 entitlements (lamat_plus, lamat_gold, lamat_platinum) and 3 offerings (plus, gold, platinum) with paywall designs. Attach Platinum products to all three entitlements, Gold products to gold + plus, Plus products to plus only.</td>
+              <td>RevenueCat Dashboard</td>
+            </tr>
+            <tr>
+              <td>Paste the webhook URL shown in Admin &gt; Plugins &gt; RevenueCat into Project &gt; Integrations &gt; Webhooks, then paste the signing secret back into the Webhook Secret field.</td>
+              <td>RevenueCat Dashboard + Admin Panel</td>
+            </tr>
+            <tr>
+              <td>Set each tier's Entitlement ID and Offering ID to match the dashboard. Set each plan's Play Store / App Store product ID.</td>
+              <td>Admin &gt; Plugins &gt; RevenueCat and Admin &gt; Pro Plans</td>
+            </tr>
+            <tr>
+              <td>Edit tier names, descriptions and the benefits list per tier. The app's plans page renders whatever you enter.</td>
+              <td>Admin &gt; Pro Plans</td>
+            </tr>
+          </table>
+          <p class="desc">
+            Troubleshooting: paywall never appears — check the entitlement ID
+            spelling and that the offering is marked current; purchase succeeds
+            but tier missing — check the webhook secret and that the product ID
+            matches a plan row; web builds use card gateways instead of
+            RevenueCat by design.
+          </p>
 
           <h3>
             OneSignal <span class="badge badge-configured">Configured</span>
@@ -3455,6 +4092,37 @@ flutter build ipa --build-name=1.0.0 --build-number=2
             </tr>
           </table>
 
+          <h3>Ably Realtime <span class="badge badge-configured">Configured</span></h3>
+          <p class="desc">
+            Live chat delivery over WebSockets. The full Ably key never
+            leaves the server — the app authenticates with short-lived
+            tokens minted by the backend <code>ably/token</code> endpoint.
+          </p>
+          <span class="get-link"
+            >&#8594;
+            <a href="https://ably.com/dashboard" target="_blank"
+              >Ably Dashboard</a
+            ></span
+          >
+          <p>Config section: <code>plugins.ably_realtime</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Channel Prefix</td>
+              <td class="config-key">channel_prefix</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+          </table>
+
           <h3>
             Google Sign-In
             <span class="badge badge-configured">Configured</span>
@@ -3477,22 +4145,26 @@ flutter build ipa --build-name=1.0.0 --build-number=2
             </tr>
             <tr>
               <td>Enabled</td>
-              <td class="config-key">enabled</td>
+              <td class="config-key">enable_google_connect</td>
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
             <tr>
-              <td>Key (Client ID)</td>
-              <td class="config-key">key</td>
+              <td>OAuth Client ID</td>
+              <td class="config-key">google_oauth_client_id</td>
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
             <tr>
               <td>Secret</td>
-              <td class="config-key">secret</td>
-              <td><span class="badge badge-req">Yes</span></td>
+              <td class="config-key">google_secret</td>
+              <td><span class="badge badge-opt">Optional</span></td>
             </tr>
           </table>
-
-          <h3>
+          <div class="alert alert-warning">
+            Google Sign-In ships <strong>disabled</strong> and with no client ID.
+            The button stays hidden until you enable it and add your own OAuth
+            client ID.
+          </div>
+<h3>
             Facebook Sign-In
             <span class="badge badge-configured">Configured</span>
           </h3>
@@ -3526,11 +4198,24 @@ flutter build ipa --build-name=1.0.0 --build-number=2
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
           </table>
+          <div class="alert alert-info">
+            <strong>Native placeholders to fill:</strong> the secret above stays
+            server-side only. In the app itself, replace the
+            <code>YOUR_FACEBOOK_APP_ID</code> /
+            <code>YOUR_FACEBOOK_CLIENT_TOKEN</code> placeholders in
+            <code>android/app/src/main/res/values/strings.xml</code> and
+            <code>ios/Runner/Info.plist</code> (plus the
+            <code>fbYOUR_FACEBOOK_APP_ID</code> URL scheme) with the values
+            from your Facebook app at
+            <a href="https://developers.facebook.com/apps" target="_blank"
+              >Facebook Developers</a
+            >.
+          </div>
 
           <h3>
             Apple Sign-In <span class="badge badge-configured">Configured</span>
           </h3>
-          <p class="desc">Sign in with Apple for iOS users.</p>
+          <p class="desc">Sign in with Apple for iOS, Android and Web users.</p>
           <span class="get-link"
             >&#8594;
             <a
@@ -3556,11 +4241,79 @@ flutter build ipa --build-name=1.0.0 --build-number=2
             </tr>
             <tr>
               <td>Domain/Return URL</td>
-              <td>Configure in Apple Developer for the Service ID</td>
+              <td>
+                Configure in Apple Developer for the Service ID — use
+                <code>https://your-domain.com/apple/callback</code> and set
+                <code>APPLE_REDIRECT_URI</code> to the same value.
+              </td>
+            </tr>
+            <tr>
+              <td>Post-login Redirect URL</td>
+              <td>
+                Where browser-based (iOS / Web) users land after signing in.
+                Set <code>APPLE_REDIRECT_URL</code> in <code>.env</code>, or use
+                the admin panel: <strong>Plugins → Apple → Post-login Redirect
+                URL</strong>. Use your own site; leave empty to fall back to
+                <code>APP_URL</code>. Android users return to the app instead.
+              </td>
             </tr>
           </table>
-
-          <h3>Sentry <span class="badge badge-configured">Configured</span></h3>
+          <p>Config section: <code>plugins.apple</code></p>
+          <table>
+            <tr>
+              <th>Field</th>
+              <th>Key</th>
+              <th>Required</th>
+            </tr>
+            <tr>
+              <td>Enabled</td>
+              <td class="config-key">enabled</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Services ID</td>
+              <td class="config-key">service_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Key ID</td>
+              <td class="config-key">key_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Team ID</td>
+              <td class="config-key">team_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Bundle ID</td>
+              <td class="config-key">bundle_id</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Return URL</td>
+              <td class="config-key">redirect_uri</td>
+              <td><span class="badge badge-req">Yes</span></td>
+            </tr>
+            <tr>
+              <td>Post-login Redirect URL</td>
+              <td class="config-key">redirect_url</td>
+              <td><span class="badge badge-opt">Optional</span></td>
+            </tr>
+          </table>
+          <div class="alert alert-info">
+            <strong>Two different redirects — don't mix them up.</strong>
+            <code>redirect_uri</code> is the <em>Return URL</em> Apple posts the
+            credential to, and must match a Return URL registered on your Services
+            ID. <code>redirect_url</code> is where the user is then sent. Both
+            belong to your own domain; neither is ever pointed at a third party.
+          </div>
+          <div class="alert alert-warning">
+            Sign in with Apple ships <strong>disabled</strong>. The button stays
+            hidden until <code>enabled</code> is switched on <em>and</em>
+            <code>service_id</code> is filled in.
+          </div>
+<h3>Sentry <span class="badge badge-configured">Configured</span></h3>
           <p class="desc">
             Error tracking and performance monitoring for Flutter and backend
             PHP.
@@ -3589,8 +4342,32 @@ flutter build ipa --build-name=1.0.0 --build-number=2
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
           </table>
+          <p>
+            <strong>Flutter app:</strong> no Sentry DSN ships in this package —
+            Sentry is <strong>disabled by default</strong>. To enable it with
+            your own Sentry project, pass your DSN with
+            <code>--dart-define</code> flags. These values are baked in at
+            compile time, so repeat them on <strong>every</strong> run or
+            release build — otherwise that build ships with Sentry disabled.
+            Without a DSN the app starts normally with Sentry disabled.
+          </p>
+          <pre>
+<span class="comment"># Development run with Sentry</span>
+flutter run --dart-define=SENTRY_ENABLED=true --dart-define=SENTRY_DSN=https://your-key@o123.ingest.sentry.io/456
 
-          <h3>
+<span class="comment"># Release builds with Sentry (repeat the flags every time)</span>
+flutter build appbundle --release --dart-define=SENTRY_ENABLED=true --dart-define=SENTRY_DSN=https://your-key@o123.ingest.sentry.io/456
+flutter build ipa --release --dart-define=SENTRY_ENABLED=true --dart-define=SENTRY_DSN=https://your-key@o123.ingest.sentry.io/456
+flutter build web --release --dart-define=SENTRY_ENABLED=true --dart-define=SENTRY_DSN=https://your-key@o123.ingest.sentry.io/456
+</pre
+          >
+          <p>
+            The flags map to <code>lib/constants.dart</code>
+            (<code>sentryEnabled</code> / <code>sentryDSN</code>, defaults
+            <code>false</code> / empty). Never commit a personal DSN to version
+            control.
+          </p>
+<h3>
             Google AdMob <span class="badge badge-configured">Configured</span>
           </h3>
           <p class="desc">
@@ -3650,6 +4427,16 @@ flutter build ipa --build-name=1.0.0 --build-number=2
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
           </table>
+          <div class="alert alert-info">
+            <strong>Native placeholder:</strong> also replace
+            <code>ca-app-pub-YOUR_ADMOB_APP_ID</code> in
+            <code>android/app/src/main/AndroidManifest.xml</code>
+            (<code>GADApplicationIdentifier</code>) with your AdMob app ID
+            from the
+            <a href="https://apps.admob.com" target="_blank"
+              >AdMob console</a
+            >.
+          </div>
 
           <h3>
             Zego UIKit <span class="badge badge-configured">Configured</span>
@@ -3677,8 +4464,8 @@ flutter build ipa --build-name=1.0.0 --build-number=2
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
             <tr>
-              <td>Pub Token</td>
-              <td class="config-key">pub_token</td>
+              <td>Server Secret</td>
+              <td class="config-key">zego_server_secret</td>
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
             <tr>
@@ -3687,6 +4474,14 @@ flutter build ipa --build-name=1.0.0 --build-number=2
               <td><span class="badge badge-req">Yes</span></td>
             </tr>
           </table>
+          <div class="alert alert-info">
+            <strong>Token-based calling:</strong> the app never receives a raw
+            key. Paste the <strong>ServerSecret</strong> (ZEGOCLOUD console —
+            a different value from the AppSign) into the Live plugin settings;
+            the backend mints short-lived, room-bound tokens from the
+            <code>zego/token</code> endpoint. Without it the app shows a setup
+            notice instead of a dead room.
+          </div>
 
           <h3>
             Google Maps <span class="badge badge-configured">Configured</span>
@@ -3784,6 +4579,19 @@ flutter build ipa --build-name=1.0.0 --build-number=2
               </td>
             </tr>
           </table>
+          <div class="alert alert-info">
+            <strong>Use your own domain everywhere:</strong> replace the
+            <code>yourdomain.com</code> placeholders with your backend domain in
+            <code>AndroidManifest.xml</code> (app-links host),
+            <code>ios/Runner/Runner.entitlements</code>
+            (<code>applinks:</code>), and
+            <code>ios/Runner/Info.plist</code> (URL schemes such as
+            <code>fbYOUR_FACEBOOK_APP_ID</code> and the Google
+            <code>com.googleusercontent.apps.…</code> scheme, plus the
+            <code>NSExceptionDomains</code> host). The feed share links follow
+            <code>webAppUrl</code> in <code>lib/constants.dart</code>
+            automatically.
+          </div>
 
           <h3>Instagram <span class="badge badge-api">API Key Needed</span></h3>
           <p class="desc">
@@ -4039,6 +4847,17 @@ POST   /api/V1/upload/image        <span class="comment"># Image upload</span>
               Check that the database exists and connection credentials are
               correct. The SQL file must not be empty
               (<code>database/backup/database.sql</code>).
+            </td>
+          </tr>
+          <tr>
+            <td>Logo, favicon or images don't load after install</td>
+            <td>
+              The seed leaves the site logo, header logo and favicon empty, and
+              <code>app_base_url</code> set to the placeholder
+              <code>https://domain.example</code>. Set
+              <strong>General Settings → App Base URL</strong> to your own domain and
+              upload your own logo and favicon. The gift catalogue also ships without
+              icons, and the landing-page QR codes are empty until you upload them.
             </td>
           </tr>
           <tr>
@@ -4385,8 +5204,7 @@ POST   /api/V1/upload/image        <span class="comment"># Image upload</span>
             </td>
           </tr>
         </table>
-
-        <h2 id="security">Security Notes</h2>
+<h2 id="security">Security Notes</h2>
 
         <div class="alert alert-danger">
           <strong>Production checklist:</strong>
@@ -4407,6 +5225,10 @@ POST   /api/V1/upload/image        <span class="comment"># Image upload</span>
           </li>
           <li>
             Purchase data is encrypted at <code>storage/app/purchase.json</code>
+          </li>
+          <li>
+            Rotate any key the moment it leaves your control — regenerate it
+            in the provider console and update the matching setting
           </li>
           <li>
             Delete <code>database/backup/database.sql</code> after installation
@@ -4455,6 +5277,39 @@ POST   /api/V1/upload/image        <span class="comment"># Image upload</span>
             <code>homeUrl</code> constant to your backend domain (e.g.
             <code>https://yourdomain.com</code>). Also ensure
             <code>isDemo</code> is set to <code>false</code>.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I run a public demo of the admin panel?</summary>
+          <p>
+            Install normally — wizard Step 5 creates your administrator account —
+            then set <code>IS_DEMO=true</code> in <code>.env</code>. That blocks
+            destructive admin actions such as deleting users or changing payment
+            settings. To let visitors sign in, also set
+            <code>DEMO_ADMIN_EMAIL</code> and <code>DEMO_ADMIN_PASSWORD</code> to
+            that administrator's credentials; the login form is then pre-filled
+            with them. Both default to empty, so a normal install always shows a
+            blank login form. Run <code>php artisan config:clear</code> after
+            editing <code>.env</code>.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            The Sign in with Apple / Google button doesn't appear on the login
+            screen. Why?
+          </summary>
+          <p>
+            Social login ships <strong>disabled</strong> and without credentials,
+            so the buttons are hidden. Add your own credentials and enable the
+            plugin in the admin panel — <strong>Plugins → Apple</strong> or
+            <strong>Plugins → Google Connect</strong>. A button only renders once
+            its plugin is enabled <em>and</em> its ID field is filled in
+            (<code>service_id</code> for Apple,
+            <code>google_oauth_client_id</code> for Google). The same values can
+            be supplied through <code>.env</code> — see the
+            <a href="#config-ref">Configuration Reference</a>.
           </p>
         </details>
 
@@ -4738,8 +5593,11 @@ POST   /api/V1/upload/image        <span class="comment"># Image upload</span>
           <p>
             <strong>Required (paid):</strong> Pusher (real-time chat), ZegoCloud
             (calls/streaming), SMTP (emails), at least one payment gateway
-            (Stripe, PayPal, etc.). <strong>Required (free):</strong> Firebase
-            (FCM, Auth), Google Maps/Geolocation (free tier available).
+            (Stripe, PayPal, etc.). <strong>Required (free to start):</strong>
+            Firebase (FCM, Auth), Google Maps/Geolocation (free tier available),
+            Google/Apple/Facebook OAuth — note these may involve costs depending
+            on your traffic volume, so review Firebase Blaze pricing and each
+            provider's quotas to plan your budget.
             <strong>Optional:</strong> RevenueCat ($), OneSignal (free tier),
             Sentry (free tier), Sight Engine ($), AdMob, Giphy (free). Refer to
             the "External Services" table in the System Requirements section for
@@ -4806,6 +5664,30 @@ POST   /api/V1/upload/image        <span class="comment"># Image upload</span>
             <code>config/cors.php</code>'s allowed origins. (4) Deploy the
             <code>build/web/</code> folder to your server's
             <code>public/</code> directory or a subdomain.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            Where do I set my support email address?
+          </summary>
+          <p>
+            Error dialogs that ask users to contact support read the address
+            from <code>lib/utils/error_codes.dart</code> — search that file for
+            <code>support@yourdomain.com</code> and replace it with your own
+            support address.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            How do shared post links get my domain?
+          </summary>
+          <p>
+            The in-app share sheet builds links from
+            <code>webAppUrl</code> in <code>lib/constants.dart</code> (e.g.
+            <code>https://yourdomain.com/post/123</code>), so setting that one
+            value fixes every shared link at once.
           </p>
         </details>
 
