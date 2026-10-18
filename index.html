@@ -1552,17 +1552,28 @@ chmod -R 775 storage bootstrap/cache
         <h3>Step 2 — Purchase Verification</h3>
         <div class="step-box">
           <p>
-            Enter your Envato purchase code
-            (<code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>).
+            Pick your code type, then enter your purchase code. Envato codes
+            look like <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>; Lamat
+            codes look like
+            <code>{PRODUCT}-SRC-{R|E}-XXXXXXXX-XXXXXXXX-XXXXXXXX</code>. The
+            verification method is picked automatically from the code format.
           </p>
           <p>
-            If <code>LICENSE_SERVER_URL</code> is configured, verification is
-            handled by the license server automatically. Otherwise, you'll be
-            asked for an Envato Personal Token.
+            <strong>Envato codes:</strong> verified with the official Envato
+            API — your Envato Personal Token is always required. Create your
+            own token at
+            <a href="https://build.envato.com/create-token/" target="_blank" rel="noopener"><code>build.envato.com/create-token</code></a>
+            (tick <strong>View Sales</strong>). It stays encrypted on your
+            server and is never shared.
           </p>
           <p>
-            On success, a <strong>30-minute download token</strong> is generated
-            and the database schema is downloaded from the license server.
+            <strong>Lamat codes:</strong> verified with your license server
+            (<code>LICENSE_SERVER_URL</code> in <code>.env</code>).
+          </p>
+          <p>
+            The stored code is re-checked automatically every 48 hours — if the
+            issuer rejects it, the admin panel shows an un-dismissable notice
+            until you re-verify.
           </p>
           <div class="alert alert-success">
             Purchase data is encrypted at <code>storage/app/purchase.json</code>
